@@ -172,3 +172,8 @@ cython_debug/
 
 # PyPI configuration file
 .pypirc
+
+#specific machine related  vscode settings and tasks
+.vscode*
+.vscode\*
+*.gitignore
