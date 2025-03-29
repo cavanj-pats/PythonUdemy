@@ -1,0 +1,56 @@
+put this is the .vscode directory
+allows building and running of Python from vscode when using MSYS2 to maintain build and debug software 
+like gcc, g++ and for this, Python
+
+
+//settings.json
+{
+"terminal.integrated.profiles.windows": {
+    "PowerShell": {
+      "source": "PowerShell",
+      "icon": "terminal-powershell"
+    },
+    "Command Prompt": {
+      "path": [
+        "${env:windir}\\Sysnative\\cmd.exe",
+        "${env:windir}\\System32\\cmd.exe"
+      ],
+      "args": [],
+      "icon": "terminal-cmd"
+    },
+    "Git Bash": {
+      "source": "Git Bash"
+    },
+    "MSYS2": {
+      "path": "C:\\msys64\\usr\\bin\\bash.exe",
+      "args": [
+        "--login",
+        "-i"
+      ],
+      "env": {
+        "MSYSTEM": "MINGW64",
+        "CHERE_INVOKING": "1"
+      }
+    }
+  },
+}
+
+
+
+//tasks.json
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Run Python",
+            "type": "shell",
+            "command": "c:\\msys64\\mingw64\\bin\\python.exe",
+            "args": ["${file}"],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "problemMatcher": []
+        }
+    ]
+}
