@@ -7,6 +7,19 @@ import csv
 import pandas as pd
 
 
+#header  scale ('10,)
+header = camelot.read_pdf("C:/Users/james/Downloads/10785_Solid-Block-Mounted-SRB-Catalog_LR.pdf",
+                      flavor='stream'  ,  #'lattice',
+                      pages='94' ,
+                      table_areas = ['5,800,550,720'] ,
+                      flag_size = True,    
+                      strip_text = '\n' ,
+                      #line_scale = 50 ,
+                      #shift_text = ['t'],
+                      #copy_text =['v'],
+                      layout_kwargs = {'detect_vertical' : True} )
+
+
 a = camelot.read_pdf("C:/Users/james/Downloads/10785_Solid-Block-Mounted-SRB-Catalog_LR.pdf",
                       flavor='lattice',
                       pages='94' ,
@@ -15,7 +28,6 @@ a = camelot.read_pdf("C:/Users/james/Downloads/10785_Solid-Block-Mounted-SRB-Cat
                       split_text = False,  #was true can change back if needed
                       flag_size = True,    
                       strip_text = '\n' ,
-                      line_scale = 50 ,
                       shift_text = ['t'],
                       copy_text =['v'],
                       layout_kwargs = {'detect_vertical' : True} )
@@ -23,9 +35,10 @@ a = camelot.read_pdf("C:/Users/james/Downloads/10785_Solid-Block-Mounted-SRB-Cat
 camelot.plot(a[0], kind = 'grid', filename='grid')
 camelot.plot(a[0], kind = 'text', filename='text')
 
+headerData = header[0].df
 
 #this works but also picks up the period in 'mmin.'
-dataSeries = (a[0].df)[3]   #column index 3
+dataSeries = (a[0].df)[3]   #column index 3/ might also be teh name of the column
 for i in range(dataSeries.size):
     position = dataSeries[i].find('.' )   #should find the first one.
     if position != -1:
