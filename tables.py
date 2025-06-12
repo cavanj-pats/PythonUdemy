@@ -7,8 +7,9 @@ import csv
 import pandas as pd
 
 
+
 #header  scale ('10,)
-header = camelot.read_pdf("C:/Users/james/Downloads/10785_Solid-Block-Mounted-SRB-Catalog_LR.pdf",
+header = camelot.read_pdf("https://www.timken.com/wp-content/uploads/2025/05/10785_Solid-Block-Mounted-SRB-Catalog_LR.pdf",
                       flavor='stream'  ,  #'lattice',
                       pages='94' ,
                       table_areas = ['5,800,550,720'] ,
@@ -20,7 +21,7 @@ header = camelot.read_pdf("C:/Users/james/Downloads/10785_Solid-Block-Mounted-SR
                       layout_kwargs = {'detect_vertical' : True} )
 
 
-a = camelot.read_pdf("C:/Users/james/Downloads/10785_Solid-Block-Mounted-SRB-Catalog_LR.pdf",
+a = camelot.read_pdf("https://www.timken.com/wp-content/uploads/2025/05/10785_Solid-Block-Mounted-SRB-Catalog_LR.pdf",
                       flavor='lattice',
                       pages='94' ,
                       table_regions = ['25,500,560,180'] ,
@@ -32,8 +33,8 @@ a = camelot.read_pdf("C:/Users/james/Downloads/10785_Solid-Block-Mounted-SRB-Cat
                       copy_text =['v'],
                       layout_kwargs = {'detect_vertical' : True} )
 
-camelot.plot(a[0], kind = 'grid', filename='grid')
-camelot.plot(a[0], kind = 'text', filename='text')
+#camelot.plot(a[0], kind = 'grid', filename='grid')
+#camelot.plot(a[0], kind = 'text', filename='text')
 
 headerData = header[0].df
 
