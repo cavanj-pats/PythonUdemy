@@ -12,7 +12,7 @@ import re     #regex for pattern match
 #globalMaxColumns = 25
 
 #header  scale ('10,)
-header = camelot.read_pdf("C:/Users/james/Downloads/10785_Solid-Block-Mounted-SRB-Catalog_LR.pdf",
+header = camelot.read_pdf("https://www.timken.com/wp-content/uploads/2025/05/10785_Solid-Block-Mounted-SRB-Catalog_LR.pdf",
                       flavor='stream'  ,  #'lattice',
                       pages= '94-138, 141-180, 183-209, 213-253' ,     #141-180
                       table_areas = ['5,800,550,720'] ,
