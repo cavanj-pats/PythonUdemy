@@ -39,6 +39,11 @@ a = camelot.read_pdf("C:/Users/james/Downloads/10785_Solid-Block-Mounted-SRB-Cat
                       shift_text = ['t'],
                       copy_text =['v'],
                       layout_kwargs = {'detect_vertical' : True} )
+maxCol = 0
+for ta in range(len(a)):
+    if a[ta].df.shape[1] > maxCol:
+        maxCol = a[ta].df.shape[1]
+
 
 #camelot.plot(a[0], kind = 'grid', filename='grid')
 #camelot.plot(a[0], kind = 'text', filename='text')
