@@ -7,11 +7,14 @@ import csv
 import pandas as pd
 import re     #regex for pattern match
 
+## seems i need to set a GlobalMaxNumColumns as some tables have more columns   Series and Block type
+## need to be beyond the actual data so that it does not over write actual data that is needed
+globalMaxColumns = 25
 
 #header  scale ('10,)
 header = camelot.read_pdf("C:/Users/james/Downloads/10785_Solid-Block-Mounted-SRB-Catalog_LR.pdf",
                       flavor='stream'  ,  #'lattice',
-                      pages='94-138, 141-180' ,
+                      pages='94-138' ,     #141-180
                       table_areas = ['5,800,550,720'] ,
                       flag_size = True,    
                       strip_text = '\n' ,
@@ -27,7 +30,7 @@ header = camelot.read_pdf("C:/Users/james/Downloads/10785_Solid-Block-Mounted-SR
 
 a = camelot.read_pdf("C:/Users/james/Downloads/10785_Solid-Block-Mounted-SRB-Catalog_LR.pdf",
                       flavor='lattice',
-                      pages='94-138, 141-180' ,
+                      pages='94-138' ,
                       table_regions = ['25,500,560,180'] ,
                       #columns = ['35, 49, 62, 71, 79, 88, 96, 105, 104, 113, 122, 131, 139, 148, 156, 165, 173, 182, 190 '],
                       split_text = False,  #was true can change back if needed
@@ -50,8 +53,12 @@ for t in range(len(a)):
     cols = a[t].df.shape[1]   # i think this is columns  [1] is columns [0] is rows
     rows = a[t].df.shape[0]
     row = 0
-    for c in range(cols):
-        dataSeries = (a[t].df)[c]   #column index 3/ might also be teh name of the column
+    for c in range(globalMaxColumns):
+        if c <= cols:
+            dataSeries = (a[t].df)[c]   #column index 3/ might also be teh name of the column
+        else:
+            dataSeries = a[t].df[1]    #put shaft diameter
+
         head = a[t].df[c][0]   #should be the column header from catalog
         for i in range(dataSeries.size):
             match = re.match('[0-9]{1,3}.[0-9]{2,3}.[0-9]{2}',dataSeries[i])
@@ -71,17 +78,18 @@ for t in range(len(a)):
                     dataSeries[i]= dataSeries[i][:pos] + ' / ' + dataSeries[i][pos:]    
             else:
                 continue
-
+               
         (a[t].df)[c] = dataSeries
+        
 
     if t == 0 and firstTable:
-        a[t].df.insert(cols,'18','')
-        a[t].df.insert(cols+1,'19','')
-        a[t].df.insert(cols+2,'20','')
-        a[t].df.insert(cols+3,'21','')
-        a[t].df.insert(cols+4,'22','')
-        a[t].df.insert(cols+5, 'Series', headerData.values[0][t])
-        a[t].df.insert(cols+6,'Block_Type', headerData.values[1][t])
+        a[t].df.insert(19,'18','')
+        a[t].df.insert(20,'19','')
+        a[t].df.insert(21,'20','')
+        a[t].df.insert(22,'21','')
+        a[t].df.insert(23,'22','')
+        a[t].df.insert(24, 'Series', headerData.values[0][t])
+        a[t].df.insert(25,'Block_Type', headerData.values[1][t])
         a[t].df.to_csv('tmp_file.txt' )
         firstTable = False
     else:
