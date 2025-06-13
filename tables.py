@@ -10,7 +10,7 @@ import pandas as pd
 #header  scale ('10,)
 header = camelot.read_pdf("C:/Users/james/Downloads/10785_Solid-Block-Mounted-SRB-Catalog_LR.pdf",
                       flavor='stream'  ,  #'lattice',
-                      pages='94' ,
+                      pages='94-95' ,
                       table_areas = ['5,800,550,720'] ,
                       flag_size = True,    
                       strip_text = '\n' ,
@@ -22,7 +22,7 @@ header = camelot.read_pdf("C:/Users/james/Downloads/10785_Solid-Block-Mounted-SR
 
 a = camelot.read_pdf("C:/Users/james/Downloads/10785_Solid-Block-Mounted-SRB-Catalog_LR.pdf",
                       flavor='lattice',
-                      pages='94' ,
+                      pages='94-95' ,
                       table_regions = ['25,500,560,180'] ,
                       #columns = ['35, 49, 62, 71, 79, 88, 96, 105, 104, 113, 122, 131, 139, 148, 156, 165, 173, 182, 190 '],
                       split_text = False,  #was true can change back if needed
@@ -32,10 +32,12 @@ a = camelot.read_pdf("C:/Users/james/Downloads/10785_Solid-Block-Mounted-SRB-Cat
                       copy_text =['v'],
                       layout_kwargs = {'detect_vertical' : True} )
 
-camelot.plot(a[0], kind = 'grid', filename='grid')
-camelot.plot(a[0], kind = 'text', filename='text')
+#camelot.plot(a[0], kind = 'grid', filename='grid')
+#camelot.plot(a[0], kind = 'text', filename='text')
+numTables = a.n   #number of tables access for 0 to n-1
 
 headerData = header[0].df
+#a[0]df[0][2] finds the data in column 0 and row 2
 
 #this works but also picks up the period in 'mmin.'
 dataSeries = (a[0].df)[3]   #column index 3/ might also be teh name of the column
@@ -46,6 +48,10 @@ for i in range(dataSeries.size):
         dataSeries[i]= dataSeries[i][:pos] + ' / ' + dataSeries[i][pos:]
 
 (a[0].df)[3] = dataSeries
+cols = a[0].df.shape[0]   # i think this is columns
+
+a[0].df.insert(cols, 'Series', headerData.values[0][0])
+a[0].df.insert(cols+1,'Block_Type', headerData.values[1][0])
 
 # Print first table
 print(a[0].df)
