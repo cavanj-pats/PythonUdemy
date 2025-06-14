@@ -11,26 +11,28 @@ import re     #regex for pattern match
 ## need to be beyond the actual data so that it does not over write actual data that is needed
 #globalMaxColumns = 25
 
+pages = '94-138, 141-180, 183-209, 213-253'
+
 #header  scale ('10,)
 header = camelot.read_pdf("C:/Users/james/Downloads/10785_Solid-Block-Mounted-SRB-Catalog_LR.pdf",
                       flavor='stream'  ,  #'lattice',
-                      pages= '94-138, 141-180, 183-209, 213-253' ,     #141-180
+                      pages= pages ,
                       table_areas = ['5,800,550,720'] ,
                       flag_size = True,    
                       strip_text = '\n' ,
                       layout_kwargs = {'detect_vertical' : True} )
 
-""" footer = camelot.read_pdf("C:/Users/james/Downloads/10785_Solid-Block-Mounted-SRB-Catalog_LR.pdf",
+footer = camelot.read_pdf("C:/Users/james/Downloads/10785_Solid-Block-Mounted-SRB-Catalog_LR.pdf",
                       flavor='stream'  , 
-                      pages='94-138' ,
-                      table_areas = ['5,50,550,5'] ,
-                      flag_size = True,    
+                      pages= pages ,
+                      table_areas = ['5,35,550,5'] ,
+                      flag_size = False,    
                       strip_text = '\n' ,
-                      layout_kwargs = {'detect_vertical' : True} ) """
+                      layout_kwargs = {'detect_vertical' : True} )
 
 a = camelot.read_pdf("C:/Users/james/Downloads/10785_Solid-Block-Mounted-SRB-Catalog_LR.pdf",
                       flavor='lattice',
-                      pages=   '94-138, 141-180, 183-209, 213-253' ,
+                      pages=   pages,  #'94-138, 141-180, 183-209, 213-253' ,
                       table_regions = ['25,500,560,180'] ,
                       #columns = ['35, 49, 62, 71, 79, 88, 96, 105, 104, 113, 122, 131, 139, 148, 156, 165, 173, 182, 190 '],
                       split_text = False,  #was true can change back if needed
@@ -92,15 +94,20 @@ for t in range(len(a)):
             a[t].df.insert(c,str(c), dataSeries)    #changed from str(c+1)
             head =''
         
+        #header[t].df[0][0], header[t].df[0][1]
 
     if t == 0 and firstTable:
-        a[t].df.insert(maxCol, 'Series', headerData.values[0][t])
-        a[t].df.insert(maxCol+1,'Block_Type', headerData.values[1][t])
+        a[t].df.insert(maxCol, 'Series',header[t].df[0][0])    # headerData.values[0][t]
+        a[t].df.insert(maxCol+1,'Block_Type', header[t].df[0][1] )  #headerData.values[1][t]
+        a[t].df.instert(maxCol+2,'PDF_Page', a[t].page)
+        a[t].df.insert(maxCol+3, "Footer", footer[t].df[0][0])
         a[t].df.to_csv('tmp_file.txt' )
         firstTable = False
     else:
-        a[t].df[maxCol]= headerData.values[0][0]
-        a[t].df[maxCol+1] = headerData.values[1][0]
+        a[t].df[maxCol]= header[t].df[0][0]      #headerData.values[0][0]
+        a[t].df[maxCol+1] = header[t].df[0][1]    #headerData.values[1][0]
+        a[t].df[maxCol+2] = a[t].page
+        a[t].df[maxCol+3] = footer[t].df[0][0]
         a[t].df.to_csv('tmp_file.txt', mode='a', header=False )
 
 
