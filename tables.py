@@ -1,5 +1,6 @@
 # tables.py
-
+#this will work for the solid block SRB.  there are some unique elements such as the one page with two tables
+#that make this code only semi-reusable.
 
 import camelot
 import pypdfium
@@ -12,6 +13,7 @@ import re     #regex for pattern match
 #globalMaxColumns = 25
 
 pages = '94-138, 141-180, 183-209, 213-253'
+twoTablePage = 0
 
 #header  scale ('10,)
 header = camelot.read_pdf("C:/Users/james/Downloads/10785_Solid-Block-Mounted-SRB-Catalog_LR.pdf",
@@ -56,7 +58,7 @@ maxCol += 1
 firstTable = True
 
 for t in range(len(a)):
-    headerData = header[t].df
+    #headerData = header[t].df
         #a[0]df[0][2] finds the data in column 0 and row 2
 
         #this works but also picks up the period in 'mmin.'
@@ -95,19 +97,29 @@ for t in range(len(a)):
             head =''
         
         #header[t].df[0][0], header[t].df[0][1]
+    x=0
 
     if t == 0 and firstTable:
         a[t].df.insert(maxCol, 'Series',header[t].df[0][0])    # headerData.values[0][t]
         a[t].df.insert(maxCol+1,'Block_Type', header[t].df[0][1] )  #headerData.values[1][t]
-        a[t].df.instert(maxCol+2,'PDF_Page', a[t].page)
+        a[t].df.insert(maxCol+2,'PDF_Page', a[t].page)
         a[t].df.insert(maxCol+3, "Footer", footer[t].df[0][0])
         a[t].df.to_csv('tmp_file.txt' )
         firstTable = False
     else:
-        a[t].df[maxCol]= header[t].df[0][0]      #headerData.values[0][0]
-        a[t].df[maxCol+1] = header[t].df[0][1]    #headerData.values[1][0]
+        if a[t].page >= 188:
+            if twoTablePage == 0:
+                x = t
+                twoTablePage = 1
+            else:
+                x= t - 1
+        else:
+            x = t
+
+        a[t].df[maxCol]= header[x].df[0][0]      #headerData.values[0][0]
+        a[t].df[maxCol+1] = header[x].df[0][1]    #headerData.values[1][0]
         a[t].df[maxCol+2] = a[t].page
-        a[t].df[maxCol+3] = footer[t].df[0][0]
+        a[t].df[maxCol+3] = footer[x].df[0][0]
         a[t].df.to_csv('tmp_file.txt', mode='a', header=False )
 
 
