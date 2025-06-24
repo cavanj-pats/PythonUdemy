@@ -16,7 +16,7 @@ import re     #regex for pattern match
 #header  scale ('10,)
 pages = '94-138, 141-180, 183-209, 213-253'
 
-header = camelot.read_pdf("C:/Users/james/Downloads/10785_Solid-Block-Mounted-SRB-Catalog_LR.pdf",
+header = camelot.read_pdf("C:/Users/james/Downloads/10785_Solid-Block-Mounted-SRB-Catalog_LR.pdf", # type: ignore
                       flavor='stream'  ,  #'lattice',
                       pages= pages , # '94-138' ,  #, 141-180, 183-209, 213-253' ,     
                       table_areas = ['5,800,550,720'] ,
@@ -24,7 +24,7 @@ header = camelot.read_pdf("C:/Users/james/Downloads/10785_Solid-Block-Mounted-SR
                       strip_text = '\n' ,
                       layout_kwargs = {'detect_vertical' : True} )
 
-footer = camelot.read_pdf("C:/Users/james/Downloads/10785_Solid-Block-Mounted-SRB-Catalog_LR.pdf",
+footer = camelot.read_pdf("C:/Users/james/Downloads/10785_Solid-Block-Mounted-SRB-Catalog_LR.pdf", # type: ignore
                       flavor='stream'  , 
                       pages= pages , #'94-138' ,
                       table_areas = ['5,35,550,5'] ,

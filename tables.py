@@ -7,20 +7,33 @@ import pypdfium
 import csv
 import pandas as pd
 import re     #regex for pattern match
+import array
+import shaftdia
+import qsplit
+
+
+
+class HeaderFooter:
+   
+    def __init__(self, head1, head2, foot1):
+        self.series = head1  # Instance attribute
+        self.block_type = head2
+        self.foot1 = foot1
+
 
 ## seems i need to set a GlobalMaxNumColumns as some tables have more columns   Series and Block type
 ## need to be beyond the actual data so that it does not over write actual data that is needed
 #globalMaxColumns = 25
 
-pages = '94-138, 141-180, 183-209, 213-253'
-twoTablePage = 0
+pages = '187-189' #'94-138, 141-180, 183-209, 213-253'
+#twoTablePage = 0
 #document = "https://www.timken.com/wp-content/uploads/2025/05/10785_Solid-Block-Mounted-SRB-Catalog_LR.pdf"
 #https://www.timken.com/wp-content/uploads/2024/08/Mounted-Tapered-Roller-Bearing-Catalog_11477-1.pdf
 #https://www.timken.com/wp-content/uploads/2023/07/SAF-Split-Block-Mounted-SRB-Catalog_11435.pdf
 #https://www.timken.com/wp-content/uploads/2023/07/SAF-Split-Block-Mounted-SRB-Catalog_11435.pdf
 
 #header  scale ('10,)
-header = camelot.read_pdf("C:/Users/james/Downloads/10785_Solid-Block-Mounted-SRB-Catalog_LR.pdf",
+header = camelot.read_pdf("C:/Users/james/Downloads/10785_Solid-Block-Mounted-SRB-Catalog_LR.pdf", # type: ignore
                       flavor='stream'  ,  #'lattice',
                       pages= pages ,
                       table_areas = ['5,800,550,720'] ,
@@ -28,7 +41,7 @@ header = camelot.read_pdf("C:/Users/james/Downloads/10785_Solid-Block-Mounted-SR
                       strip_text = '\n' ,
                       layout_kwargs = {'detect_vertical' : True} )
 
-footer = camelot.read_pdf("C:/Users/james/Downloads/10785_Solid-Block-Mounted-SRB-Catalog_LR.pdf",
+footer = camelot.read_pdf("C:/Users/james/Downloads/10785_Solid-Block-Mounted-SRB-Catalog_LR.pdf", # type: ignore
                       flavor='stream'  , 
                       pages= pages ,
                       table_areas = ['5,35,550,5'] ,
@@ -36,7 +49,7 @@ footer = camelot.read_pdf("C:/Users/james/Downloads/10785_Solid-Block-Mounted-SR
                       strip_text = '\n' ,
                       layout_kwargs = {'detect_vertical' : True} )
 
-a = camelot.read_pdf("C:/Users/james/Downloads/10785_Solid-Block-Mounted-SRB-Catalog_LR.pdf",
+a = camelot.read_pdf("C:/Users/james/Downloads/10785_Solid-Block-Mounted-SRB-Catalog_LR.pdf", # type: ignore
                       flavor='lattice',
                       pages=   pages,  #'94-138, 141-180, 183-209, 213-253' ,
                       table_regions = ['25,500,560,180'] ,
@@ -48,12 +61,33 @@ a = camelot.read_pdf("C:/Users/james/Downloads/10785_Solid-Block-Mounted-SRB-Cat
                       shift_text = ['t'],
                       copy_text =['v'],
                       layout_kwargs = {'detect_vertical' : True} )
+
+
+#this sets the max column for all the tables so that they all fit in the same number of columns
+#in excel
+
+shaftDiaDec = {}
+
 maxCol = 0
 for ta in range(len(a)):
     if a[ta].df.shape[1] > maxCol:
         maxCol = a[ta].df.shape[1]
 
 maxCol += 1
+
+
+##   this makes a a list of header and footer information that can be retrieved using page numbers
+##   this makes the code robust to more than one table per page.
+##  since we know the page any table is on, we can retrieve the header and footer information
+## by using the page number. note the use of offset
+head_foot = []   #declares the list 
+offset = header[0].page    # array index 0 is page[0] - offset 
+
+for p in range(len(header)):
+    hf = HeaderFooter(header[p].df[0][0], header[p].df[0][1], footer[p].df[0][0])
+    head_foot.append( hf  )
+
+##   header and footer array (list) created
 
 
 #camelot.plot(a[0], kind = 'grid', filename='grid')
@@ -74,10 +108,9 @@ for t in range(len(a)):
             dataSeries = (a[t].df)[c]   #column index 3/ might also be teh name of the column
             head = a[t].df[c][0]   #should be the column header from catalog
         
-            #head = a[t].df[c][0]   #should be the column header from catalog
             for i in range(dataSeries.size):
                 match = re.match('[0-9]{1,3}.[0-9]{2,3}.[0-9]{2}',dataSeries[i])
-                if match:
+                if match and i > 1:
                     position = dataSeries[i].find('.' )  #should find the first one.
                     if position != -1:
                         pos = position + 2
@@ -90,7 +123,14 @@ for t in range(len(a)):
                     position = dataSeries[i].find('.' )  #should find the first one.
                     if position != -1:
                         pos = position + 2
-                        dataSeries[i]= dataSeries[i][:pos] + ' / ' + dataSeries[i][pos:]    
+                        dataSeries[i]= dataSeries[i][:pos] + ' / ' + dataSeries[i][pos:]   
+                elif head.find('Bearing') != -1 and head.find('Part') != -1 :
+                    dataSeries[i] = qsplit.splitPN(dataSeries[i], 'Q')
+                elif head.find('Shaft') != -1 :
+                    if i<=1:
+                        shaftDiaDec[i] = dataSeries[i]
+                    else:
+                        shaftDiaDec[i] = shaftdia.mixed_fraction_to_decimal_fractions(dataSeries[i]) 
                 else:
                     continue
                 
@@ -100,30 +140,23 @@ for t in range(len(a)):
             a[t].df.insert(c,str(c), dataSeries)    #changed from str(c+1)
             head =''
         
-        #header[t].df[0][0], header[t].df[0][1]
-    x=0
+        
+   # x=0
 
     if t == 0 and firstTable:
         a[t].df.insert(maxCol, 'Series',header[t].df[0][0])    # headerData.values[0][t]
         a[t].df.insert(maxCol+1,'Block_Type', header[t].df[0][1] )  #headerData.values[1][t]
         a[t].df.insert(maxCol+2,'PDF_Page', a[t].page)
         a[t].df.insert(maxCol+3, "Footer", footer[t].df[0][0])
+        a[t].df.insert(maxCol+4, "ShaftDiaDecimal", shaftDiaDec )
         a[t].df.to_csv('tmp_file.txt' )
         firstTable = False
     else:
-        if a[t].page >= 188:
-            if twoTablePage == 0:
-                x = t
-                twoTablePage = 1
-            else:
-                x= t - 1
-        else:
-            x = t
-
-        a[t].df[maxCol]= header[x].df[0][0]      #headerData.values[0][0]
-        a[t].df[maxCol+1] = header[x].df[0][1]    #headerData.values[1][0]
+        a[t].df[maxCol]= head_foot[a[t].page - offset].series   # header[x].df[0][0]      #headerData.values[0][0]
+        a[t].df[maxCol+1] = head_foot[a[t].page - offset].block_type # header[x].df[0][1]    #headerData.values[1][0]
         a[t].df[maxCol+2] = a[t].page
-        a[t].df[maxCol+3] = footer[x].df[0][0]
+        a[t].df[maxCol+3] = head_foot[a[t].page - offset].foot1  #footer[x].df[0][0]
+        a[t].df[maxCol + 4] = shaftDiaDec 
         a[t].df.to_csv('tmp_file.txt', mode='a', header=False )
 
 
@@ -140,5 +173,6 @@ for t in range(len(a)):
        
         #print(f"Index: {i}, Value: {my_array[i]}")
 #        csv.writer(f, delimiter=',').writerows(a[i])
+
 
 
