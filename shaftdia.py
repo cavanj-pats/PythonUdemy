@@ -134,9 +134,27 @@ def mixed_fraction_to_decimal_fractions(mixed_fraction_str):
     total_fraction = Fraction(whole_number * fraction_obj.denominator + fraction_obj.numerator, fraction_obj.denominator)
     
     return float(total_fraction)
+def cleanUpDisplay_Convert_to_float(strDisplay):
+    strCleaned = mixed_fraction_to_decimal_fractions(strDisplay)
+    inCount = strCleaned.count('in' )
+    mmCount = strCleaned.count( 'mm' )
+    inPart = ''    
+    if mmCount != 0:
+        mmParts = strCleaned.split('mm')
+        mmPart = float(int(mmParts[0])/25.4) # always only one
+        if inCount !=0:
+            inParts = mmParts[1]
+
+        if inCount == 1:
+            inPart[0] = inParts[0].strip()
+        else:
+            for i in inCount:
+                inPart[i] = inParts[i].strip()
+
+        
 
 def cleanupFraction(mixed_fraction_str):
-   
+   #helper function to clean up the display of a fraction and get it ready for conversion to decimal
     fractPos = 0
     spacePos = 0
     
