@@ -4,6 +4,7 @@
 def splitPN(text, char):
     """
     Finds all occurrences of a character in a string using enumerate.
+    character can be a string
 
     Args:
         text (str): The string to search within.
@@ -30,25 +31,7 @@ def splitPN(text, char):
    
     return strPart
    
-    """
-        part = 0
-    for index, c in enumerate(text):
-        if c == char:
-            locations.append(index)
-
-    if len(locations) > 1:
-        for s in locations:
-            if s != 0:
-                if part == 0:
-                    strPart = text[:(s-1)]
-                    part = s
-                else:
-                    strPart = strPart +  " / " + text[part:][:(s-1)]
-    else:
-        strPart = text
-
-   
-    """
+    
 
 """
 my_string = " QVFNL15V065SQVFNL15V207SQVFNL15V208S   "

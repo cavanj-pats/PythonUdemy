@@ -11,7 +11,15 @@ import array
 import shaftdia
 import qsplit
 
+"""   TO DO
+need to refine separating data like 123.45.75 into 123.4mm and 5.75in.
+if the data is 1235.75 it does not work.  there needs to be two '.' for the current code to work
+the above example should result in 123mm 5.75in.  or 123 / 5.75
 
+need to proof
+need better way to keep headers
+this is quite challenging since the catlog moves form Pillow BLocks to flange blocks, etc.
+"""
 
 class HeaderFooter:
    

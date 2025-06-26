@@ -1,5 +1,10 @@
-#footer.py
+#footer_header.py
 
+#create a table tmp_headfoot.txt with header and footer data in it
+"""  TO DO
+    separate the footer text into catalog secion description and paper page number
+
+"""
 
 
 
