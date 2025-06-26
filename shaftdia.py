@@ -32,6 +32,11 @@ def mixed_fraction_to_decimal_fractions(mixed_fraction_str):
     fractSuperPos = mixed_fraction_str.find('\u2044')
     spacePos = mixed_fraction_str.find(' ')
     fraction_str = ''
+    mmPart = ''
+    parts = ''
+
+    if mixed_fraction_str == '':
+        return mixed_fraction_str
 
     if mmCount == 0 :
         #most common case
@@ -134,7 +139,12 @@ def mixed_fraction_to_decimal_fractions(mixed_fraction_str):
     total_fraction = Fraction(whole_number * fraction_obj.denominator + fraction_obj.numerator, fraction_obj.denominator)
     
     return float(total_fraction)
+
+"""
 def cleanUpDisplay_Convert_to_float(strDisplay):
+    # now that ew can clean up what is entered in the table, 
+    # we perhaps don't need to convert this to float. 
+    #although float probably helps us
     strCleaned = mixed_fraction_to_decimal_fractions(strDisplay)
     inCount = strCleaned.count('in' )
     mmCount = strCleaned.count( 'mm' )
@@ -151,6 +161,7 @@ def cleanUpDisplay_Convert_to_float(strDisplay):
             for i in inCount:
                 inPart[i] = inParts[i].strip()
 
+"""
         
 
 def cleanupFraction(mixed_fraction_str):
@@ -158,11 +169,14 @@ def cleanupFraction(mixed_fraction_str):
     fractPos = 0
     spacePos = 0
     
-    fractPos = mixed_fraction_str.find('/')
+    fractPos = ''
+    fractChar = ''
     spacePos = mixed_fraction_str.find(' ')
+    doubleSpacePos = mixed_fraction_str.find('  ')
     whole_number = ''
     numerator = ''
     denominator = ''
+    parts = ''
 
     pos = mixed_fraction_str.find('\u00BE')
     if pos != -1:
@@ -181,29 +195,48 @@ def cleanupFraction(mixed_fraction_str):
         numerator = '1'
         denominator = '2'
         whole_number = mixed_fraction_str[:pos].strip()
+
+    if mixed_fraction_str.find('/') != -1:
+        fractPos = mixed_fraction_str.find('/')
+        fractChar = '/'
+    elif mixed_fraction_str.find('\u2044'):
+        fractPos = mixed_fraction_str.find('\u2044')
+        fractChar = '\u2044'
+
+          
    
-    if mixed_fraction_str.find('/') !=-1:
-        if mixed_fraction_str.find(' ') != -1:
-            parts = mixed_fraction_str.split(' ')
-            whole_number = parts[0]
-            fractionPart = parts[1]
+    if fractPos !=-1:
+        if doubleSpacePos != -1 and doubleSpacePos < fractPos:
+            parts = mixed_fraction_str.split('  ')  #split on double space
+        elif spacePos != -1 and spacePos < fractPos:
+            parts = mixed_fraction_str.split(' ')  # split on single space
+            
         else:
             fractionPart = mixed_fraction_str
+        
+        #if there is no whole part, if the whole part is part of the fraction
+        if len(parts) != 0:
+            whole_number = parts[0].strip()
+            fractionPart = parts[1]
 
-        parts = fractionPart.split("/")
+        parts = fractionPart.split(fractChar)
     
         numerator = parts[0].strip()
         denominator = parts[1].strip()
+        
         pos = 0
-        while whole_number == '' or numerator > denominator:
+        
+        while whole_number == '' or int(numerator) > int(denominator):
             pos += 1
-            whole_number = (mixed_fraction_str[:pos]) # redo the split
-            parts = mixed_fraction_str[pos:].split("/")
-            numerator = parts[0]
-            denominator = parts[1]
+            whole_number = (mixed_fraction_str[:pos]).strip() # redo the split
+            parts = mixed_fraction_str[pos:].split(fractChar)
+            numerator = parts[0].strip()
+            denominator = parts[1].strip()
     else: 
         if whole_number == '':
             whole_number = mixed_fraction_str
+
+
 
     if denominator == '' :
         return whole_number
@@ -245,15 +278,17 @@ def contains_superscript_or_subscript(text):
 
 
 
-
+"""
 
 ####   TESTER
 
-mixed_fraction = "169mm 415/16 in. 6 15/16 in. 8 in. 3 ¾ in." #6 15/16" #"4" #"315/16" #"3 ¾".   160mm 6 15/16in. 7 in. 
+mixed_fraction = "2 15⁄16 in." #"65 mm 2 7⁄16 in. 2 ½ in."  #"169mm 415/16 in. 6 15/16 in. 8 in. 3 ¾ in." #6 15/16" #"4" #"315/16" #"3 ¾".   160mm 6 15/16in. 7 in. 
 mixed_clean = mixed_fraction_to_decimal_fractions(mixed_fraction)
 #decimal_result = mixed_fraction_to_decimal_fractions(mixed_fraction)
 #mixed_clean = cleanupFraction(mixed_fraction)
 #decimal_result = fraction_to_float(mixed_clean)
 #print(f"The decimal equivalent of {mixed_fraction} is: {decimal_result}")
 print(f"Cleaned Up Fraction of {mixed_fraction} is: {mixed_clean}")
+
+"""
 

@@ -25,7 +25,7 @@ class HeaderFooter:
 ## need to be beyond the actual data so that it does not over write actual data that is needed
 #globalMaxColumns = 25
 
-pages = '187-189' #'94-138, 141-180, 183-209, 213-253'
+pages = '94-138, 141-180, 183-209, 213-253'  #'187-189' #
 #twoTablePage = 0
 #document = "https://www.timken.com/wp-content/uploads/2025/05/10785_Solid-Block-Mounted-SRB-Catalog_LR.pdf"
 #https://www.timken.com/wp-content/uploads/2024/08/Mounted-Tapered-Roller-Bearing-Catalog_11477-1.pdf
@@ -33,6 +33,7 @@ pages = '187-189' #'94-138, 141-180, 183-209, 213-253'
 #https://www.timken.com/wp-content/uploads/2023/07/SAF-Split-Block-Mounted-SRB-Catalog_11435.pdf
 
 #header  scale ('10,)
+"""
 header = camelot.read_pdf("C:/Users/james/Downloads/10785_Solid-Block-Mounted-SRB-Catalog_LR.pdf", # type: ignore
                       flavor='stream'  ,  #'lattice',
                       pages= pages ,
@@ -49,6 +50,7 @@ footer = camelot.read_pdf("C:/Users/james/Downloads/10785_Solid-Block-Mounted-SR
                       strip_text = '\n' ,
                       layout_kwargs = {'detect_vertical' : True} )
 
+"""
 a = camelot.read_pdf("C:/Users/james/Downloads/10785_Solid-Block-Mounted-SRB-Catalog_LR.pdf", # type: ignore
                       flavor='lattice',
                       pages=   pages,  #'94-138, 141-180, 183-209, 213-253' ,
@@ -80,13 +82,14 @@ maxCol += 1
 ##   this makes the code robust to more than one table per page.
 ##  since we know the page any table is on, we can retrieve the header and footer information
 ## by using the page number. note the use of offset
-head_foot = []   #declares the list 
-offset = header[0].page    # array index 0 is page[0] - offset 
-
+# head_foot = []   #declares the list 
+#offset = header[0].page    # array index 0 is page[0] - offset 
+"""
 for p in range(len(header)):
     hf = HeaderFooter(header[p].df[0][0], header[p].df[0][1], footer[p].df[0][0])
     head_foot.append( hf  )
 
+"""
 ##   header and footer array (list) created
 
 
@@ -110,7 +113,7 @@ for t in range(len(a)):
         
             for i in range(dataSeries.size):
                 match = re.match('[0-9]{1,3}.[0-9]{2,3}.[0-9]{2}',dataSeries[i])
-                if match and i > 1:
+                if match and i > 1 and c != 1:
                     position = dataSeries[i].find('.' )  #should find the first one.
                     if position != -1:
                         pos = position + 2
@@ -125,12 +128,17 @@ for t in range(len(a)):
                         pos = position + 2
                         dataSeries[i]= dataSeries[i][:pos] + ' / ' + dataSeries[i][pos:]   
                 elif head.find('Bearing') != -1 and head.find('Part') != -1 :
-                    dataSeries[i] = qsplit.splitPN(dataSeries[i], 'Q')
+                    if dataSeries[i] != '' or dataSeries[i].find('Bearing') != -1:
+                        if dataSeries[i][:4] == 'TAPK':
+                            charSplit = 'TA'
+                        else:
+                            charSplit = dataSeries[i][:1]
+                        dataSeries[i] = qsplit.splitPN(dataSeries[i], charSplit)
                 elif head.find('Shaft') != -1 :
                     if i<=1:
-                        shaftDiaDec[i] = dataSeries[i]
+                        dataSeries[i] = dataSeries[i]
                     else:
-                        shaftDiaDec[i] = shaftdia.mixed_fraction_to_decimal_fractions(dataSeries[i]) 
+                        dataSeries[i] = shaftdia.mixed_fraction_to_decimal_fractions(dataSeries[i]) 
                 else:
                     continue
                 
@@ -144,19 +152,19 @@ for t in range(len(a)):
    # x=0
 
     if t == 0 and firstTable:
-        a[t].df.insert(maxCol, 'Series',header[t].df[0][0])    # headerData.values[0][t]
-        a[t].df.insert(maxCol+1,'Block_Type', header[t].df[0][1] )  #headerData.values[1][t]
-        a[t].df.insert(maxCol+2,'PDF_Page', a[t].page)
-        a[t].df.insert(maxCol+3, "Footer", footer[t].df[0][0])
-        a[t].df.insert(maxCol+4, "ShaftDiaDecimal", shaftDiaDec )
+       # a[t].df.insert(maxCol, 'Series',header[t].df[0][0])    # headerData.values[0][t]
+       # a[t].df.insert(maxCol+1,'Block_Type', header[t].df[0][1] )  #headerData.values[1][t]
+        a[t].df.insert(maxCol,'PDF_Page', a[t].page)
+       # a[t].df.insert(maxCol+3, "Footer", footer[t].df[0][0])
+#        a[t].df.insert(maxCol+4, "ShaftDiaDecimal", shaftDiaDec )
         a[t].df.to_csv('tmp_file.txt' )
         firstTable = False
     else:
-        a[t].df[maxCol]= head_foot[a[t].page - offset].series   # header[x].df[0][0]      #headerData.values[0][0]
-        a[t].df[maxCol+1] = head_foot[a[t].page - offset].block_type # header[x].df[0][1]    #headerData.values[1][0]
-        a[t].df[maxCol+2] = a[t].page
-        a[t].df[maxCol+3] = head_foot[a[t].page - offset].foot1  #footer[x].df[0][0]
-        a[t].df[maxCol + 4] = shaftDiaDec 
+        #a[t].df[maxCol]= head_foot[a[t].page - offset].series   # header[x].df[0][0]      #headerData.values[0][0]
+        #a[t].df[maxCol+1] = head_foot[a[t].page - offset].block_type # header[x].df[0][1]    #headerData.values[1][0]
+        a[t].df[maxCol] = a[t].page
+        #a[t].df[maxCol+3] = head_foot[a[t].page - offset].foot1  #footer[x].df[0][0]
+#        a[t].df[maxCol + 4] = shaftDiaDec 
         a[t].df.to_csv('tmp_file.txt', mode='a', header=False )
 
 
