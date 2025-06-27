@@ -62,7 +62,7 @@ footer = camelot.read_pdf("C:/Users/james/Downloads/10785_Solid-Block-Mounted-SR
 
 """
 a = camelot.read_pdf( document, # type: ignore
-                      flavor= 'hybrid',
+                      flavor= 'lattice',
                       pages=   pages,  #'94-138, 141-180, 183-209, 213-253' ,
                       table_regions = ['25,500,560,180'] ,
                       #columns = ['35, 49, 62, 71, 79, 88, 96, 105, 104, 113, 122, 131, 139, 148, 156, 165, 173, 182, 190 '],
