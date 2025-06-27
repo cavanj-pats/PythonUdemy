@@ -62,9 +62,9 @@ footer = camelot.read_pdf("C:/Users/james/Downloads/10785_Solid-Block-Mounted-SR
 
 """
 a = camelot.read_pdf( document, # type: ignore
-                      flavor= 'hybrid',
+                      flavor= 'lattice',
                       pages=   pages,  #'94-138, 141-180, 183-209, 213-253' ,
-                      table_regions = ['25,500,560,180'] ,
+                      table_regions = ['25,560,560,110'] ,
                       #columns = ['35, 49, 62, 71, 79, 88, 96, 105, 104, 113, 122, 131, 139, 148, 156, 165, 173, 182, 190 '],
                       split_text = False,  #was true can change back if needed
                       flag_size = True,   
@@ -86,7 +86,7 @@ for ta in range(len(a)):
     if a[ta].df.shape[1] > maxCol:
         maxCol = a[ta].df.shape[1]
 
-maxCol += 1
+#maxCol += 1
 
 
 ##   this makes a a list of header and footer information that can be retrieved using page numbers
@@ -104,8 +104,8 @@ for p in range(len(header)):
 ##   header and footer array (list) created
 
 
-#camelot.plot(a[0], kind = 'grid', filename='grid')
-#camelot.plot(a[0], kind = 'text', filename='text')
+camelot.plot(a[0], kind = 'grid', filename='grid')
+camelot.plot(a[0], kind = 'text', filename='text')
 
 #numTables = a.n   #number of tables access for 0 to n-1
 firstTable = True
@@ -113,7 +113,7 @@ firstTable = True
 for t in range(len(a)):
     #headerData = header[t].df
         #a[0]df[0][2] finds the data in column 0 and row 2
-
+    """
         #this works but also picks up the period in 'mmin.'
     cols = a[t].df.shape[1]   # i think this is columns  [1] is columns [0] is rows
     rows = a[t].df.shape[0]
@@ -161,6 +161,7 @@ for t in range(len(a)):
             head =''
         
         
+    """
    # x=0
 
     if t == 0 and firstTable:
@@ -178,21 +179,4 @@ for t in range(len(a)):
         #a[t].df[maxCol+3] = head_foot[a[t].page - offset].foot1  #footer[x].df[0][0]
 #        a[t].df[maxCol + 4] = shaftDiaDec 
         a[t].df.to_csv('tmp_bbhu.txt', mode='a', header=False )
-
-
-#with open('tmp_file.txt', 'w') as f:
-""" for i in range(len(a)):
-    if i== 0:
-        a[i].df.to_csv('tmp_file.txt' )
-    else:
-        a[i].df.to_csv('tmp_file.txt', mode='a', header=False ) """
-       
- # Print first table
-#print(a[0].df)
-      
-       
-        #print(f"Index: {i}, Value: {my_array[i]}")
-#        csv.writer(f, delimiter=',').writerows(a[i])
-
-
 
