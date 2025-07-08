@@ -2,7 +2,19 @@
 
 import requests
 from bs4 import BeautifulSoup
+#two Bolt Pillow /Plummer block
+#four Bolt Pillow / Plummer Block
+#four bolt flange
+#two bolt flange
+#Piloted flange
+#cartridge
 
+#various URL tests.  All seem to work.
+#now need to figure out data structure, storage, and navigating to 
+    # next pages
+    # item detail data
+
+    
 url = 'https://cad.timken.com/viewitems/split-cylindrical-roller-bearing-flange-units/split-cylindrical-roller-bearing-light-series-flan'
 #url = 'https://cad.timken.com/viewitems/single-concentric-solid-block-mounted-bearings/single-concentric-two-bolt-pillow-block'
 #url = 'https://cad.timken.com/viewitems/fafnir--pillow-block-mounted-bearings/fafnir--pillow-block-mounted-bearings-eccentric-lo'
