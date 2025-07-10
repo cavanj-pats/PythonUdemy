@@ -2,6 +2,8 @@
 
 import requests
 from bs4 import BeautifulSoup
+import pandas as pd
+
 #two Bolt Pillow /Plummer block
 #four Bolt Pillow / Plummer Block
 #four bolt flange
@@ -14,14 +16,19 @@ from bs4 import BeautifulSoup
     # next pages
     # item detail data
 
-    
-url = 'https://cad.timken.com/viewitems/split-cylindrical-roller-bearing-flange-units/split-cylindrical-roller-bearing-light-series-flan'
-#url = 'https://cad.timken.com/viewitems/single-concentric-solid-block-mounted-bearings/single-concentric-two-bolt-pillow-block'
+
+#url = 'https://cad.timken.com/viewitems/split-cylindrical-roller-bearing-flange-units/split-cylindrical-roller-bearing-light-series-flan'
+url = 'https://cad.timken.com/viewitems/single-concentric-solid-block-mounted-bearings/single-concentric-two-bolt-pillow-block'
 #url = 'https://cad.timken.com/viewitems/fafnir--pillow-block-mounted-bearings/fafnir--pillow-block-mounted-bearings-eccentric-lo'
 
 r = requests.get(url)
 print(r.status_code)
 soup = BeautifulSoup(r.text, 'html.parser')
+
+#get the number of pages we need to naviage to:  this will become an outer loop
+pages = soup.find('div', class_="plp-pagination")
+for p in pages.find_all('a'):
+    print (p.get('href'))
 
 item_table = soup.find('table', id='plp-table-filter')  #this locates the table
 #print(item_table)   #works
@@ -33,18 +40,35 @@ for h in item_table.find_all('thead'):
     for link in links:   
         print(link.text.strip() )   #this returns a list of headers
 
+df = pd.DataFrame(columns=links)
+print(df)
+
 #now need to return the body data.
 #part will be a link all other data will simply be data
 
-#need to find itemprop = 'sku' for part and itemprop = 'value' for data
+#need to find itemprop = 'sku' for part and itemprop = 'value' for dat
 for b in item_table.find_all('tbody'):
     #print (b.text.strip())
     for row in b.find_all('tr'):
         part = row.find('span', itemprop = 'sku')   #returns the part number but no link data
-        data = row.find_all('span', itemprop = 'value')   # returns all data about the item
+       # data = row.find_all('span', itemprop = 'value')   # returns all data about the item
+        data = row.find_all('td')
         print (part.text.strip())
+        
+        detail_link = row.find('a', class_='plp-itemlink')
+        sub_link = detail_link.get('href')
+        print(sub_link)
+        
+        loc = 0
         for d in data:
-            print (d.text.strip())
+           
+            
+            value = d.find_all('span' , itemprop='value')
+            for v in value:
+                print(loc, v.text)
+            loc += 1
+
+            
         print('')      
 
 
