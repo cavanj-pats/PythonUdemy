@@ -113,20 +113,33 @@ for b in item_table.find_all('tbody'):
             subDataRows = dt.find_all('tr', itemprop='additionalProperty')
             for sdr in subDataRows:
                 data_Name = sdr.find('td', class_='plp-table-name left')
+                dfColName = data_Name.text.strip()
                 data_Elements = sdr.find('td', class_='plp-table-value' )   #' plp-spec-value'
                 data_element_list = data_Elements.find_all('span', itemprop = 'value')
                 dataElement = []
-                subDataHeaders.append(data_Name.text.strip())
+                subDataHeaders.append(dfColName)
                 #some data elements have more than one piece of data,  lets make a list of them           
                 for de in data_element_list:
                     dataElement.append(de.text.strip())
                 #print (data_Name.text.strip(),dataElement)
                     
                 dataElementList.append(dataElement)
+
                 if (not firstSubItem):
                     #subDF.insert(length, data_Name.text.strip(), data_element_list)
-                    subDF.loc[length, data_Name.text.strip()]= dataElement
+                    if (dfColName in subDF.columns):
+                        subDF.loc[length, dfColName]= dataElement
+                    else:
+                        #append the column
+                        dummyData=[]
+                        for i in range(0,length):
+                            dummyData.append('')   #since new column, fill existing records with ''
+                        dummyData.append(dataElement)
 
+                        subDF.insert(len(subDF.columns),dfColName,dummyData)
+
+                  #  subDF.loc[length, dfColName]= dataElement   #commented this out 
+##########################   WORKING ON ABOVE FAILS ON FAFNIR and SPLIT CRB HERE ##################
             
         if (firstSubItem):
             subDF = pd.DataFrame(columns = subDataHeaders)
