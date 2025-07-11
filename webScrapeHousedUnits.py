@@ -16,10 +16,11 @@ import pandas as pd
     # next pages
     # item detail data
 data_listA=[]
+colNames=[]
 url_pre = 'https://cad.timken.com'
 #url = 'https://cad.timken.com/viewitems/split-cylindrical-roller-bearing-flange-units/split-cylindrical-roller-bearing-light-series-flan'
-url = 'https://cad.timken.com/viewitems/single-concentric-solid-block-mounted-bearings/single-concentric-two-bolt-pillow-block'
-#url = 'https://cad.timken.com/viewitems/fafnir--pillow-block-mounted-bearings/fafnir--pillow-block-mounted-bearings-eccentric-lo'
+#url = 'https://cad.timken.com/viewitems/single-concentric-solid-block-mounted-bearings/single-concentric-two-bolt-pillow-block'
+url = 'https://cad.timken.com/viewitems/fafnir--pillow-block-mounted-bearings/fafnir--pillow-block-mounted-bearings-eccentric-lo'
 
 r = requests.get(url)
 print(r.status_code)
@@ -40,8 +41,13 @@ for h in item_table.find_all('thead'):
     #for link in links:   
     #    print(link.text.strip() )   #this returns a list of headers
 
-df = pd.DataFrame(columns=links, )
+for l in links:
+    colNames.append( l.text.strip() )
+
+df = pd.DataFrame(columns=colNames )
 print(df)
+#print (colNames[3])
+
 
 #ONCE WE GO TO THE SUBLINKED PAGE we need to set up a sub dataframe.  but once it is set up we dont need
 # to set it up again
@@ -52,6 +58,9 @@ firstSubItem = True
 #part will be a link all other data will simply be data
 
 #need to find itemprop = 'sku' for part and itemprop = 'value' for dat
+##############################################################################################
+###########   start wtih MAIN table data scrape
+#############################################################
 for b in item_table.find_all('tbody'):
     #print (b.text.strip())
     for row in b.find_all('tr'):
@@ -64,7 +73,7 @@ for b in item_table.find_all('tbody'):
         detail_link = row.find('a', class_='plp-itemlink')
         sub_link = url_pre + detail_link.get('href')
         #print(sub_link)
-        
+        dcol = 0
         loc = 0
         for d in data[1:]:
            
@@ -81,11 +90,17 @@ for b in item_table.find_all('tbody'):
                     
            # print(loc, strData)
             data_listA.append(strData)
+           
+            dcol += 1
+            
             loc += 1
-
+        df.loc[len(df)] = data_listA
         print (data_listA)
         data_listA=[]
         
+        #########################################################################################
+        ########################   EXTRACT FROM SUB PAGE STORE IN ITS OWN DF    #################
+        #########################################################################################
         #get the data from the detail page associated with each part
         r1 = requests.get(sub_link)
         sub_soup = BeautifulSoup(r1.text, 'html.parser')
@@ -110,7 +125,7 @@ for b in item_table.find_all('tbody'):
                 dataElementList.append(dataElement)
                 if (not firstSubItem):
                     #subDF.insert(length, data_Name.text.strip(), data_element_list)
-                    subDF.loc[length,data_Name.text.strip()]= dataElement
+                    subDF.loc[length, data_Name.text.strip()]= dataElement
 
             
         if (firstSubItem):
