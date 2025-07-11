@@ -125,11 +125,11 @@ for b in item_table.find_all('tbody'):
                 #print (data_Name.text.strip(),dataElement)
                     
                 dataElementList.append(dataElement)
-
+                #add any columns then add any data elements individually
                 if (not firstSubItem):
                     #subDF.insert(length, data_Name.text.strip(), data_element_list)
                     if (dfColName in subDF.columns):
-                        subDF.loc[length, dfColName]= dataElement
+                        subDF.at[length, dfColName]= dataElement   #must use 'at' to insert a LIST at a specific location
                     else:
                         #append the column
                         dummyData=[]
@@ -139,13 +139,13 @@ for b in item_table.find_all('tbody'):
                         subDF.insert(len(subDF.columns),dfColName,dummyData)
 
                   #  subDF.loc[length, dfColName]= dataElement   #commented this out 
-##########################   WORKING ON ABOVE FAILS ON FAFNIR and SPLIT CRB HERE ##################
+    ##########################   WORKING ON ABOVE FAILS ON FAFNIR and SPLIT CRB HERE ##################
             
         if (firstSubItem):
             subDF = pd.DataFrame(columns = subDataHeaders)
             firstSubItem = False     
             length = len(subDF)
-            subDF.loc[length] = dataElementList
+            subDF.loc[length] = dataElementList  # this is ok because this will match the columns exactly.
         #subDF.insert(len(subDF),list(zip(dataElementList)))
         length = len(subDF)
         
