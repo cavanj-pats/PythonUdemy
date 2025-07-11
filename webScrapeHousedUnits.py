@@ -15,8 +15,8 @@ import pandas as pd
 #now need to figure out data structure, storage, and navigating to 
     # next pages
     # item detail data
-
-
+data_listA=[]
+url_pre = 'https://cad.timken.com'
 #url = 'https://cad.timken.com/viewitems/split-cylindrical-roller-bearing-flange-units/split-cylindrical-roller-bearing-light-series-flan'
 url = 'https://cad.timken.com/viewitems/single-concentric-solid-block-mounted-bearings/single-concentric-two-bolt-pillow-block'
 #url = 'https://cad.timken.com/viewitems/fafnir--pillow-block-mounted-bearings/fafnir--pillow-block-mounted-bearings-eccentric-lo'
@@ -37,11 +37,15 @@ item_table = soup.find('table', id='plp-table-filter')  #this locates the table
 
 for h in item_table.find_all('thead'):
     links = h.find_all('a')
-    for link in links:   
-        print(link.text.strip() )   #this returns a list of headers
+    #for link in links:   
+    #    print(link.text.strip() )   #this returns a list of headers
 
-df = pd.DataFrame(columns=links)
+df = pd.DataFrame(columns=links, )
 print(df)
+
+#ONCE WE GO TO THE SUBLINKED PAGE we need to set up a sub dataframe.  but once it is set up we dont need
+# to set it up again
+firstSubItem = True
 
 #now need to return the body data.
 #part will be a link all other data will simply be data
@@ -53,25 +57,74 @@ for b in item_table.find_all('tbody'):
         part = row.find('span', itemprop = 'sku')   #returns the part number but no link data
        # data = row.find_all('span', itemprop = 'value')   # returns all data about the item
         data = row.find_all('td')
-        print (part.text.strip())
+        #print (part.text.strip())
+        data_listA.append(part.text.strip())
         
         detail_link = row.find('a', class_='plp-itemlink')
-        sub_link = detail_link.get('href')
-        print(sub_link)
+        sub_link = url_pre + detail_link.get('href')
+        #print(sub_link)
         
         loc = 0
-        for d in data:
+        for d in data[1:]:
            
-            
+            colPos = 0
+            strData = ''
             value = d.find_all('span' , itemprop='value')
             for v in value:
-                print(loc, v.text)
+                #print(loc, v.text)
+                if (colPos == 0 ):
+                    strData = v.text
+                else:
+                    strData = strData +' / '+ v.text
+                colPos += 1
+                    
+           # print(loc, strData)
+            data_listA.append(strData)
             loc += 1
 
+        print (data_listA)
+        data_listA=[]
+        
+        #get the data from the detail page associated with each part
+        r1 = requests.get(sub_link)
+        sub_soup = BeautifulSoup(r1.text, 'html.parser')
+       
+        subCol = 0
+        subDataHeaders = []
+        dataElementList=[]
+        detail_tables = sub_soup.find_all('table', class_='plp-item-table')  #this locates the table
+        for dt in detail_tables:   #loop through the list of tables
+            subDataRows = dt.find_all('tr', itemprop='additionalProperty')
+            for sdr in subDataRows:
+                data_Name = sdr.find('td', class_='plp-table-name left')
+                data_Elements = sdr.find('td', class_='plp-table-value' )   #' plp-spec-value'
+                data_element_list = data_Elements.find_all('span', itemprop = 'value')
+                dataElement = []
+                if (firstSubItem):
+                   # subDF = pd.DataFrame(subCol, data_Name.text.strip)
+                    subDataHeaders.append(data_Name.text.strip())
+                    
+                for de in data_element_list:
+                    dataElement.append(de.text.strip())
+                #print (data_Name.text.strip(),dataElement)
+                dataElementList.append(dataElement)
+                
             
+        if (firstSubItem):
+            subDF = pd.DataFrame(columns = subDataHeaders)
+            firstSubItem = False
+            
+            
+        length = len(subDF)
+        subDF.loc[length] = dataElementList
+        #subDF.insert(len(subDF),list(zip(dataElementList)))
+
+        
+       # print (subDataHeaders)
+       # print (dataElementList)
         print('')      
 
-
+print (subDF)
         # SI and Imperial data is separated and needs to be combined somehow.
         # not sure if each housed unit type will present data teh same way.
   
