@@ -19,8 +19,9 @@ data_listA=[]
 colNames=[]
 url_pre = 'https://cad.timken.com'
 #url = 'https://cad.timken.com/viewitems/split-cylindrical-roller-bearing-flange-units/split-cylindrical-roller-bearing-light-series-flan'
+url = 'https://cad.timken.com/viewitems/split-cylindrical-roller-bearing-light-series-plum/split-cylindrical-roller-bearing-light-series-stan'
 #url = 'https://cad.timken.com/viewitems/single-concentric-solid-block-mounted-bearings/single-concentric-two-bolt-pillow-block'
-url = 'https://cad.timken.com/viewitems/fafnir--pillow-block-mounted-bearings/fafnir--pillow-block-mounted-bearings-eccentric-lo'
+#url = 'https://cad.timken.com/viewitems/fafnir--pillow-block-mounted-bearings/fafnir--pillow-block-mounted-bearings-eccentric-lo'
 
 r = requests.get(url)
 print(r.status_code)
@@ -135,7 +136,6 @@ for b in item_table.find_all('tbody'):
                         for i in range(0,length):
                             dummyData.append('')   #since new column, fill existing records with ''
                         dummyData.append(dataElement)
-
                         subDF.insert(len(subDF.columns),dfColName,dummyData)
 
                   #  subDF.loc[length, dfColName]= dataElement   #commented this out 
