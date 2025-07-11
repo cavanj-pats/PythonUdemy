@@ -101,25 +101,25 @@ for b in item_table.find_all('tbody'):
                 data_Elements = sdr.find('td', class_='plp-table-value' )   #' plp-spec-value'
                 data_element_list = data_Elements.find_all('span', itemprop = 'value')
                 dataElement = []
-                if (firstSubItem):
-                   # subDF = pd.DataFrame(subCol, data_Name.text.strip)
-                    subDataHeaders.append(data_Name.text.strip())
-                    
+                subDataHeaders.append(data_Name.text.strip())
+                #some data elements have more than one piece of data,  lets make a list of them           
                 for de in data_element_list:
                     dataElement.append(de.text.strip())
                 #print (data_Name.text.strip(),dataElement)
+                    
                 dataElementList.append(dataElement)
-                
+                if (not firstSubItem):
+                    #subDF.insert(length, data_Name.text.strip(), data_element_list)
+                    subDF.loc[length,data_Name.text.strip()]= dataElement
+
             
         if (firstSubItem):
             subDF = pd.DataFrame(columns = subDataHeaders)
-            firstSubItem = False
-            
-            
-        length = len(subDF)
-        subDF.loc[length] = dataElementList
+            firstSubItem = False     
+            length = len(subDF)
+            subDF.loc[length] = dataElementList
         #subDF.insert(len(subDF),list(zip(dataElementList)))
-
+        length = len(subDF)
         
        # print (subDataHeaders)
        # print (dataElementList)
@@ -128,4 +128,5 @@ for b in item_table.find_all('tbody'):
 print (subDF)
         # SI and Imperial data is separated and needs to be combined somehow.
         # not sure if each housed unit type will present data teh same way.
-  
+df_combined = pd.concat([df, subDF], axis=1)
+df_combined.to_csv('scrape.csv', index=False)  
