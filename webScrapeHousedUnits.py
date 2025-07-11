@@ -45,6 +45,7 @@ print(df)
 
 #ONCE WE GO TO THE SUBLINKED PAGE we need to set up a sub dataframe.  but once it is set up we dont need
 # to set it up again
+#each sub page can have slightly different data and could have missing columns
 firstSubItem = True
 
 #now need to return the body data.
