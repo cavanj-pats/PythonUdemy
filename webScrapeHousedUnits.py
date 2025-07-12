@@ -25,15 +25,16 @@ url_pre = 'https://cad.timken.com'
 
 
 ##    Split CRB Light Pillow Blocks
-url = 'https://cad.timken.com/viewitems/split-cylindrical-roller-bearing-light-series-plum/split-cylindrical-roller-bearing-light-series-stan'
-numpages = 25   # Determine this by inspecting cad.timken.com
-fileName = 'SplitCRB_Light.csv'
+#url = 'https://cad.timken.com/viewitems/split-cylindrical-roller-bearing-light-series-plum/split-cylindrical-roller-bearing-light-series-stan'
+#numpages = 25   # Determine this by inspecting cad.timken.com
+#fileName = 'SplitCRB_Light.csv'
 
 #  ^^^^^^^^^^^^^^^^^      Solid Block SRB Pillow Blocks  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 ##       There is a URL for each shaft lock plus two vs. four bold plus maybe other types
-#url = 'https://cad.timken.com/viewitems/single-concentric-solid-block-mounted-bearings/single-concentric-two-bolt-pillow-block'
-#numpages = 25    #adjust as required
-#fileName = 'SolidSRB_CL_2Bolt.csv'   #change as required
+url = 'https://cad.timken.com/viewitems/single-concentric-solid-block-mounted-bearings/single-concentric-two-bolt-pillow-block'
+numpages = 7    #adjust as required
+fileName = 'SolidSRB_CL_2Bolt.csv'   #change as required
+
 
 #         ^^^^^^^^^^^^^^^^^^   FAFNIR
 #url = 'https://cad.timken.com/viewitems/fafnir--pillow-block-mounted-bearings/fafnir--pillow-block-mounted-bearings-eccentric-lo'
@@ -216,4 +217,5 @@ for x in range(1,numpages+1):
             # SI and Imperial data is separated and needs to be combined somehow.
             # not sure if each housed unit type will present data teh same way.
 df_combined = pd.concat([df, subDF], axis=1)
-df_combined.to_csv('scrape.csv', index=False)  
+#df_combined.to_csv('scrape.csv', index=False)  
+df_combined.to_csv(fileName, index=False)  

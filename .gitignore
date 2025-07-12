@@ -179,3 +179,4 @@ cython_debug/
 *.gitignore
 scrape.csv
 scrapeSplitCRB.csv
+SolidSRB_CL_2Bolt.csv
