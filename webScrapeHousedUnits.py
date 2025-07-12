@@ -71,24 +71,18 @@ for x in range(1,numpages+1):
         rr = requests.get(url)
     else:
         pgnum = str(x)
-        f_pgnum = f'{pgnum}'
+        f_pgnum = f'{pgnum}'  #need to format in single quotes
         #query_payload = {'pagesize':'25','sortid':'1001410', 'measuresortid':'256','pagenum': f_pgnum , 'selecteduom':'1' }
         query_payload = {'pagesize':'25', 'sortid':'1001410', 'measuresortid':'256+262', 'pagenum': f_pgnum, 'selecteduom':'1'}
-        #query_payload = {'pagenum': f_pgnum}
         rr = requests.get(url, params = query_payload)
-
 
     print (x, rr.status_code)
 
-
-   # rr = requests.get(pg)
     newSoup = BeautifulSoup(rr.text, 'html.parser')
 
     item_table = newSoup.find('table', id='plp-table-filter')  #this locates the table
-    #print(item_table)   #works
-    # i want both the header and data
-    # i also want to go to each page
-
+    #print(item_table)   #works.   Good for debugging
+   
     if (firstFirstItem):
         for h in item_table.find_all('thead'):
             links = h.find_all('a')
@@ -99,18 +93,14 @@ for x in range(1,numpages+1):
         df = pd.DataFrame(columns=colNames )
         firstFirstItem = False
 
-
-
-    #ONCE WE GO TO THE SUBLINKED PAGE we need to set up a sub dataframe.  but once it is set up we dont need
-    # to set it up again
-    #each sub page can have slightly different data and could have missing columns
-    #firstSubItem flag was here but now we moved outside of outer loop so it won't get reset to True
+    #ONCE WE GO TO THE SUBLINKED PAGE we need to set up a sub dataframe. 
+    #  Once sub dataframe is set up we dont need to set it up again
+    #  but each sub page can have slightly different data fields  and hence data
+    #  firstSubItem flag was here but now we moved outside of outer loop so it won't get reset to True
     
 
-    #now need to return the body data.
-    #part will be a link all other data will simply be data
 
-    #need to find itemprop = 'sku' for part and itemprop = 'value' for dat
+    #need to find itemprop = 'sku' for part and itemprop = 'value' for data
     ##############################################################################################
     ###########   start wtih MAIN table data scrape
     #############################################################
@@ -118,19 +108,19 @@ for x in range(1,numpages+1):
         #print (b.text.strip())
         for row in b.find_all('tr'):
             part = row.find('span', itemprop = 'sku')   #returns the part number but no link data
-        # data = row.find_all('span', itemprop = 'value')   # returns all data about the item
-            data = row.find_all('td')
+            # data = row.find_all('span', itemprop = 'value')   # returns all data about the part but misses some data 
+            data = row.find_all('td')    # returns row data 
             #print (part.text.strip())
-            data_listA.append(part.text.strip())
+            data_listA.append(part.text.strip())  # add the part to the data list
             
             detail_link = row.find('a', class_='plp-itemlink')
-            sub_link = url_pre + detail_link.get('href')
-            #print(sub_link)
-            dcol = 0
-            loc = 0
+            sub_link = url_pre + detail_link.get('href')    #returns sublink page to be used later
+            #print(sub_link)  #for debugging
+            dcol = 0   #this is the data column
+            loc = 0    #this is akin to row (I think)
             for d in data[1:]:
             
-                colPos = 0
+                colPos = 0   #within the list of Imperial / SI data if that is type of field
                 strData = ''
                 value = d.find_all('span' , itemprop='value')
                 for v in value:
@@ -141,15 +131,14 @@ for x in range(1,numpages+1):
                         strData = strData +' / '+ v.text
                     colPos += 1
                         
-            # print(loc, strData)
-                data_listA.append(strData)
+                # print(loc, strData)
+                data_listA.append(strData)   #strData is the combined Imperial / SI data
             
-                dcol += 1
-                
-                loc += 1
-            df.loc[len(df)] = data_listA
-           # print (data_listA)
-            data_listA=[]
+                dcol += 1   #move to the next data column                
+                loc += 1   # i guess i used this for deguggin
+            df.loc[len(df)] = data_listA   #append the completed data_listA for the row to the dataframe
+           # print (data_listA)   #for debuggin
+            data_listA=[]  # now that it has been appended, ok to clear the data list.
             
            
 
