@@ -36,9 +36,9 @@ url_pre = 'https://cad.timken.com'
 
 #  ^^^^^^^^^^^^^^^^^      Solid Block SRB Pillow Blocks  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 ##       There is a URL for each shaft lock plus two vs. four bold plus maybe other types
-url = 'https://cad.timken.com/viewitems/single-concentric-solid-block-mounted-bearings/single-concentric-two-bolt-pillow-block'
-numpages = 7    #adjust as required
-fileName = 'SolidSRB_CL_2Bolt.csv'   #change as required
+#url = 'https://cad.timken.com/viewitems/single-concentric-solid-block-mounted-bearings/single-concentric-two-bolt-pillow-block'
+#numpages = 7    #adjust as required
+#fileName = 'SolidSRB_CL_2Bolt.csv'   #change as required
 #^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^    solid block single concentric CLfour bolt   ##
 #url = 'https://cad.timken.com/viewitems/single-concentric-solid-block-mounted-bearings/single-concentric-four-bolt-pillow-block'
 #numpages = 3
@@ -98,11 +98,11 @@ fileName = 'SolidSRB_CL_2Bolt.csv'   #change as required
 ###################################Type E TWO BOLT
 #url = 'https://cad.timken.com/viewitems/type-e-mounted-tapered-roller-bearings/pillow-block-2-bolt-base-bearing'
 #numpages = 10
-#fileName = 'TypeE_TwoBolt.csv'
+#fileName = 'E_TwoBolt.csv'
 #################################Type E Four Bolt  ##########################################################
 #url = 'https://cad.timken.com/viewitems/type-e-mounted-tapered-roller-bearings/pillow-block-4-bolt-base'
 #numages = 9
-#fileName = 'TypeE_FourBolt.csv'
+#fileName = 'E_FourBolt.csv'
 ####################################Type ESA  ######################################################################
 ###  two bolt  double collar
 #url = 'https://cad.timken.com/viewitems/self-aligning-mounted-tapered-roller-bearings/self-aligning-tap-roller-bearing-pillow-block-2b'
