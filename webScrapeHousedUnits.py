@@ -11,25 +11,44 @@ import pandas as pd
 #Piloted flange
 #cartridge
 
-#various URL tests.  All seem to work.
-#now need to figure out data structure, storage, and navigating to 
-    # next pages
-    # item detail data
+##               ------  Tool to extract Housed unit, mostly pillow block, data from cad.timken.com
+##               ------  tabulate the data in a csv for each product type
+##               ------  make the underlying data searchable   
+
 data_listA=[]
 colNames=[]
-
 navigation_List=[]
 url_pre = 'https://cad.timken.com'
-#url = 'https://cad.timken.com/viewitems/split-cylindrical-roller-bearing-flange-units/split-cylindrical-roller-bearing-light-series-flan'
+
+##############################################################################################################################
+#    ^^^^^^^^^^^^^^^^^^^^^^^^^    TYPE E   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+
+##    Split CRB Light Pillow Blocks
 url = 'https://cad.timken.com/viewitems/split-cylindrical-roller-bearing-light-series-plum/split-cylindrical-roller-bearing-light-series-stan'
+numpages = 25   # Determine this by inspecting cad.timken.com
+fileName = 'SplitCRB_Light.csv'
+
+#  ^^^^^^^^^^^^^^^^^      Solid Block SRB Pillow Blocks  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+##       There is a URL for each shaft lock plus two vs. four bold plus maybe other types
 #url = 'https://cad.timken.com/viewitems/single-concentric-solid-block-mounted-bearings/single-concentric-two-bolt-pillow-block'
+#numpages = 25    #adjust as required
+#fileName = 'SolidSRB_CL_2Bolt.csv'   #change as required
+
+#         ^^^^^^^^^^^^^^^^^^   FAFNIR
 #url = 'https://cad.timken.com/viewitems/fafnir--pillow-block-mounted-bearings/fafnir--pillow-block-mounted-bearings-eccentric-lo'
-#url = 'https://cad.timken.com/viewitems/split-cylindrical-roller-bearing-light-series-plum/split-cylindrical-roller-bearing-light-series-stan?pagesize=25&amp;sortid=140&amp;measuresortid=0&amp;pagenum=6'
-r = requests.get(url)
-print(r.status_code)
-soup = BeautifulSoup(r.text, 'html.parser')
+#numpages = 25    #adjust as required
+#fileName = 'FafnirBHU_ecc.csv'   #change as required
 
 
+
+#########################################################################################################################
+# below works, don't believe it is needed anymore
+#r = requests.get(url)
+#print(r.status_code)
+#soup = BeautifulSoup(r.text, 'html.parser')
+
+#####  The below is an old technique that worked perfectly fine  ##########################
 #get the number of pages we need to naviage to:  this will become an outer loop
 #navigation_List.append(url)
 #pages = soup.find('div', class_="plp-pagination")
@@ -38,29 +57,22 @@ soup = BeautifulSoup(r.text, 'html.parser')
 #    navigation_List.append(url_pre + p.get('href'))
 
 
-
-# must make list of links manually
-#navigation_List.append(url)
-#for x in range(20,22):  #there are 65 pages
-#    navigation_List.append('https://cad.timken.com/viewitems/split-cylindrical-roller-bearing-light-series-plum/split-cylindrical-roller-bearing-light-series-stan?pagesize=25&amp;sortid=140&amp;measuresortid=0&amp;pagenum='+str(x) + '&selecteduom=1')
-
 firstFirstItem = True
 firstSubItem = True
 #############################################  outer loop goes here 
 ##   1. For each set of tables within a product type,  top level page should be identical.  no need to check if columns exist.  Assumption
 #for pg in navigation_List:
 
-## maybe i can navigate in groups of 5 pages. then make the navigation list then chunk through those
-## then navigate to page + 5 then loop
+
 #find the range of x by inspection
-for x in range(1,66):
+for x in range(1,numpages+1):
     if (x == 1):
         rr = requests.get(url)
     else:
         pgnum = str(x)
         f_pgnum = f'{pgnum}'
         #query_payload = {'pagesize':'25','sortid':'1001410', 'measuresortid':'256','pagenum': f_pgnum , 'selecteduom':'1' }
-        query_payload = {'pagesize':'25', 'pagenum': f_pgnum, 'selecteduom':'1'}
+        query_payload = {'pagesize':'25', 'sortid':'1001410', 'measuresortid':'256+262', 'pagenum': f_pgnum, 'selecteduom':'1'}
         #query_payload = {'pagenum': f_pgnum}
         rr = requests.get(url, params = query_payload)
 
@@ -167,7 +179,13 @@ for x in range(1,66):
                     #print (data_Name.text.strip(),dataElement)
                         
                     dataElementList.append(dataElement)
-                    #add any columns then add any data elements individually
+                    #    THE SUB PAGE MAY HAVE DIFFERENT FIELDS.  Need to check for missing fields and
+                    #    add any Fields needed. 
+                    #    Then add the data elements individually
+                    #    The first data element added needs to be a empty list up until the data element 
+                    #     It is empty since we are adding it, it has not been present until now.
+                    #     The problem here is we need to add each piece of data versus a list of data with
+                    #      Fields and Data in same exact order
                     if (not firstSubItem):
                         #subDF.insert(length, data_Name.text.strip(), data_element_list)
                         if (dfColName in subDF.columns):
@@ -181,7 +199,6 @@ for x in range(1,66):
                             subDF.insert(len(subDF.columns),dfColName,dummyData)
 
                     #  subDF.loc[length, dfColName]= dataElement   #commented this out 
-        ##########################   WORKING ON ABOVE FAILS ON FAFNIR and SPLIT CRB HERE ##################
                 
             if (firstSubItem):
                 subDF = pd.DataFrame(columns = subDataHeaders)

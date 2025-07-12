@@ -178,3 +178,4 @@ cython_debug/
 .vscode\*
 *.gitignore
 scrape.csv
+scrapeSplitCRB.csv
