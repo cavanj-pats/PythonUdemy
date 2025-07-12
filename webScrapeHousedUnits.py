@@ -50,14 +50,18 @@ firstFirstItem = True
 
 ## maybe i can navigate in groups of 5 pages. then make the navigation list then chunk through those
 ## then navigate to page + 5 then loop
-for x in range(1,66, 5):
+for x in range(1,66):
     if (x == 1):
         rr = requests.get(url)
     else:
         pgnum = str(x)
-        f_pgnum = f"'{pgnum}'"
-        query_payload = {'pagesize':'25','sortid':'1001410', 'measuresortid':'256','pagenum': f_pgnum , 'selecteduom':'1' }
-        rr = requests.post(url, query_payload)
+        f_pgnum = f'{pgnum}'
+        #query_payload = {'pagesize':'25','sortid':'1001410', 'measuresortid':'256','pagenum': f_pgnum , 'selecteduom':'1' }
+        query_payload = {'pagesize':'25', 'pagenum': f_pgnum, 'selecteduom':'1'}
+        #query_payload = {'pagenum': f_pgnum}
+        rr = requests.get(url, params = query_payload)
+
+
     print (x, rr.status_code)
 
 
