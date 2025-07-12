@@ -17,6 +17,7 @@ import pandas as pd
     # item detail data
 data_listA=[]
 colNames=[]
+
 navigation_List=[]
 url_pre = 'https://cad.timken.com'
 #url = 'https://cad.timken.com/viewitems/split-cylindrical-roller-bearing-flange-units/split-cylindrical-roller-bearing-light-series-flan'
@@ -44,12 +45,14 @@ soup = BeautifulSoup(r.text, 'html.parser')
 #    navigation_List.append('https://cad.timken.com/viewitems/split-cylindrical-roller-bearing-light-series-plum/split-cylindrical-roller-bearing-light-series-stan?pagesize=25&amp;sortid=140&amp;measuresortid=0&amp;pagenum='+str(x) + '&selecteduom=1')
 
 firstFirstItem = True
+firstSubItem = True
 #############################################  outer loop goes here 
 ##   1. For each set of tables within a product type,  top level page should be identical.  no need to check if columns exist.  Assumption
 #for pg in navigation_List:
 
 ## maybe i can navigate in groups of 5 pages. then make the navigation list then chunk through those
 ## then navigate to page + 5 then loop
+#find the range of x by inspection
 for x in range(1,66):
     if (x == 1):
         rr = requests.get(url)
@@ -88,7 +91,8 @@ for x in range(1,66):
     #ONCE WE GO TO THE SUBLINKED PAGE we need to set up a sub dataframe.  but once it is set up we dont need
     # to set it up again
     #each sub page can have slightly different data and could have missing columns
-    firstSubItem = True
+    #firstSubItem flag was here but now we moved outside of outer loop so it won't get reset to True
+    
 
     #now need to return the body data.
     #part will be a link all other data will simply be data
@@ -131,14 +135,17 @@ for x in range(1,66):
                 
                 loc += 1
             df.loc[len(df)] = data_listA
-            print (data_listA)
+           # print (data_listA)
             data_listA=[]
             
+           
+
             #########################################################################################
             ########################   EXTRACT FROM SUB PAGE STORE IN ITS OWN DF    #################
             #########################################################################################
             #get the data from the detail page associated with each part
             r1 = requests.get(sub_link)
+           # print (r1.status_code, 'sub link')
             sub_soup = BeautifulSoup(r1.text, 'html.parser')
         
             subCol = 0
@@ -186,9 +193,9 @@ for x in range(1,66):
             
         # print (subDataHeaders)
         # print (dataElementList)
-            print('')      
+            #print('')      
 
-    print (subDF)
+    #print (subDF)
             # SI and Imperial data is separated and needs to be combined somehow.
             # not sure if each housed unit type will present data teh same way.
 df_combined = pd.concat([df, subDF], axis=1)
