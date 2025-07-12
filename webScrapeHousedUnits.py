@@ -20,35 +20,48 @@ colNames=[]
 navigation_List=[]
 url_pre = 'https://cad.timken.com'
 #url = 'https://cad.timken.com/viewitems/split-cylindrical-roller-bearing-flange-units/split-cylindrical-roller-bearing-light-series-flan'
-#url = 'https://cad.timken.com/viewitems/split-cylindrical-roller-bearing-light-series-plum/split-cylindrical-roller-bearing-light-series-stan'
+url = 'https://cad.timken.com/viewitems/split-cylindrical-roller-bearing-light-series-plum/split-cylindrical-roller-bearing-light-series-stan'
 #url = 'https://cad.timken.com/viewitems/single-concentric-solid-block-mounted-bearings/single-concentric-two-bolt-pillow-block'
 #url = 'https://cad.timken.com/viewitems/fafnir--pillow-block-mounted-bearings/fafnir--pillow-block-mounted-bearings-eccentric-lo'
-url = 'https://cad.timken.com/viewitems/split-cylindrical-roller-bearing-light-series-plum/split-cylindrical-roller-bearing-light-series-stan?pagesize=25&amp;sortid=140&amp;measuresortid=0&amp;pagenum=6'
+#url = 'https://cad.timken.com/viewitems/split-cylindrical-roller-bearing-light-series-plum/split-cylindrical-roller-bearing-light-series-stan?pagesize=25&amp;sortid=140&amp;measuresortid=0&amp;pagenum=6'
 r = requests.get(url)
 print(r.status_code)
 soup = BeautifulSoup(r.text, 'html.parser')
 
 
 #get the number of pages we need to naviage to:  this will become an outer loop
-navigation_List.append(url)
-pages = soup.find('div', class_="plp-pagination")
-for p in pages.find_all('a'):
+#navigation_List.append(url)
+#pages = soup.find('div', class_="plp-pagination")
+#for p in pages.find_all('a'):
     #print (url_pre + p.get('href'))
-    navigation_List.append(url_pre + p.get('href'))
+#    navigation_List.append(url_pre + p.get('href'))
 
 
 
 # must make list of links manually
 #navigation_List.append(url)
 #for x in range(20,22):  #there are 65 pages
-#    navigation_List.append('https://cad.timken.com/viewitems/split-cylindrical-roller-bearing-light-series-plum/split-cylindrical-roller-bearing-light-series-stan?pagesize=25&amp;sortid=140&amp;measuresortid=0&amp;pagenum='+str(x))
+#    navigation_List.append('https://cad.timken.com/viewitems/split-cylindrical-roller-bearing-light-series-plum/split-cylindrical-roller-bearing-light-series-stan?pagesize=25&amp;sortid=140&amp;measuresortid=0&amp;pagenum='+str(x) + '&selecteduom=1')
 
 firstFirstItem = True
 #############################################  outer loop goes here 
 ##   1. For each set of tables within a product type,  top level page should be identical.  no need to check if columns exist.  Assumption
-for pg in navigation_List:
-    rr = requests.get(pg)
-    print (rr.status_code)
+#for pg in navigation_List:
+
+## maybe i can navigate in groups of 5 pages. then make the navigation list then chunk through those
+## then navigate to page + 5 then loop
+for x in range(1,66, 5):
+    if (x == 1):
+        rr = requests.get(url)
+    else:
+        pgnum = str(x)
+        f_pgnum = f"'{pgnum}'"
+        query_payload = {'pagesize':'25','sortid':'1001410', 'measuresortid':'256','pagenum': f_pgnum , 'selecteduom':'1' }
+        rr = requests.post(url, query_payload)
+    print (x, rr.status_code)
+
+
+   # rr = requests.get(pg)
     newSoup = BeautifulSoup(rr.text, 'html.parser')
 
     item_table = newSoup.find('table', id='plp-table-filter')  #this locates the table
