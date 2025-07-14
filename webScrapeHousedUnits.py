@@ -18,6 +18,7 @@ import pandas as pd
 data_listA=[]
 colNames=[]
 navigation_List=[]
+dataElementSeparator = '/'
 url_pre = 'https://cad.timken.com'
 
 ##############################################################################################################################
@@ -252,7 +253,7 @@ for x in range(1,numpages+1):
                         dataElement.append(de.text.strip())
                     #print (data_Name.text.strip(),dataElement)
                         
-                    dataElementList.append(dataElement)
+                    dataElementList.append(dataElementSeparator.join(dataElement))
                     #    THE SUB PAGE MAY HAVE DIFFERENT FIELDS.  Need to check for missing fields and
                     #    add any Fields needed. 
                     #    Then add the data elements individually
@@ -263,13 +264,13 @@ for x in range(1,numpages+1):
                     if (not firstSubItem):
                         #subDF.insert(length, data_Name.text.strip(), data_element_list)
                         if (dfColName in subDF.columns):
-                            subDF.at[length, dfColName]= dataElement   #must use 'at' to insert a LIST at a specific location
+                            subDF.at[length, dfColName]= dataElementSeparator.join(dataElement)   #must use 'at' to insert a LIST at a specific location
                         else:
                             #append the column
                             dummyData=[]
                             for i in range(0,length):
                                 dummyData.append('')   #since new column, fill existing records with ''
-                            dummyData.append(dataElement)
+                            dummyData.append(dataElementSeparator.join(dataElement))
                             subDF.insert(len(subDF.columns),dfColName,dummyData)
 
                     #  subDF.loc[length, dfColName]= dataElement   #commented this out 
