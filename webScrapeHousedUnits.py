@@ -28,9 +28,9 @@ url_pre = 'https://cad.timken.com'
 
 
 ##    Split CRB Light Pillow Blocks
-#url = 'https://cad.timken.com/viewitems/split-cylindrical-roller-bearing-light-series-plum/split-cylindrical-roller-bearing-light-series-stan'
-#numpages = 25   # Determine this by inspecting cad.timken.com   I shortened the list to smaller sizes up to like 7"
-#fileName = 'SplitCRB_Light.csv'
+url = 'https://cad.timken.com/viewitems/split-cylindrical-roller-bearing-light-series-plum/split-cylindrical-roller-bearing-light-series-stan'
+numpages = 25   # Determine this by inspecting cad.timken.com   I shortened the list to smaller sizes up to like 7"
+fileName = 'SplitCRB_Light.csv'
 #####################SPLIT CRB LIGHT SAFQ
 #url = 'https://cad.timken.com/viewitems/split-cylindrical-roller-bearing-light-series-plum/split-cylindrical-roller-bearing-light-series-safq'
 #numpages = 27
@@ -49,43 +49,43 @@ url_pre = 'https://cad.timken.com'
 ##     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^   Solid SRB Doulbe V lock Two Bolt
 #url = 'https://cad.timken.com/viewitems/double-v-lock-solid-block-mounted-bearings/double-v-lock-two-bolt-pillow-block'
 #numpages= 7
-#fileName = 'SolidSRB_VV_2Bolt.csv
+#fileName = 'SolidSRB_VV_2Bolt.csv'
 ###########################################################Solid SRB Double V Four Bolt
 #url = 'https://cad.timken.com/viewitems/double-v-lock-solid-block-mounted-bearings/double-v-lock-four-bolt-pillow-block'
 #numpages= 8
-#fileName = 'SolidSRB_VV_4Bolt.csv
+#fileName = 'SolidSRB_VV_4Bolt.csv'
 ######################################################### Solid SRB Single V Lock Two BOlt
 #url = 'https://cad.timken.com/viewitems/single-v-lock-solid-block-mounted-bearings/single-v-lock-two-bolt-pillow-block'
 #numpages=  8
-#fileName = 'SolidSRB_SnglV_2Bolt.csv
+#fileName = 'SolidSRB_SnglV_2Bolt.csv'
 ##    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^Solid SRB Single V   Four bolt
 #url = 'https://cad.timken.com/viewitems/single-v-lock-solid-block-mounted-bearings/single-v-lock-four-bolt-pillow-block'
 #numpages= 8
-#fileName = 'SolidSRB_SnglV_4Bolt.csv
+#fileName = 'SolidSRB_SnglV_4Bolt.csv'
 ##^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^Solid SRB ECC Lock  Two Bolt
 #url = 'https://cad.timken.com/viewitems/eccentric-solid-block-mounted-bearings/eccentric-two-bolt-pillow-block'
 #numpages= 7
-#fileName = 'SolidSRB_ECC_2Bolt.csv
+#fileName = 'SolidSRB_ECC_2Bolt.csv'
 ##           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^Solid  SRB   ECC Lock  Four Bolt
 #url = 'https://cad.timken.com/viewitems/eccentric-solid-block-mounted-bearings/eccentric-four-bolt-pillow-block'
 #numpages= 6
-#fileName = 'SolidSRB_ECC_4Bolt.csv
+#fileName = 'SolidSRB_ECC_4Bolt.csv'
 ##      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^     Solid SRB    Tapered Adapter Lock Two BOlt
 #url = 'https://cad.timken.com/viewitems/tapered-adapter-solid-block-mounted-bearings/tapered-adapter-two-bolt-pillow-block'
 #numpages= 7
-#fileName = 'SolidSRB_TA_2Bolt.csv
+#fileName = 'SolidSRB_TA_2Bolt.csv'
 ##       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^     Solid SRB Tapered Adapter Lock Four Bolt   
 #url = 'https://cad.timken.com/viewitems/tapered-adapter-solid-block-mounted-bearings/tapered-adapter-four-bolt-pillow-block'
 #numpages= 6
-#fileName = 'SolidSRB_TA_4Bolt.csv
+#fileName = 'SolidSRB_TA_4Bolt.csv'
 ##         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^  Solid SRB  Double Nut Tapered Adapter Lock Two Bolt ^^^^^^^
 #url = 'https://cad.timken.com/viewitems/double-nut-tapered-adapter-solid-mounted-bearings/double-nut-tapered-adapter-two-bolt-pillow-bloc'
 #numpages= 7
-#fileName = 'SolidSRB_DblNutTA_2Bolt.csv
+#fileName = 'SolidSRB_DblNutTA_2Bolt.csv'
 #         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^    Solid SRB Double Nut Tapered Adapter Lock Four Bolt  ^^^^^^^^^^^^^^^
 #url = 'https://cad.timken.com/viewitems/double-nut-tapered-adapter-solid-mounted-bearings/double-nut-tapered-adapter-four-bolt-pillow-blo'
 #numpages= 20
-#fileName = 'SolidSRB_DblNutTA_4Bolt.csv
+#fileName = 'SolidSRB_DblNutTA_4Bolt.csv'
 ####################################################################################################################
 
 #         ^^^^^^^^^^^^^^^^^^   FAFNIR
@@ -104,7 +104,7 @@ url_pre = 'https://cad.timken.com'
 #fileName = 'E_TwoBolt.csv'
 #################################Type E Four Bolt  ##########################################################
 #url = 'https://cad.timken.com/viewitems/type-e-mounted-tapered-roller-bearings/pillow-block-4-bolt-base'
-#numages = 9
+#numpages = 9
 #fileName = 'E_FourBolt.csv'
 ####################################Type ESA  ######################################################################
 ###  two bolt  double collar
@@ -164,6 +164,16 @@ for x in range(1,numpages+1): # type: ignore
         rr = requests.get(url, params = query_payload) # type: ignore
 
     print (x, rr.status_code)
+    y=rr.status_code
+    while (y != 200):
+        z =  input('status code did not equal 200 enter z to try again, q to exit')
+        if (z == 'z'):
+            rr = requests.get(url, params = query_payload) # type: ignore
+            y = rr.status_code
+        elif (z == 'q'):
+            break
+
+
 
     newSoup = BeautifulSoup(rr.text, 'html.parser')
 
