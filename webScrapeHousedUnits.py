@@ -1,4 +1,6 @@
-#scrape cad.timken.com for housed units
+#scrape cad.timken.com for housed units"
+# on the laptop VSCODE is happiest using the anaconda [conda] python package
+#install packes using the anaconda prompt
 
 import requests
 from bs4 import BeautifulSoup
@@ -151,15 +153,15 @@ firstSubItem = True
 
 
 #find the range of x by inspection
-for x in range(1,numpages+1):
+for x in range(1,numpages+1): # type: ignore
     if (x == 1):
-        rr = requests.get(url)
+        rr = requests.get(url) # type: ignore
     else:
         pgnum = str(x)
         f_pgnum = f'{pgnum}'  #need to format in single quotes
         #query_payload = {'pagesize':'25','sortid':'1001410', 'measuresortid':'256','pagenum': f_pgnum , 'selecteduom':'1' }
         query_payload = {'pagesize':'25', 'sortid':'1001410', 'measuresortid':'256+262', 'pagenum': f_pgnum, 'selecteduom':'1'}
-        rr = requests.get(url, params = query_payload)
+        rr = requests.get(url, params = query_payload) # type: ignore
 
     print (x, rr.status_code)
 
@@ -169,7 +171,7 @@ for x in range(1,numpages+1):
     #print(item_table)   #works.   Good for debugging
    
     if (firstFirstItem):
-        for h in item_table.find_all('thead'):
+        for h in item_table.find_all('thead'): # type: ignore
             links = h.find_all('a')
         
         for l in links:
@@ -189,7 +191,7 @@ for x in range(1,numpages+1):
     ##############################################################################################
     ###########   start wtih MAIN table data scrape
     #############################################################
-    for b in item_table.find_all('tbody'):
+    for b in item_table.find_all('tbody'): # type: ignore
         #print (b.text.strip())
         for row in b.find_all('tr'):
             part = row.find('span', itemprop = 'sku')   #returns the part number but no link data
@@ -292,4 +294,4 @@ for x in range(1,numpages+1):
             # not sure if each housed unit type will present data teh same way.
 df_combined = pd.concat([df, subDF], axis=1)
 #df_combined.to_csv('scrape.csv', index=False)  
-df_combined.to_csv(fileName, index=False)  
+df_combined.to_csv(fileName, index=False)   # type: ignore
