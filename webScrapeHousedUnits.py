@@ -43,46 +43,56 @@ url_pre = 'https://cad.timken.com'
 #url = 'https://cad.timken.com/viewitems/single-concentric-solid-block-mounted-bearings/single-concentric-four-bolt-pillow-block'
 #numpages = 3
 #fileName = 'SolidSRB_CL_4Bolt.csv'
+###################################################  Solid Block Double Concentric Lock
+#url = 'https://cad.timken.com/viewitems/double-concentric-solid-block-mounted-bearings/double-concentric-two-bolt-pillow-block'
+#numpages = 5    #adjust as required
+#fileName = 'SolidSRB_DblCL_2Bolt.csv'   #change as required
+#^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^    solid block Doublee concentric CLfour bolt   ##
+#url = 'https://cad.timken.com/viewitems/double-concentric-solid-block-mounted-bearings/double-concentric-four-bolt-pillow-block'
+#numpages = 4
+#fileName = 'SolidSRB_DblCL_4Bolt.csv'
+
+
 ##     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^   Solid SRB Doulbe V lock Two Bolt
 #url = 'https://cad.timken.com/viewitems/double-v-lock-solid-block-mounted-bearings/double-v-lock-two-bolt-pillow-block'
 #numpages= 7
-#fileName = 'SolidSRB_VV_2Bolt.csv
+#fileName = 'SolidSRB_VV_2Bolt.csv'
 ###########################################################Solid SRB Double V Four Bolt
 #url = 'https://cad.timken.com/viewitems/double-v-lock-solid-block-mounted-bearings/double-v-lock-four-bolt-pillow-block'
 #numpages= 8
-#fileName = 'SolidSRB_VV_4Bolt.csv
+#fileName = 'SolidSRB_VV_4Bolt.csv'
 ######################################################### Solid SRB Single V Lock Two BOlt
 #url = 'https://cad.timken.com/viewitems/single-v-lock-solid-block-mounted-bearings/single-v-lock-two-bolt-pillow-block'
 #numpages=  8
-#fileName = 'SolidSRB_SnglV_2Bolt.csv
+#fileName = 'SolidSRB_SnglV_2Bolt.csv'
 ##    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^Solid SRB Single V   Four bolt
 #url = 'https://cad.timken.com/viewitems/single-v-lock-solid-block-mounted-bearings/single-v-lock-four-bolt-pillow-block'
 #numpages= 8
-#fileName = 'SolidSRB_SnglV_4Bolt.csv
+#fileName = 'SolidSRB_SnglV_4Bolt.csv'
 ##^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^Solid SRB ECC Lock  Two Bolt
 #url = 'https://cad.timken.com/viewitems/eccentric-solid-block-mounted-bearings/eccentric-two-bolt-pillow-block'
 #numpages= 7
-#fileName = 'SolidSRB_ECC_2Bolt.csv
+#fileName = 'SolidSRB_ECC_2Bolt.csv'
 ##           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^Solid  SRB   ECC Lock  Four Bolt
 #url = 'https://cad.timken.com/viewitems/eccentric-solid-block-mounted-bearings/eccentric-four-bolt-pillow-block'
 #numpages= 6
-#fileName = 'SolidSRB_ECC_4Bolt.csv
+#fileName = 'SolidSRB_ECC_4Bolt.csv'
 ##      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^     Solid SRB    Tapered Adapter Lock Two BOlt
-#url = 'https://cad.timken.com/viewitems/tapered-adapter-solid-block-mounted-bearings/tapered-adapter-two-bolt-pillow-block'
-#numpages= 7
-#fileName = 'SolidSRB_TA_2Bolt.csv
+url = 'https://cad.timken.com/viewitems/tapered-adapter-solid-block-mounted-bearings/tapered-adapter-two-bolt-pillow-block'
+numpages= 7
+fileName = 'SolidSRB_TA_2Bolt.csv'
 ##       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^     Solid SRB Tapered Adapter Lock Four Bolt   
 #url = 'https://cad.timken.com/viewitems/tapered-adapter-solid-block-mounted-bearings/tapered-adapter-four-bolt-pillow-block'
 #numpages= 6
-#fileName = 'SolidSRB_TA_4Bolt.csv
+#fileName = 'SolidSRB_TA_4Bolt.csv'
 ##         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^  Solid SRB  Double Nut Tapered Adapter Lock Two Bolt ^^^^^^^
 #url = 'https://cad.timken.com/viewitems/double-nut-tapered-adapter-solid-mounted-bearings/double-nut-tapered-adapter-two-bolt-pillow-bloc'
 #numpages= 7
-#fileName = 'SolidSRB_DblNutTA_2Bolt.csv
+#fileName = 'SolidSRB_DblNutTA_2Bolt.csv'
 #         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^    Solid SRB Double Nut Tapered Adapter Lock Four Bolt  ^^^^^^^^^^^^^^^
 #url = 'https://cad.timken.com/viewitems/double-nut-tapered-adapter-solid-mounted-bearings/double-nut-tapered-adapter-four-bolt-pillow-blo'
 #numpages= 20
-#fileName = 'SolidSRB_DblNutTA_4Bolt.csv
+#fileName = 'SolidSRB_DblNutTA_4Bolt.csv'
 ####################################################################################################################
 
 #         ^^^^^^^^^^^^^^^^^^   FAFNIR
@@ -101,7 +111,7 @@ url_pre = 'https://cad.timken.com'
 #fileName = 'E_TwoBolt.csv'
 #################################Type E Four Bolt  ##########################################################
 #url = 'https://cad.timken.com/viewitems/type-e-mounted-tapered-roller-bearings/pillow-block-4-bolt-base'
-#numages = 9
+#numpages = 9
 #fileName = 'E_FourBolt.csv'
 ####################################Type ESA  ######################################################################
 ###  two bolt  double collar
@@ -116,7 +126,7 @@ url_pre = 'https://cad.timken.com'
 #url = 'https://cad.timken.com/viewitems/self-aligning-mounted-tapered-roller-bearings/single-collar---self-aligning-tapered-roller-beari'
 #numpages = 13
 #fileName = 'ESA_SnglCollar2Bolt.csv'
-############################SAFSA  Single Collar Four Bolt
+############################   ESA  Single Collar Four Bolt
 #url = 'https://cad.timken.com/viewitems/self-aligning-mounted-tapered-roller-bearings/-bearing-pillow-block-4-bolt-base-mounted-bearings'
 #numpages = 8
 #fileName = 'ESA_SnglCollar4Bolt.csv'
