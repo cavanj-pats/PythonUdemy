@@ -28,9 +28,9 @@ url_pre = 'https://cad.timken.com'
 
 
 ##    Split CRB Light Pillow Blocks
-#url = 'https://cad.timken.com/viewitems/split-cylindrical-roller-bearing-light-series-plum/split-cylindrical-roller-bearing-light-series-stan'
-#numpages = 25   # Determine this by inspecting cad.timken.com   I shortened the list to smaller sizes up to like 7"
-#fileName = 'SplitCRB_Light.csv'
+url = 'https://cad.timken.com/viewitems/split-cylindrical-roller-bearing-light-series-plum/split-cylindrical-roller-bearing-light-series-stan'
+numpages = 25   # Determine this by inspecting cad.timken.com   I shortened the list to smaller sizes up to like 7"
+fileName = 'SplitCRB_Light.csv'
 #####################SPLIT CRB LIGHT SAFQ
 #url = 'https://cad.timken.com/viewitems/split-cylindrical-roller-bearing-light-series-plum/split-cylindrical-roller-bearing-light-series-safq'
 #numpages = 27
@@ -187,6 +187,8 @@ for x in range(1,numpages+1): # type: ignore
         for l in links:
             colNames.append( l.text.strip() )
 
+        #addded 7/22/2025  method to store the sublink to part specific sub page
+        colNames.append('LinkToPart')
         df = pd.DataFrame(columns=colNames )
         firstFirstItem = False
 
@@ -233,6 +235,9 @@ for x in range(1,numpages+1): # type: ignore
             
                 dcol += 1   #move to the next data column                
                 loc += 1   # i guess i used this for deguggin
+            
+            #added 7/22/2025 to append the "LinkToPart"
+            data_listA.append(sub_link)
             df.loc[len(df)] = data_listA   #append the completed data_listA for the row to the dataframe
            # print (data_listA)   #for debuggin
             data_listA=[]  # now that it has been appended, ok to clear the data list.
