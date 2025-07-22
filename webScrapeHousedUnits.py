@@ -28,9 +28,9 @@ url_pre = 'https://cad.timken.com'
 
 
 ##    Split CRB Light Pillow Blocks
-url = 'https://cad.timken.com/viewitems/split-cylindrical-roller-bearing-light-series-plum/split-cylindrical-roller-bearing-light-series-stan'
-numpages = 25   # Determine this by inspecting cad.timken.com   I shortened the list to smaller sizes up to like 7"
-fileName = 'SplitCRB_Light.csv'
+#url = 'https://cad.timken.com/viewitems/split-cylindrical-roller-bearing-light-series-plum/split-cylindrical-roller-bearing-light-series-stan'
+#numpages = 25   # Determine this by inspecting cad.timken.com   I shortened the list to smaller sizes up to like 7"
+#fileName = 'SplitCRB_Light.csv'
 #####################SPLIT CRB LIGHT SAFQ
 #url = 'https://cad.timken.com/viewitems/split-cylindrical-roller-bearing-light-series-plum/split-cylindrical-roller-bearing-light-series-safq'
 #numpages = 27
