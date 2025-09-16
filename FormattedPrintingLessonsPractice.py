@@ -39,6 +39,13 @@
 
     print(  sep  file   flush)
 
+    control characters for formatted printed
+    %s sring
+    $d decimal %i integer %o. octal  %x hexadecimal 
+    %f float %F float %g General %e Scientific %E Scientific
+
+    poop
+
 '''
 
 
