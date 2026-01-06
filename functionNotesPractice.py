@@ -90,3 +90,76 @@ def pangram(phrase):
 
 str = 'The quick brown fox jumps over the lazy dog'
 print (pangram(str))
+
+
+"""
+Variable length position arguements
+def fun (*args)    content of args will be a tuple
+
+Variable length keyword arguments
+def fun (**kwargs)   content of kwargs wll be dicitonary
+no arguments allowed after variable length keyword arguments
+arguments are allowed before variable length keyword argument.
+these preceding arguments can be either positional or keyword.
+
+def fun(*args, a, b, **kwargs)    only if a, b are keyword arguments. Not allowed if a.b are positional
+
+
+"""
+
+#variable length keyword arguments
+def fun(*args, a, b, **kwargs):
+   print (args, a, b, kwargs)
+   # for item in kwargs.items():
+   #     if item[0]=='b':
+   #         print(item[1])   #print only the value in b.   item will be a key:value tuple
+
+fun(3,4,a = 6, b=5, c=10, d=11)
+
+
+#can return multiple values from a function
+def mult(a, b, c):
+    sum = a + b + c
+    prod = a * b * c
+    return sum, prod
+
+print(mult(4,3,9))
+
+
+#grade scorer returns total, average and pass/fail
+def results( *marks):
+    item_count = len(marks)    #how many grades were submitted
+    total = 0
+    for item in marks:
+        total +=  int(item)
+
+    average = total/item_count
+
+    if (average >= 60):
+        grade = 'Pass'
+    else:
+        grade = 'Fail'
+
+    return total, average, grade
+
+print(results(55, 75, 95, 90))
+
+
+def unique_nums(*args):
+    nums = set(args)  #convert tuple to set
+    return list(nums)    #convert nums to list
+
+
+#print (unique_nums(5, 2, 7, 5, 4, 0, 7, 9, 12))
+
+#in Abdul's example he took input from user which was a string of numbers.  
+#  use split to get the individual numbers as an integer
+#print("Enter numbers seprated by spaces: ")
+nums = "5 4 3 7 5 1 7 11"   #input("")
+numbers = [int(n) for n in nums.split()]  #puts in a list
+unique = unique_nums(*numbers)    #this is how you must pass the arguments.  (this is new)
+
+print("\nUnique Numbers: ")
+print(unique)
+           
+           
