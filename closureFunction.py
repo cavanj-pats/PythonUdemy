@@ -33,6 +33,10 @@ g()
 print('\n')
 
 
+"""
+Basically two ways to do the same thing i think.
+Closure Function
+"""
 count = 0
 def counter():
     global count   #so global counter variable can be accessed
@@ -51,7 +55,9 @@ def get_counter():
 
 #c1 = counter()
 c2 = get_counter()
+c3 = get_counter()
 
 print(counter(), counter(), counter())
 print(c2(),c2(), c2())
+print(c3(), c3(), c3())
 
