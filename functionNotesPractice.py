@@ -7,11 +7,13 @@
 # postiional on left hand side and keyword on right hand side is the rule.
 #guidance is to use positional or keyword but not both.
 
-
+"""
+Docstring for functionNotesPractice
 def volume (length, breadth, height = 1):
     print (length, breadth, height)
     return length * breadth * height
 
+"""
 
 #print(volume(10,5,height=3))
     
@@ -78,7 +80,7 @@ si = simple_interest(P=25000, T=4, R=5.49 )
 #Pangram phrase
 import re
 
-
+"""
 def pangram(phrase):
     letters = re.sub(r'[^a-zA-Z]','', phrase)
     letters_set = set(letters.lower())
@@ -90,6 +92,7 @@ def pangram(phrase):
 
 str = 'The quick brown fox jumps over the lazy dog'
 print (pangram(str))
+"""
 
 
 """
@@ -106,7 +109,7 @@ def fun(*args, a, b, **kwargs)    only if a, b are keyword arguments. Not allowe
 
 
 """
-
+"""
 #variable length keyword arguments
 def fun(*args, a, b, **kwargs):
    print (args, a, b, kwargs)
@@ -162,4 +165,107 @@ unique = unique_nums(*numbers)    #this is how you must pass the arguments.  (th
 print("\nUnique Numbers: ")
 print(unique)
            
-           
+
+"""
+
+
+"""
+# when it came to testing, this function worked. When it came to grading, this function
+#did not work.  I gave up trying to deterine why.  i simply pasted in Abdul's code for the grading
+def is_strong(password):
+    special_chars = set("!@#$%^&*-_+=.")
+
+    msg = 'Password must contain '
+    if len(password)<8:
+        return False, msg + "at least 8 characters"
+    if not any(c.isupper() for c in password ):
+        return False, msg + "one UPPERCASE character"
+    if not any(c.islower() for c in password ):
+        return False, msg + "one lowercase character."
+    if not any(c.isnumeric() for c in password):
+        return False, msg + "one number."
+    if not any(c in special_chars for c in password):
+        return False, msg + "special characters."
+    
+    return True, 'Password is Strong'
+
+
+print (is_strong('Applebannana9'))
+"""
+
+"""
+# this seems like we made our own interator function
+def myrange(n):
+    i = 0
+    while (i<n):
+        yield i
+        i = i + 1
+
+
+n = myrange(4)
+
+print(next(n))
+print(next(n))
+print(next(n))
+print(next(n))
+"""
+
+
+"""
+##He refers to this as a generator
+# prepare a function that will cycle through the days of the week
+# each invokation of next() will move to the next day.
+# I am not sure how it establishes the range when the loop is infinite
+
+def days():
+    d = ['Sun', 'Mon', 'Tues', 'Wed', 'Thu', 'Fri', 'Sat']
+    i = 0
+    while True:
+        yield d[i]
+        i = (i +1) % 7   # mod 7 returns to i = 0
+
+
+d = days()
+next(d)
+print(next(d))    #should print Mon
+"""
+
+
+
+"""
+def rec(n):
+    if(n>0):
+        print(n)
+        rec(n-1)
+
+    print(n)
+rec(4)
+"""
+
+"""
+
+def factorial(n):
+    if(n<=0):
+        return 1
+    else:
+        return n * factorial(n-1)
+    
+print(factorial(5))
+"""
+
+
+def fib_term(n):
+    a,b = 0,1   #first two terms of Fibonacc sequence
+
+    for i in range(n+1):
+        yield a
+        a, b = b, a + b
+
+if __name__ == "__main__":
+    num = 10
+
+    for term in fib_term(num):
+        print(term, end = ', ')
+        
+    print("\n")
+
