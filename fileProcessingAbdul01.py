@@ -15,7 +15,7 @@
     ##different functions
     read()
     read(10).   # would be 10 bytes which is 10 characters
-    readLine().  #reads all lines and puts in a list
+    readline().  #reads all lines and puts in a list
     readable()
     writeable()
 
