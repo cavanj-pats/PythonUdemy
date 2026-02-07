@@ -31,10 +31,9 @@ class Person:
         #need date class to determine age
         return date.today().year - self.__yob
 
+if __name__ == "__main__":
+    jim = Person('Jim', 'Cavanaugh', 1966)
 
-
-jim = Person('Jim', 'Cavanaugh', 1966)
-
-print(jim.age)
-jim.name = 'James Johnson'
-print(jim.name)
+    jim.name = 'James Johnson'
+    print("Name: ", jim.name)
+    print("Age: ", jim.age)
