@@ -62,6 +62,21 @@ class Rectangle:
             ....yet length will be protected
             @property -> for get
             @propertyname.setter for set method
+
+            Private data
+            use double underscore in name,  aka dunder
+            .data instead call it .__data
+            can only access Private data  using name Mangling
+            ._Rectangle.__length for example will force access to the Private data member length
+
+            Protected data
+            use single underscore
+
+                        public.     protected.   private
+        Inside Class      Y.             Y.         Y
+        Child Class.      Y               Y         N
+        Using Object      Y             Y           N
+
     """
     count = 0
     
