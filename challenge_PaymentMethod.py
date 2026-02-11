@@ -24,7 +24,12 @@ def process_payment(paymethod, amount):
 
 
 
+if __name__ == "__main__":
+    #abdul used a for loop to test all different payment types.
+    payments = [CreditCard(),
+                PayPal(),
+                Crypto()]
+    
+    for method in payments:
 
-cc = Crypto()
-
-process_payment(cc, 20)
+        process_payment(method, 20)
