@@ -79,7 +79,7 @@ def insert_trans():
         acc_id = int(input('Enter account ID (fk): '))
         trans_type = input('Enter transaction type (deposit/withdrawal): ')
         amount = float(input('Enter transaction amount: '))
-        ddate = input('Enter a date in Y/M/D')
+        ddate = input('Enter a date in Y/M/D: ')
         print("\n")
 
         cursor.execute(f'insert into transactions values({trans_id}, {acc_id}, "{trans_type}", {amount}, "{ddate}")')
@@ -89,6 +89,19 @@ def insert_trans():
     cursor.close()
     conn.close()
 
+def selectData(strSQL):
+    conn = sqlite3.connect('bankDB.db')
+
+    cursor = conn.cursor()
+    
+    tuples = cursor.execute(strSQL)
+
+    for t in tuples:
+        print(t)
+
+    conn.commit()
+    cursor.close()
+    conn.close()
 
 def del_db():
     conn = sqlite3.connect('univ2.db')
@@ -170,4 +183,18 @@ if __name__ == "__main__":
  #   createTable()
  # insert_cust()
    # insert_acct()
-    insert_trans()
+  #  insert_trans()
+
+    strSQL = 'select * from customers'
+    print('list details of all customers:')
+    selectData(strSQL)
+    print('\n Customer Account Details: ')
+    strSQL = 'select customerID, name, acc_id, acc_type, balance '\
+          'from customers C, accounts A ' \
+        ' where C.customerID = A.cust_ID'
+    selectData(strSQL)
+
+    print('\nTransaction list:')
+    strSQL = 'select * from transactions'
+    selectData(strSQL)
+    
