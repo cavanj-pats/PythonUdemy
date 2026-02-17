@@ -7,16 +7,16 @@ def createTable():
 
     cursor = conn.cursor()
 
-    cursor.execute('create table customers(customerID integer primary key,' 
-            'name text ,'
-            'address text, email text );')
+    cursor.execute('create table IF NOT EXISTS customers(customerID integer primary key,' 
+            'name TEXT NOT NULL,'
+            'address text, email text UNIQUE);')
 
-    cursor.execute('create table accounts (acc_id integer primary key, '
+    cursor.execute('create table IF NOT EXISTS accounts (acc_id integer primary key, '
                    'cust_id integer, acc_type text, balance real, ' 
                    'foreign key(cust_id) '
                     'references customers(customerID));')
     
-    cursor.execute('create table transactions (trans_id integer primary key, '
+    cursor.execute('create table IF NOT EXISTS transactions (trans_id integer primary key, '
                    'acc_id integer, trans_type text ,'
                    ' amount real, date date, '
                     'foreign key(acc_id) '
@@ -47,6 +47,15 @@ def insert_cust():
 
     cursor.close()
     conn.close()
+
+    """
+        you can insert multiple records in one statement as follows:
+        cursor.execute('''INSERT INTO Customers Values
+                        (110, 'Anil','Mumbai', 'anil@gmail.com') ,
+                        (111, 'Smith', 'Delhi', 'smith@example.com') ,
+                        (112, 'Ramesh', 'Mumbai', 'ramesh@gmail.com') ,
+                        (113, 'Khan', 'Delhi', 'khan@example.com')''')
+    """
 
 def insert_acct():
     conn = sqlite3.connect('bankDB.db')
@@ -188,11 +197,15 @@ if __name__ == "__main__":
     strSQL = 'select * from customers'
     print('list details of all customers:')
     selectData(strSQL)
-    print('\n Customer Account Details: ')
+    print('\n Customer Account Details: ')      #see Abdul SQL statement
     strSQL = 'select customerID, name, acc_id, acc_type, balance '\
           'from customers C, accounts A ' \
         ' where C.customerID = A.cust_ID'
     selectData(strSQL)
+    #abdul aSQL = 'SELECT accounts.acc_id, customers.name, accounts.acc_type, accounts.balance 
+                #   'FROM accounts JOIN customers ON 
+                #   'accounts.cust_id = customers.cust_ID'
+
 
     print('\nTransaction list:')
     strSQL = 'select * from transactions'
