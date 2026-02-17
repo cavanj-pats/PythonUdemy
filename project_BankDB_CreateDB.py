@@ -7,16 +7,20 @@ def createTable():
 
     cursor = conn.cursor()
 
-    cursor.execute('create table customers(customerID integer primary key,' 
-            'name text ,'
-            'address text, email text );')
+    #cursor.execute('create table customers(customerID integer primary key,' 
+    #        'name text ,'
+    #        'address text, email text );')
 
     cursor.execute('create table accounts (acc_id integer primary key, '
-                   'cust_id integer, acc_type text, balance real ' 
-                   'foreign key(cust_id)'
+                   'cust_id integer, acc_type text, balance real, ' 
+                   'foreign key(cust_id) '
                     'references customers(customerID));')
     
-
+    cursor.execute('create table transactions (trans_id integer primary key, '
+                   'acc_id integer, trans_type text ,'
+                   ' amount real, date date, '
+                    'foreign key(acc_id) '
+                    'references accounts(acc_id) ); ')
 
     conn.commit()
 
@@ -121,5 +125,5 @@ if __name__ == "__main__":
    #insert_dept()
    #del_db()
    #select()
-
+    createTable()
 
