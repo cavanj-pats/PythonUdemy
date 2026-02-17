@@ -7,9 +7,9 @@ def createTable():
 
     cursor = conn.cursor()
 
-    #cursor.execute('create table customers(customerID integer primary key,' 
-    #        'name text ,'
-    #        'address text, email text );')
+    cursor.execute('create table customers(customerID integer primary key,' 
+            'name text ,'
+            'address text, email text );')
 
     cursor.execute('create table accounts (acc_id integer primary key, '
                    'cust_id integer, acc_type text, balance real, ' 
@@ -28,20 +28,61 @@ def createTable():
 
     conn.close()
 
-
-
-def insert_dept():
-    conn = sqlite3.connect('univ2.db')
+def insert_cust():
+    conn = sqlite3.connect('bankDB.db')
 
     cursor = conn.cursor()
     while True:
-        deptno = int(input('Enter deptno as integer (99 to stop): '))
-        if deptno == 99 :
+        custno = int(input('Enter customer id as integer (99 to stop): '))
+        if custno == 99 :
             break
-        dname = input('Enter dept. name: ')
+        name = input('Enter customer name: ')
+        address = input('Enter city/town: ')
+        email = input('Enter email: ')
         print("\n")
 
-        cursor.execute(f'insert into dept values({deptno}, "{dname}")')
+        cursor.execute(f'insert into customers values({custno}, "{name}", "{address}", "{email}")')
+
+        conn.commit()
+
+    cursor.close()
+    conn.close()
+
+def insert_acct():
+    conn = sqlite3.connect('bankDB.db')
+
+    cursor = conn.cursor()
+    while True:
+        accid = int(input('Enter acc id as integer (99 to stop): '))
+        if accid == 99 :
+            break
+        cust_id = int(input('Enter customer ID (fk): '))
+        acc_type = input('Enter account type: ')
+        balance = float(input('Enter balance: '))
+        print("\n")
+
+        cursor.execute(f'insert into accounts values({accid}, {cust_id}, "{acc_type}", {balance})')
+
+        conn.commit()
+
+    cursor.close()
+    conn.close()
+
+def insert_trans():
+    conn = sqlite3.connect('bankDB.db')
+
+    cursor = conn.cursor()
+    while True:
+        trans_id = int(input('Enter transaction id as integer (99 to stop): '))
+        if trans_id == 99 :
+            break
+        acc_id = int(input('Enter account ID (fk): '))
+        trans_type = input('Enter transaction type (deposit/withdrawal): ')
+        amount = float(input('Enter transaction amount: '))
+        ddate = input('Enter a date in Y/M/D')
+        print("\n")
+
+        cursor.execute(f'insert into transactions values({trans_id}, {acc_id}, "{trans_type}", {amount}, "{ddate}")')
 
         conn.commit()
 
@@ -125,5 +166,8 @@ if __name__ == "__main__":
    #insert_dept()
    #del_db()
    #select()
-    createTable()
-
+ #for the challenge i ran these in this order
+ #   createTable()
+ # insert_cust()
+   # insert_acct()
+    insert_trans()
