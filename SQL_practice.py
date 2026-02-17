@@ -25,11 +25,46 @@ def createTable():
 
 
 
+def insert_dept():
+    conn = sqlite3.connect('univ2.db')
 
-conn = sqlite3.connect('univ2.db')
+    cursor = conn.cursor()
+    deptno = 0
+    while deptno != 99:
+        deptno = int(input('Enter deptno as integer (99 to stop): '))
 
-cursor = conn.cursor()
-cursor.execute('insert into dept calues(10, "CSE")')
-conn.commit()
-cursor.close()
-conn.close()
+        dname = input('Enter dept. name: ')
+        print("\n")
+
+        cursor.execute(f'insert into dept values({deptno}, "{dname}")')
+
+        conn.commit()
+    cursor.close()
+    conn.close()
+
+
+def del_db():
+    conn = sqlite3.connect('univ2.db')
+
+    cursor = conn.cursor()
+    
+       # deptno = int(input('Enter deptno as integer (99 to stop): '))
+
+       # dname = input('Enter dept. name: ')
+       # print("\n")
+
+    cursor.execute('delete from dept ;')
+
+    conn.commit()
+    cursor.close()
+    conn.close()
+
+
+
+
+if __name__ == "__main__":
+    # we've already created tables. if we hadn't we could launch that function here
+   insert_dept()
+   #del_db()
+
+
