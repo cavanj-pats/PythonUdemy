@@ -101,6 +101,20 @@ def select():
     conn.close()
 
 
+"""
+#update query
+'update dept '
+'set dname = "IT" '
+'where deptno = 50 ;'
+"""
+
+"""
+#delete query
+ 'delete '
+ 'from dept '
+ 'where deptno = 50 ;
+ """
+
 if __name__ == "__main__":
     # we've already created tables. if we hadn't we could launch that function here
    #insert_dept()
