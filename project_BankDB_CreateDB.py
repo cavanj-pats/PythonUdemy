@@ -7,16 +7,16 @@ def createTable():
 
     cursor = conn.cursor()
 
-    #cursor.execute('create table customers(customerID integer primary key,' 
-    #        'name text ,'
-    #        'address text, email text );')
+    cursor.execute('create table IF NOT EXISTS customers(customerID integer primary key,' 
+            'name TEXT NOT NULL,'
+            'address text, email text UNIQUE);')
 
-    cursor.execute('create table accounts (acc_id integer primary key, '
+    cursor.execute('create table IF NOT EXISTS accounts (acc_id integer primary key, '
                    'cust_id integer, acc_type text, balance real, ' 
                    'foreign key(cust_id) '
                     'references customers(customerID));')
     
-    cursor.execute('create table transactions (trans_id integer primary key, '
+    cursor.execute('create table IF NOT EXISTS transactions (trans_id integer primary key, '
                    'acc_id integer, trans_type text ,'
                    ' amount real, date date, '
                     'foreign key(acc_id) '
@@ -28,26 +28,89 @@ def createTable():
 
     conn.close()
 
-
-
-def insert_dept():
-    conn = sqlite3.connect('univ2.db')
+def insert_cust():
+    conn = sqlite3.connect('bankDB.db')
 
     cursor = conn.cursor()
     while True:
-        deptno = int(input('Enter deptno as integer (99 to stop): '))
-        if deptno == 99 :
+        custno = int(input('Enter customer id as integer (99 to stop): '))
+        if custno == 99 :
             break
-        dname = input('Enter dept. name: ')
+        name = input('Enter customer name: ')
+        address = input('Enter city/town: ')
+        email = input('Enter email: ')
         print("\n")
 
-        cursor.execute(f'insert into dept values({deptno}, "{dname}")')
+        cursor.execute(f'insert into customers values({custno}, "{name}", "{address}", "{email}")')
 
         conn.commit()
 
     cursor.close()
     conn.close()
 
+    """
+        you can insert multiple records in one statement as follows:
+        cursor.execute('''INSERT INTO Customers Values
+                        (110, 'Anil','Mumbai', 'anil@gmail.com') ,
+                        (111, 'Smith', 'Delhi', 'smith@example.com') ,
+                        (112, 'Ramesh', 'Mumbai', 'ramesh@gmail.com') ,
+                        (113, 'Khan', 'Delhi', 'khan@example.com')''')
+    """
+
+def insert_acct():
+    conn = sqlite3.connect('bankDB.db')
+
+    cursor = conn.cursor()
+    while True:
+        accid = int(input('Enter acc id as integer (99 to stop): '))
+        if accid == 99 :
+            break
+        cust_id = int(input('Enter customer ID (fk): '))
+        acc_type = input('Enter account type: ')
+        balance = float(input('Enter balance: '))
+        print("\n")
+
+        cursor.execute(f'insert into accounts values({accid}, {cust_id}, "{acc_type}", {balance})')
+
+        conn.commit()
+
+    cursor.close()
+    conn.close()
+
+def insert_trans():
+    conn = sqlite3.connect('bankDB.db')
+
+    cursor = conn.cursor()
+    while True:
+        trans_id = int(input('Enter transaction id as integer (99 to stop): '))
+        if trans_id == 99 :
+            break
+        acc_id = int(input('Enter account ID (fk): '))
+        trans_type = input('Enter transaction type (deposit/withdrawal): ')
+        amount = float(input('Enter transaction amount: '))
+        ddate = input('Enter a date in Y/M/D: ')
+        print("\n")
+
+        cursor.execute(f'insert into transactions values({trans_id}, {acc_id}, "{trans_type}", {amount}, "{ddate}")')
+
+        conn.commit()
+
+    cursor.close()
+    conn.close()
+
+def selectData(strSQL):
+    conn = sqlite3.connect('bankDB.db')
+
+    cursor = conn.cursor()
+    
+    tuples = cursor.execute(strSQL)
+
+    for t in tuples:
+        print(t)
+
+    conn.commit()
+    cursor.close()
+    conn.close()
 
 def del_db():
     conn = sqlite3.connect('univ2.db')
@@ -125,5 +188,26 @@ if __name__ == "__main__":
    #insert_dept()
    #del_db()
    #select()
-    createTable()
+ #for the challenge i ran these in this order
+ #   createTable()
+ # insert_cust()
+   # insert_acct()
+  #  insert_trans()
 
+    strSQL = 'select * from customers'
+    print('list details of all customers:')
+    selectData(strSQL)
+    print('\n Customer Account Details: ')      #see Abdul SQL statement
+    strSQL = 'select customerID, name, acc_id, acc_type, balance '\
+          'from customers C, accounts A ' \
+        ' where C.customerID = A.cust_ID'
+    selectData(strSQL)
+    #abdul aSQL = 'SELECT accounts.acc_id, customers.name, accounts.acc_type, accounts.balance 
+                #   'FROM accounts JOIN customers ON 
+                #   'accounts.cust_id = customers.cust_ID'
+
+
+    print('\nTransaction list:')
+    strSQL = 'select * from transactions'
+    selectData(strSQL)
+    
