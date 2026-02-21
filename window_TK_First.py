@@ -1,6 +1,6 @@
 
 
-from tkinter import *
+from tkinter import * # type: ignore
 #from tkmacosx import *
 
 
@@ -15,8 +15,8 @@ l = Label(win, text='Hello World')  # create a label reference the window it wil
 l.pack()  #add label to the window
 
 #text box
-var='OK'
-e = Entry(win, textvariable='var')
+#var='OK'
+e = Entry(win)
 e['justify']='right'  #entry does not have anchor
 
 e.pack()
@@ -24,7 +24,7 @@ e.pack()
 #button
 #properties can be added when you set up the object, or in dictionary form or using config function
 #properties are also known as options.  for config can also use configure (the entire word)
-cmdOK = Button(win, text= var, width=4, height=2)
+cmdOK = Button(win, text= 'OK', width=4, height=2)
 cmdOK['bd']=2  #'border depth'
 cmdOK['anchor']='sw'    #ne northeast,  nw, sw  anchors text in a corner.  
 cmdOK['font']='Ariel, 20'  #abdul also used cmdOK.config(font='Ariel, 20)
@@ -39,11 +39,12 @@ t.pack()
 
 c = Checkbutton(win, text='Yes')
 c.pack()
+v1='t'
 
-r= Radiobutton(win, text='Option 1', variable='v1', value=1)
+r= Radiobutton(win, text='Option 1', variable=v1, value=1) # type: ignore
 r.pack()
-r2 = Radiobutton(win, text='Option 2', variable='v1', value=2)
-r3 = Radiobutton(win, text='Option 3', variable='v1', value=3)
+r2 = Radiobutton(win, text='Option 2', variable=v1, value=2) # type: ignore
+r3 = Radiobutton(win, text='Option 3', variable=v1, value=3) # type: ignore
 r2.pack()
 r3.pack()
 
