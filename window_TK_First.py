@@ -1,6 +1,8 @@
 
 
 from tkinter import *
+#from tkmacosx import *
+
 
 win = Tk()
 win.title('First Application!')
@@ -13,11 +15,22 @@ l = Label(win, text='Hello World')  # create a label reference the window it wil
 l.pack()  #add label to the window
 
 #text box
-e = Entry(win)
+var='OK'
+e = Entry(win, textvariable='var')
+e['justify']='right'  #entry does not have anchor
+
 e.pack()
 
 #button
-cmdOK = Button(win, text='Ok')
+#properties can be added when you set up the object, or in dictionary form or using config function
+#properties are also known as options.  for config can also use configure (the entire word)
+cmdOK = Button(win, text= var, width=4, height=2)
+cmdOK['bd']=2  #'border depth'
+cmdOK['anchor']='sw'    #ne northeast,  nw, sw  anchors text in a corner.  
+cmdOK['font']='Ariel, 20'  #abdul also used cmdOK.config(font='Ariel, 20)
+cmdOK['fg']='yellow'
+cmdOK['padx']=2
+cmdOK['pady']=2
 cmdOK.pack()
 
 #text area in Tkinter - text
