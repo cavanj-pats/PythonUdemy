@@ -3,7 +3,49 @@
 from tkinter import *
 
 win = Tk()
-win.geometry('600x400')
+win.title('First Application!')
+win.geometry('600x400+100+10')   #+100+10 places the window
+win.resizable(True, True)  #x and y 
+#win.attributes('-alpha',0.55)   #-alpha, 0.25 made window transparent, can keep messing with the float value.  opaqueness level
+
+#add a label
+l = Label(win, text='Hello World')  # create a label reference the window it will be in
+l.pack()  #add label to the window
+
+#text box
+e = Entry(win)
+e.pack()
+
+#button
+cmdOK = Button(win, text='Ok')
+cmdOK.pack()
+
+#text area in Tkinter - text
+t = Text(win, width=30, height=10)
+t.pack()
+
+c = Checkbutton(win, text='Yes')
+c.pack()
+
+r= Radiobutton(win, text='Option 1', variable='v1', value=1)
+r.pack()
+r2 = Radiobutton(win, text='Option 2', variable='v1', value=2)
+r3 = Radiobutton(win, text='Option 3', variable='v1', value=3)
+r2.pack()
+r3.pack()
+
+#option menu or listbox/combobox
+v = StringVar()
+opt=OptionMenu(win, v, 'Python', *('Java','C++', 'Javascript','Python'))
+opt.pack()
+
+#scale or slider or sliding bar
+s = Scale(win, from_=0, to=100)
+s.pack()
+
+
+
+
 win.mainloop()
 
 
