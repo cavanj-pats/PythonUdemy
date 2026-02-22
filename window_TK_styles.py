@@ -1,6 +1,7 @@
 #window_TK_styles.py
 
 # Various style options and settings for use in Entry, Text, Label, and List Boxes
+#  graphics  bitmap or image
 
 from tkinter import * # type: ignore
 #from tkmacosx import *
@@ -52,7 +53,12 @@ e1.pack()
 e2 = Text(win,height='2', width='20', insertbackground='red', insertwidth=5, insertborderwidth=5, selectbackground='yellow', selectforeground='blue', selectborderwidth=10)
 e2.pack()
 
-l1 = Label(win, text='abcdefghijklmnopqrstuvwxyz', width=100, wraplength=100)
+###
+#   bitmap='warning' changes text to exclamation point
+###
+
+img = PhotoImage(file='icons8-python-48.png')
+l1 = Label(win, text='abcdefghijklmnopqrstuvwxyz', width=100, wraplength=100, image=img)
 l1.pack()
 
 ####      exportselection most useful in listbox  keep or lose selection when moving to another control
