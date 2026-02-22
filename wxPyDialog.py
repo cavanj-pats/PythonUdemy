@@ -1,6 +1,7 @@
 #wxPyDialog.py
 
-
+#since i'm using the anaconda python installation i needed to 
+# pip install wxwidgets from teh anaconda prompt
 
 # First things, first. Import the wxPython package.
 import wx
