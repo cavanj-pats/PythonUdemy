@@ -9,6 +9,17 @@ import datetime
 
 #from tkmacosx import *
 
+"""
+    this is abdul's code mostly 
+    I added the global elapse_time to main and assinged it zero 
+    otherwise i got an error. probably because elapse_time was unasssigned 
+    when it was attempted to be incremented.
+    This is clever use of the "after" function for a label
+    since the delay is in miliseconds, each time while looping 
+    the update_time function is run is 10 miliseconds after the previous time.
+    there is no use of any time module functions at all.
+    
+"""
 def update_time():
     global flag, elapse_time
     if flag == True:
