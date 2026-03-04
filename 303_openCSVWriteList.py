@@ -27,7 +27,7 @@ fields = ['Variety', 'qty', 'qty bearing', 'year planted']
 wrtr = csv.DictWriter(f, fields)
 wrtr.writeheader()  #already provided fields
 
-for d in treesdata:
+for d in trees:
     wrtr.writerow(d)   #it just took keys.  it did not take values
 
 
