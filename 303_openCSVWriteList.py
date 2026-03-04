@@ -1,5 +1,7 @@
 #openCSVWriteList.py
 
+###   I believe this file demos both lectures for CSV WRITE
+
 #make a list of apple trees
 
 import csv
