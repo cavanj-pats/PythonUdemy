@@ -3,6 +3,8 @@ from tkinter import *
 import csv
 import tkinter.messagebox as msg
 
+#abdul wants to also try a version with SQLITE database providing underlying data.
+
 def onSelect(e):
     i = lstEmployee.curselection()[0]
     eid.set(data[i][0])
