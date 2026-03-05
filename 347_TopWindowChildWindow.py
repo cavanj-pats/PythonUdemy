@@ -1,8 +1,8 @@
 #346_FrameAndLabelFrame.py
 
 
-from tkinter import *
-from tkinter.messagebox import *
+from tkinter import * # pyright: ignore[reportWildcardImportFromLibrary]
+from tkinter.messagebox import * # pyright: ignore[reportWildcardImportFromLibrary]
 
 
 class MyTop(Toplevel):
@@ -36,7 +36,7 @@ def classhandler():
     tp2 = MyTop()
     tp2.geometry('250x250')
     tp2.title('Child Window from Class')
-    tp1.mainloop()
+    tp2.mainloop()
 
 
 win = Tk()
