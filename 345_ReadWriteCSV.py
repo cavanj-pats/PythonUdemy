@@ -10,6 +10,7 @@ def onSelect(e):
     salary.set(data[i][2])
 
 def onEntryChange():
+    #i've only coded a salary change thining name and empID woudld nto change
     i = lstEmployee.curselection()[0]
     currValue = salary.get()
     if currValue != data[i][2]:
