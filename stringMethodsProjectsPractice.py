@@ -15,23 +15,24 @@ print (str2)
 '''
 
 
-'''
+
 #URL Parsing
-str = input('Enter a URL for parsing: ')
+#str = input('Enter a URL for parsing: ')
+str = 'https://www.kaggle.com/datasets'
 pPos = str.find('://')
-d1Pos = str.find('.')
-d2Pos = str.find('.', d1Pos+1)
-pagePos = str.find('/', d2Pos+1)
+dot1 = str.find('.')
+dot2 = str.find('.', dot1+1)
+pagePos = str.find('/', dot2+1)
 
 protocol = str[:pPos]
-domain = str[d1Pos+1:d2Pos]
+domain = str[dot1+1:dot2]
 page = str[pagePos:]
 
 print ('Protocol: ' + protocol)
 print ('Domain: ' + domain)
 print ('Page: ' + page)
 
-'''
+
 
 '''
 #palindrome project   'Race car',  'Poop', etc.
@@ -80,7 +81,7 @@ for x in strScan:
 print (strClean)
 '''
 
-
+""" 
 #password change project
 newPassword = 'Nice.Pooper1'
 confirmPassword = 'Nice.PoopeR1'
@@ -93,4 +94,4 @@ else:
     elif len(newPassword) != len(confirmPassword):
          print('Passwords different lengths!')
     else:
-        print ('Passwords do not match!')
+        print ('Passwords do not match!') """
