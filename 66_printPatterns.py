@@ -1,6 +1,6 @@
 # print * patterns
 
-
+print('Lower Diagonal Pattern:')
 for i in range (1, 6):
     for j in range (1, 6):
         print('*', end=' ')
@@ -8,7 +8,7 @@ for i in range (1, 6):
 
 print ('')
 
-
+print('Method 2 for lower diag pattern:')
 #method 2 fro printing lower diag matrix
 for i in range(1, 6):
     for j in range(0, i):
@@ -16,6 +16,7 @@ for i in range(1, 6):
     print('')
 
 print('')
+
 #method 3 for printing patter. Lower diag matrix
 for i in range(1, 6):
     print('* ' * i)
