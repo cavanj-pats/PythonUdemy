@@ -4,6 +4,8 @@
 #married filing jointly
 #income over   $100k
 
+form1040 = dict()
+
 
 
 income = int(input('Enter line 15 taxable income: '))
