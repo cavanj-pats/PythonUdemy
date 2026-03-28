@@ -1,6 +1,7 @@
 #w2.py
 #i dont know if this will be one W2 or if it will be all applicable w2's
 
+#need to add functionality for mnore than one W2 to be created.
 
 import tkinter as tk
 
