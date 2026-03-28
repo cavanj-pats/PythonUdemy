@@ -2,6 +2,7 @@
 import tkinter as tk
 from FrameA import FrameA
 from FrameB import FrameB
+from w2 import W2
 
 class TestApp(tk.Tk):
     def __init__(self, *args, **kwargs):
@@ -11,7 +12,9 @@ class TestApp(tk.Tk):
         
         self.frames = {}
         # Initialize frames from different files
-        for F in (FrameA, FrameB):
+
+        #as frames are added you need to add them below
+        for F in (FrameA, FrameB, W2):
             page_name=F.__name__
             frame = F(container, self)
             self.frames[page_name] = frame

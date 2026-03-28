@@ -11,4 +11,7 @@ class FrameB(tk.Frame):
         btn = tk.Button(self, text="Update A", 
                         command=lambda: controller.update_data("Updated!", "FrameA"))
         btn.pack()
+        btnW2 =tk.Button(self, text="W2 Form", 
+                         command=lambda: controller.show_frame("W2"))
+        btnW2.pack()
 
