@@ -24,6 +24,16 @@ class W2(tk.Frame):
         varBox2 = tk.StringVar()
         self.entry2 = tk.Entry(self, textvariable=varBox2)
         self.entry2.pack()
+
+        varBox3 = tk.StringVar()
+        self.lblBox3 = tk.Label(self, text='Soc Sec Wages', font=SMALL_FONT)
+        self.lblBox3.pack()
+        self.Box3 = tk.Entry(self, textvariable=varBox3 )
+        self.Box3.pack()
+        
+        btn = tk.Button(self, text="Go to B", 
+                        command=lambda: controller.show_frame("FrameB") ) 
+        btn.pack()
         #all other controls and functionality go here
         """
             box 1 wages
