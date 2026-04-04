@@ -12,13 +12,19 @@ class TestApp(tk.Tk):
         
         self.frames = {}
         # Initialize frames from different files
+        #need a navigation frame
+        #ok to use grid just
+        navFrame=tk.Frame(container, height=900, width=300, padx=50)
+        navFrame.grid(row=0, column=0, sticky="nsew")
+        btnID = tk.Button(navFrame, text='ID')
+        btnID.pack()
 
         #as frames are added you need to add them below
         for F in (FrameA, FrameB, W2):
             page_name=F.__name__
             frame = F(container, self)
             self.frames[page_name] = frame
-            frame.grid(row=0, column=0, sticky="nsew")
+            frame.grid(row=0, column=1, sticky="nsew")  #adjusted column
         
         self.show_frame("FrameA")
 
