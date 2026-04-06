@@ -92,3 +92,22 @@ if __name__ == "__main__":
     app = TestApp()
     app.mainloop()   
 
+
+
+
+"""
+    https://www.pythonguis.com/tutorials/input-validation-tkinter/
+
+    https://www.google.com/search?q=python+tkinter+frame+with+many+entry+boxes+most+have+numeric+data+how+to+check+at+data+entry&ie=UTF-8
+
+    https://www.google.com/search?q=python+tkinter+iterate+through+a+dictionary+to+populate+entry+box+initial+data.+dictionary+keys+represent+winfo.children%28%29&sxsrf=ANbL-n4mdlw7DbycG8KOe8HK3CJQARti5g%3A1775424860361
+
+    https://www.google.com/search?q=python+tkinter+after+extracting+value+from+entry+box+how+do+i+reset+the+variable+from+a+function%3F&ie=UTF-8
+
+    https://www.google.com/search?q=python+tkinter+convert+string+from+entry+box+to+float+using+get.&ie=UTF-8
+
+
+    https://www.google.com/search?q=python+tkinter+loop+through+all+entry+widgets+and+save+their+data+to+a+dictionary+with+entry+widget+name+as+the+key&ie=UTF-8
+
+    
+"""
