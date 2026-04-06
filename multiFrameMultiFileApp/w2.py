@@ -13,7 +13,7 @@ class W2(tk.Frame):
         self.controller = controller
 
         # Register the validation function
-        vcmd = (parent.register(self.validate_numeric), '%P')
+        vcmd = (parent.register(self.validate_numeric), '%P', '%W')
 
         self.instance_id = 0   #index each time you save and clear form to start a new instance
         self.label = tk.Label(self, text="W2")
@@ -249,13 +249,23 @@ class W2(tk.Frame):
         self.Box1.insert(0, entry_data['Box1']-10)   #this works to refill the data
         
         
-    def validate_numeric(self, proposed_value):
+    def validate_numeric(self, proposed_value, W):
         # Allow empty string (for backspacing) or digits only
+        widget = self.nametowidget(W)
+
+        print(widget.cget("bg"))
+        #on macOS returns systemTextBackgroundColor
+
+
         if proposed_value == "" or proposed_value.isdigit():
             self.dataValidate.config(text='good')
             self.dataValidate.config(fg='black')
+            widget.config(bg='systemTextBackgroundColor')  #i don't know if this will work on windows or linux
+            return True
 
 
         self.dataValidate.config(text='Bad Data')
         self.dataValidate.config(fg='red')
+        widget.config(bg='red')
+        return True  #return True either way so as to not switch off validation
        
