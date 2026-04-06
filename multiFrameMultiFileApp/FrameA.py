@@ -11,3 +11,5 @@ class FrameA(tk.Frame):
         btn = tk.Button(self, text="Go to B", 
                         command=lambda: controller.show_frame("FrameB") )  #Example logic
         btn.pack()
+        label_line11_income=tk.Label(self)
+        label_line11_income.pack()  #put result of calculation here
