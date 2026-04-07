@@ -111,7 +111,7 @@ class W2(tk.Frame):
         self.varBox12a_code = tk.StringVar()
         self.lblBox12a_code = tk.Label(self, text='12a', font=SMALL_FONT)
         self.lblBox12a_code.grid(column=3, row=16, columnspan=1)
-        self.Box12a_code = tk.Entry(self, textvariable=self.varBox12a_code, name='_Box12a_code' )
+        self.Box12a_code = tk.Entry(self, textvariable=self.varBox12a_code, name='_Box12a_code', width=4 )
         self.Box12a_code.grid(column=3, row=17, columnspan=1)
 
         self.varBox12a_data = tk.StringVar()
@@ -123,7 +123,7 @@ class W2(tk.Frame):
         self.varBox12b_code = tk.StringVar()
         self.lblBox12b_code = tk.Label(self, text='12b', font=SMALL_FONT)
         self.lblBox12b_code.grid(column=3, row=18, columnspan=1)
-        self.Box12b_code = tk.Entry(self, textvariable=self.varBox12b_code, name='_Box12b_code' )
+        self.Box12b_code = tk.Entry(self, textvariable=self.varBox12b_code, name='_Box12b_code', width=4 )
         self.Box12b_code.grid(column=3, row=19, columnspan=1)
 
         self.varBox12b_data = tk.StringVar()
@@ -135,7 +135,7 @@ class W2(tk.Frame):
         self.varBox12c_code = tk.StringVar()
         self.lblBox12c_code = tk.Label(self, text='12c', font=SMALL_FONT)
         self.lblBox12c_code.grid(column=3, row=20, columnspan=1)
-        self.Box12c_code = tk.Entry(self, textvariable=self.varBox12c_code, name='_Box12c_code' )
+        self.Box12c_code = tk.Entry(self, textvariable=self.varBox12c_code, name='_Box12c_code', width=4 )
         self.Box12c_code.grid(column=3, row=21, columnspan=1)
 
         self.varBox12c_data = tk.StringVar()
@@ -146,8 +146,8 @@ class W2(tk.Frame):
 
         self.varBox12d_code = tk.StringVar()
         self.lblBox12d_code = tk.Label(self, text='12d', font=SMALL_FONT)
-        self.lblBox12d_code.grid(column=3, row=22, columnspan=1)
-        self.Box12d_code = tk.Entry(self, textvariable=self.varBox12d_code, name='_Box12d_code' )
+        self.lblBox12d_code.grid(column=3, row=22, columnspan=3, sticky=tk.W)
+        self.Box12d_code = tk.Entry(self, textvariable=self.varBox12d_code, name='_Box12d_code', width=4 )
         self.Box12d_code.grid(column=3, row=23, columnspan=1)
 
         self.varBox12d_data = tk.StringVar()
@@ -214,11 +214,11 @@ class W2(tk.Frame):
             3 soc sec wages
             4 soc sec tax witheld
             6 medicare tax witheld
-            d control number
-            c employer
-            b employer fed id number
-            a employee soc sec number
-            12a.  code and value
+            d control number.   text
+            c employer.     text
+            b employer fed id number.  text
+            a employee soc sec number.  text
+            12a.  code and value. code is text value is numeric
             12b.   code and value
             12c
             12d
