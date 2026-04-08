@@ -117,7 +117,7 @@ class W2(tk.Frame):
         self.varBox12a_data = tk.StringVar()
         #self.lblBox12a_data = tk.Label(self, text=' ', font=SMALL_FONT)
         #self.lblBox12a_data.pack()
-        self.Box12a_data = tk.Entry(self, textvariable=self.varBox12a_data, name='_Box12a_data' )
+        self.Box12a_data = tk.Entry(self, textvariable=self.varBox12a_data, name='_Box12a_data', width=12 )
         self.Box12a_data.grid(column=4, row=17, columnspan=2)
 
         self.varBox12b_code = tk.StringVar()
@@ -129,7 +129,7 @@ class W2(tk.Frame):
         self.varBox12b_data = tk.StringVar()
         #self.lblBox12b_data = tk.Label(self, text=' ', font=SMALL_FONT)
         #self.lblBox12b_data.pack()
-        self.Box12b_data = tk.Entry(self, textvariable=self.varBox12b_data, name='_Box12b_data' )
+        self.Box12b_data = tk.Entry(self, textvariable=self.varBox12b_data, name='_Box12b_data', width=12 )
         self.Box12b_data.grid(column=4, row=19, columnspan=2)
 
         self.varBox12c_code = tk.StringVar()
@@ -141,7 +141,7 @@ class W2(tk.Frame):
         self.varBox12c_data = tk.StringVar()
         #self.lblBox12c_data = tk.Label(self, text=' ', font=SMALL_FONT)
         #self.lblBox12c_data.pack()
-        self.Box12c_data = tk.Entry(self, textvariable=self.varBox12c_data, name='_Box12c_data' )
+        self.Box12c_data = tk.Entry(self, textvariable=self.varBox12c_data, name='_Box12c_data', width=12 )
         self.Box12c_data.grid(column=4, row=21, columnspan=2)
 
         self.varBox12d_code = tk.StringVar()
@@ -153,7 +153,7 @@ class W2(tk.Frame):
         self.varBox12d_data = tk.StringVar()
         #self.lblBox12d_data = tk.Label(self, text=' ', font=SMALL_FONT)
         #self.lblBox12d_data.pack()
-        self.Box12d_data = tk.Entry(self, textvariable=self.varBox12d_data, name='_Box12d_data' )
+        self.Box12d_data = tk.Entry(self, textvariable=self.varBox12d_data, name='_Box12d_data', width=12 )
         self.Box12d_data.grid(column=4, row=23, columnspan=2, sticky=tk.E+tk.W)
 
         self.varBox15 = tk.StringVar()
