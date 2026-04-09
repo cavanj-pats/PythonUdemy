@@ -110,7 +110,7 @@ class W2(tk.Frame):
 
         self.varBox12a_code = tk.StringVar()
         self.lblBox12a_code = tk.Label(self, text='12a', font=SMALL_FONT)
-        self.lblBox12a_code.grid(column=3, row=16, columnspan=1)
+        self.lblBox12a_code.grid(column=3, row=16, columnspan=1, sticky=tk.W)
         self.Box12a_code = tk.Entry(self, textvariable=self.varBox12a_code, name='_Box12a_code', width=4 )
         self.Box12a_code.grid(column=3, row=17, columnspan=1)
 
@@ -122,7 +122,7 @@ class W2(tk.Frame):
 
         self.varBox12b_code = tk.StringVar()
         self.lblBox12b_code = tk.Label(self, text='12b', font=SMALL_FONT)
-        self.lblBox12b_code.grid(column=3, row=18, columnspan=1)
+        self.lblBox12b_code.grid(column=3, row=18, columnspan=1, sticky=tk.W)
         self.Box12b_code = tk.Entry(self, textvariable=self.varBox12b_code, name='_Box12b_code', width=4 )
         self.Box12b_code.grid(column=3, row=19, columnspan=1)
 
@@ -134,7 +134,7 @@ class W2(tk.Frame):
 
         self.varBox12c_code = tk.StringVar()
         self.lblBox12c_code = tk.Label(self, text='12c', font=SMALL_FONT)
-        self.lblBox12c_code.grid(column=3, row=20, columnspan=1)
+        self.lblBox12c_code.grid(column=3, row=20, columnspan=1, sticky=tk.W)
         self.Box12c_code = tk.Entry(self, textvariable=self.varBox12c_code, name='_Box12c_code', width=4 )
         self.Box12c_code.grid(column=3, row=21, columnspan=1)
 
@@ -154,7 +154,7 @@ class W2(tk.Frame):
         #self.lblBox12d_data = tk.Label(self, text=' ', font=SMALL_FONT)
         #self.lblBox12d_data.pack()
         self.Box12d_data = tk.Entry(self, textvariable=self.varBox12d_data, name='_Box12d_data', width=12 )
-        self.Box12d_data.grid(column=4, row=23, columnspan=2, sticky=tk.E+tk.W)
+        self.Box12d_data.grid(column=4, row=23, columnspan=2, sticky=tk.W)
 
         self.varBox15 = tk.StringVar()
         self.lblBox15 = tk.Label(self, text='State', font=SMALL_FONT)
@@ -255,7 +255,7 @@ class W2(tk.Frame):
 
         print(widget.cget("bg"))
         #on macOS returns systemTextBackgroundColor
-
+        print(widget.winfo_name())
 
         if proposed_value == "" or proposed_value.isdigit():
             self.dataValidate.config(text='good')
