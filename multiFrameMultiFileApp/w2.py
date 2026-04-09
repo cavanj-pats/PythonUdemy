@@ -253,6 +253,12 @@ class W2(tk.Frame):
         # Allow empty string (for backspacing) or digits only
         widget = self.nametowidget(W)
 
+        #widgets requiring numeric validation,  all others can be skipped.
+        #edit as required for any changes
+        toValidate =['_Box1', '_Box2', '_Box3', '_Box4', '_Box5', '_Box6', '_Box7', '_Box8', 
+                     '_Box9','_Box10', '_Box11', '_Box12a_data', '_Box12b_data', 
+                     '_Box12c_data', '_Box12d_data', '_Box16','_Box17','_Box18','_Box19']
+        
         print(widget.cget("bg"))
         #on macOS returns systemTextBackgroundColor
         print(widget.winfo_name())
