@@ -7,6 +7,8 @@ import tkinter as tk
 
 SMALL_FONT = ("Arial", 8)
 
+class InvalidDataError(Exception):
+    pass
 class W2(tk.Frame):
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
@@ -33,31 +35,41 @@ class W2(tk.Frame):
         self.lblbox2 = tk.Label(self, text='Fed Income Tax Witheld', font=SMALL_FONT )
         self.lblbox2.grid(column=3, row=2, columnspan=3)
         varBox2 = tk.StringVar()
-        self.Box2 = tk.Entry(self, textvariable=varBox2, name='_Box2')
+        self.Box2 = tk.Entry(self, validatecommand=vcmd, 
+                             validate="focusout", justify=tk.RIGHT, 
+                             textvariable=varBox2, name='_Box2')
         self.Box2.grid(column=3, row=3, columnspan=3)
 
         self.varBox3 = tk.StringVar()
         self.lblBox3 = tk.Label(self, text='Soc Sec Wages', font=SMALL_FONT)
         self.lblBox3.grid(column=0, row=4, columnspan=3)
-        self.Box3 = tk.Entry(self, textvariable=self.varBox3, name='_Box3' )
+        self.Box3 = tk.Entry(self, validatecommand=vcmd, 
+                             validate="focusout", justify=tk.RIGHT, 
+                             textvariable=self.varBox3, name='_Box3' )
         self.Box3.grid(column=0, row=5, columnspan=3)
 
         self.varBox4 = tk.StringVar()
         self.lblBox4 = tk.Label(self, text='Soc Sec Tax Wintheld', font=SMALL_FONT)
         self.lblBox4.grid(column=3, row=4, columnspan=3)
-        self.Box4 = tk.Entry(self, textvariable=self.varBox4, name='_Box4' )
+        self.Box4 = tk.Entry(self, validatecommand=vcmd, 
+                             validate="focusout", justify=tk.RIGHT, 
+                             textvariable=self.varBox4, name='_Box4' )
         self.Box4.grid(column=3, row=5, columnspan=3)
 
         self.varBox5 = tk.StringVar()
         self.lblBox5 = tk.Label(self, text='Medicare Wages', font=SMALL_FONT)
         self.lblBox5.grid(column=0, row=6, columnspan=3)
-        self.Box5 = tk.Entry(self, textvariable=self.varBox5, name='_Box5' )
+        self.Box5 = tk.Entry(self, validatecommand=vcmd, 
+                             validate="focusout", justify=tk.RIGHT, 
+                             textvariable=self.varBox5, name='_Box5' )
         self.Box5.grid(column=0, row=7, columnspan=3)
 
         self.varBox6 = tk.StringVar()
         self.lblBox6 = tk.Label(self, text='Medicare Tax Witheld', font=SMALL_FONT)
         self.lblBox6.grid(column=3, row=6, columnspan=3)
-        self.Box6 = tk.Entry(self, textvariable=self.varBox6, name='_Box6' )
+        self.Box6 = tk.Entry(self, validatecommand=vcmd, 
+                             validate="focusout", justify=tk.RIGHT, 
+                             textvariable=self.varBox6, name='_Box6' )
         self.Box6.grid(column=3, row=7, columnspan=3)
 
         self.varBoxd = tk.StringVar()
@@ -81,13 +93,17 @@ class W2(tk.Frame):
         self.varBox7 = tk.StringVar()
         self.lblBox7 = tk.Label(self, text='Soc Sec Tips', font=SMALL_FONT)
         self.lblBox7.grid(column=0, row=12, columnspan=3)
-        self.Box7 = tk.Entry(self, textvariable=self.varBox7, name='_Box7' )
+        self.Box7 = tk.Entry(self, validatecommand=vcmd, 
+                             validate="focusout", justify=tk.RIGHT, 
+                             textvariable=self.varBox7, name='_Box7' )
         self.Box7.grid(column=0, row=13, columnspan=3)
 
         self.varBox8 = tk.StringVar()
         self.lblBox8 = tk.Label(self, text='Allocated Tips', font=SMALL_FONT)
         self.lblBox8.grid(column=3, row=12, columnspan=3)
-        self.Box8 = tk.Entry(self, textvariable=self.varBox8, name='_Box8' )
+        self.Box8 = tk.Entry(self, validatecommand=vcmd,
+                             validate="focusout", justify=tk.RIGHT,  
+                             textvariable=self.varBox8, name='_Box8' )
         self.Box8.grid(column=3, row=13, columnspan=3)
         
         self.varBox9 = tk.StringVar()
@@ -99,13 +115,17 @@ class W2(tk.Frame):
         self.varBox10 = tk.StringVar()
         self.lblBox10 = tk.Label(self, text='Dep Care Benefits', font=SMALL_FONT)
         self.lblBox10.grid(column=3, row=14, columnspan=3)
-        self.Box10 = tk.Entry(self, textvariable=self.varBox10, name='_Box10' )
+        self.Box10 = tk.Entry(self, validatecommand=vcmd,
+                              validate="focusout", justify=tk.RIGHT,  
+                              textvariable=self.varBox10, name='_Box10' )
         self.Box10.grid(column=3, row=15, columnspan=3)
 
         self.varBox11 = tk.StringVar()
         self.lblBox11 = tk.Label(self, text='Non qualfied plans', font=SMALL_FONT)
         self.lblBox11.grid(column=0, row=16, columnspan=3)
-        self.Box11 = tk.Entry(self, textvariable=self.varBox11, name='_Box11' )
+        self.Box11 = tk.Entry(self, validatecommand=vcmd, 
+                              validate="focusout", justify=tk.RIGHT, 
+                              textvariable=self.varBox11, name='_Box11' )
         self.Box11.grid(column=0, row=17, columnspan=3)
 
         self.varBox12a_code = tk.StringVar()
@@ -117,7 +137,9 @@ class W2(tk.Frame):
         self.varBox12a_data = tk.StringVar()
         #self.lblBox12a_data = tk.Label(self, text=' ', font=SMALL_FONT)
         #self.lblBox12a_data.pack()
-        self.Box12a_data = tk.Entry(self, textvariable=self.varBox12a_data, name='_Box12a_data', width=12 )
+        self.Box12a_data = tk.Entry(self, validatecommand=vcmd, 
+                                    validate="focusout", justify=tk.RIGHT, 
+                                    textvariable=self.varBox12a_data, name='_Box12a_data', width=12 )
         self.Box12a_data.grid(column=4, row=17, columnspan=2)
 
         self.varBox12b_code = tk.StringVar()
@@ -129,7 +151,9 @@ class W2(tk.Frame):
         self.varBox12b_data = tk.StringVar()
         #self.lblBox12b_data = tk.Label(self, text=' ', font=SMALL_FONT)
         #self.lblBox12b_data.pack()
-        self.Box12b_data = tk.Entry(self, textvariable=self.varBox12b_data, name='_Box12b_data', width=12 )
+        self.Box12b_data = tk.Entry(self, validatecommand=vcmd, 
+                                    validate="focusout", justify=tk.RIGHT, 
+                                    textvariable=self.varBox12b_data, name='_Box12b_data', width=12 )
         self.Box12b_data.grid(column=4, row=19, columnspan=2)
 
         self.varBox12c_code = tk.StringVar()
@@ -141,7 +165,9 @@ class W2(tk.Frame):
         self.varBox12c_data = tk.StringVar()
         #self.lblBox12c_data = tk.Label(self, text=' ', font=SMALL_FONT)
         #self.lblBox12c_data.pack()
-        self.Box12c_data = tk.Entry(self, textvariable=self.varBox12c_data, name='_Box12c_data', width=12 )
+        self.Box12c_data = tk.Entry(self, validatecommand=vcmd, 
+                                    validate="focusout", justify=tk.RIGHT, 
+                                    textvariable=self.varBox12c_data, name='_Box12c_data', width=12 )
         self.Box12c_data.grid(column=4, row=21, columnspan=2)
 
         self.varBox12d_code = tk.StringVar()
@@ -153,7 +179,9 @@ class W2(tk.Frame):
         self.varBox12d_data = tk.StringVar()
         #self.lblBox12d_data = tk.Label(self, text=' ', font=SMALL_FONT)
         #self.lblBox12d_data.pack()
-        self.Box12d_data = tk.Entry(self, textvariable=self.varBox12d_data, name='_Box12d_data', width=12 )
+        self.Box12d_data = tk.Entry(self, validatecommand=vcmd, 
+                                    validate="focusout", justify=tk.RIGHT, 
+                                    textvariable=self.varBox12d_data, name='_Box12d_data', width=12 )
         self.Box12d_data.grid(column=4, row=23, columnspan=2, sticky=tk.W)
 
         self.varBox15 = tk.StringVar()
@@ -171,25 +199,33 @@ class W2(tk.Frame):
         self.varBox16 = tk.StringVar()
         self.lblBox16 = tk.Label(self, text='State Wages, Tips, etc.', font=SMALL_FONT)
         self.lblBox16.grid(column=3, row=24, columnspan=3)
-        self.Box16 = tk.Entry(self, textvariable=self.varBox16, name='_Box16' )
+        self.Box16 = tk.Entry(self, validatecommand=vcmd, 
+                              validate="focusout", justify=tk.RIGHT, 
+                              textvariable=self.varBox16, name='_Box16' )
         self.Box16.grid(column=3, row=25, columnspan=3)
 
         self.varBox17 = tk.StringVar()
         self.lblBox17 = tk.Label(self, text='State Income Tax', font=SMALL_FONT)
         self.lblBox17.grid(column=0, row=26, columnspan=3)
-        self.Box17 = tk.Entry(self, textvariable=self.varBox17, name='_Box17' )
+        self.Box17 = tk.Entry(self, validatecommand=vcmd, 
+                              validate="focusout", justify=tk.RIGHT, 
+                              textvariable=self.varBox17, name='_Box17' )
         self.Box17.grid(column=0, row=27, columnspan=3)
 
         self.varBox18 = tk.StringVar()
         self.lblBox18 = tk.Label(self, text='Local Wages, tips, etc', font=SMALL_FONT)
         self.lblBox18.grid(column=3, row=26, columnspan=3)
-        self.Box18 = tk.Entry(self, textvariable=self.varBox18, name='_Box18' )
+        self.Box18 = tk.Entry(self, validatecommand=vcmd, 
+                              validate="focusout", justify=tk.RIGHT, 
+                              textvariable=self.varBox18, name='_Box18' )
         self.Box18.grid(column=3, row=27, columnspan=3)
 
         self.varBox19 = tk.StringVar()
         self.lblBox19 = tk.Label(self, text='Local Income Tax', font=SMALL_FONT)
         self.lblBox19.grid(column=0, row=28, columnspan=3)
-        self.Box19 = tk.Entry(self, textvariable=self.varBox19, name='_Box19' )
+        self.Box19 = tk.Entry(self, validatecommand=vcmd, 
+                              validate="focusout", justify=tk.RIGHT, 
+                              textvariable=self.varBox19, name='_Box19' )
         self.Box19.grid(column=0, row=29, columnspan=3)
 
         self.varBox20 = tk.StringVar()
@@ -199,14 +235,14 @@ class W2(tk.Frame):
         self.Box20.grid(column=3, row=29, columnspan=3)
 
         
-        btn = tk.Button(self, text="Go to B", 
+        self.btn = tk.Button(self, text="Go to B", 
                         command=lambda: controller.show_frame("FrameB") ) 
-        btn.grid(column=2, row=30, columnspan=3)
-        btnW2 =tk.Button(self, text="Next W2 Form", 
+        self.btn.grid(column=2, row=30, columnspan=3)
+        self.btnW2 =tk.Button(self, text="Next W2 Form", 
                          command=lambda: controller.create_new_instance(W2))
-        btnW2.grid(column=2, row=31, columnspan=3)
-        btnSave = tk.Button(self, text="Save Data", command=self.save_data)
-        btnSave.grid(column=2, row=32, columnspan=3)
+        self.btnW2.grid(column=2, row=31, columnspan=3)
+        self.btnSave = tk.Button(self, text="Save Data", command=self.save_data)
+        self.btnSave.grid(column=2, row=32, columnspan=3)
         #all other controls and functionality go here
         """
             box 1 wages
@@ -231,6 +267,14 @@ class W2(tk.Frame):
 
         """
     def save_data(self):
+        #this is one way to preven saving known bad data
+        # as long as the validate function is working
+        #a preferred way is to disable the 'save' button
+        if self.dataValidate.cget("text")=='Bad Data':
+            print('Cannot save data with Bad Data')
+            return
+        
+
         entry_data = {}
         entry_data['instance_id']=self.instance_id
         
@@ -248,10 +292,13 @@ class W2(tk.Frame):
         self.Box1.delete(0, tk.END)   # this works to clear the data
         self.Box1.insert(0, entry_data['Box1']-10)   #this works to refill the data
         
-        
+   
+
     def validate_numeric(self, proposed_value, W):
         # Allow empty string (for backspacing) or digits only
         widget = self.nametowidget(W)
+        fgColor = self.Box20.cget("fg")  #this is an entry box that will not be validated
+        bgColor = self.Box20.cget("bg")
 
         #widgets requiring numeric validation,  all others can be skipped.
         #edit as required for any changes
@@ -259,19 +306,42 @@ class W2(tk.Frame):
                      '_Box9','_Box10', '_Box11', '_Box12a_data', '_Box12b_data', 
                      '_Box12c_data', '_Box12d_data', '_Box16','_Box17','_Box18','_Box19']
         
-        print(widget.cget("bg"))
+        #print(widget.cget("bg"))
         #on macOS returns systemTextBackgroundColor
-        print(widget.winfo_name())
+        #print(widget.winfo_name())
 
-        if proposed_value == "" or proposed_value.isdigit():
-            self.dataValidate.config(text='good')
-            self.dataValidate.config(fg='black')
-            widget.config(bg='systemTextBackgroundColor')  #i don't know if this will work on windows or linux
-            return True
+        #clean the value to remove any commas
+        cleanValue = proposed_value.replace(",", "")
 
-
-        self.dataValidate.config(text='Bad Data')
-        self.dataValidate.config(fg='red')
-        widget.config(bg='red')
-        return True  #return True either way so as to not switch off validation
+        if widget.winfo_name() in toValidate:
+            if cleanValue == "":
+                return True
+            
+            try:
+                # try to convert the value to a float
+                float(cleanValue)
+                #value can be converted to a float
+                #print(f"Pass widget: {widget.winfo_name()}")
+                #for now, once the data is deemed good,  user will see good in the label
+                self.dataValidate.config(text='good')
+                self.dataValidate.config(fg='black')
+                #change the bg color to that of an untouched entry box, back to what it was
+                #this is needed in case the user has corrected a bad entry
+                #a prior bad entry will trigger a bg color change. this changes it back
+                widget.config(bg=bgColor)  #should work for any platform
+                # widget.config(bg='systemTextBackgroundColor')  #i don't know if this will work on windows or linux
+                #if there was prior bad data, the botton was disabled.  need to enable
+                self.btnSave.config(state="normal")
+                return True
+            except:
+                #data could not be converted to a float
+                #notify user by adding text the label, make text red, 
+                self.dataValidate.config(text='Bad Data')
+                self.dataValidate.config(fg='red')
+                #additionally make background color of entry box wth the bad entry red
+                widget.config(bg='red')
+                #disable the save button so bad data can't be saved
+                self.btnSave.config(state="disabled")
+                
+                return True  #return True either way so as to not switch off validation
        
