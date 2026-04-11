@@ -25,7 +25,7 @@ class TestApp(tk.Tk):
         #ok to use grid just
         navFrame=tk.Frame(container, height=900, width=300, padx=50)
         navFrame.grid(row=0, column=0, sticky="nsew")
-        btnID = tk.Button(navFrame, text='ID')
+        btnID = tk.Button(navFrame, text='ID', command=self.calc_wages)
         btnID.pack()
         
         lblIncome = tk.Label(navFrame)
@@ -48,6 +48,9 @@ class TestApp(tk.Tk):
 
         self.show_frame("FrameA")   #this should be the first item in the dictionary
                                      #if this changes it'll need to be changed.
+        
+        
+        
         """
         self.create_new_instance("FrameA")
         """
@@ -61,8 +64,18 @@ class TestApp(tk.Tk):
         frame.label.config(text=text)
         frame.tkraise()
 
-    
-    
+    def calc_wages(self):
+        #see if we can calculate total wages
+        wages = 0
+        for k, v in self.frames.items():
+            
+            if k[:2] == 'W2'  :
+                #this is a W2
+                frame_data = self.frames[k].get_data()
+                wages += frame_data.Box1.cget()
+        
+        target = self.frames['FrameA']
+        target.label.config(text=wages)
     
     
     

@@ -314,8 +314,8 @@ class W2(tk.Frame):
         
         
         #  self.varBox1.set("")  #this works
-        self.Box1.delete(0, tk.END)   # this works to clear the data
-        self.Box1.insert(0, entry_data['Box1']-10)   #this works to refill the data
+       # self.Box1.delete(0, tk.END)   # this works to clear the data
+        #self.Box1.insert(0, entry_data['Box1'])   #this works to refill the data
         
    
 
