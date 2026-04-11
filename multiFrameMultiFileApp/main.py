@@ -71,8 +71,8 @@ class TestApp(tk.Tk):
             
             if k[:2] == 'W2'  :
                 #this is a W2
-                frame_data = self.frames[k].get_data()
-                wages += frame_data.Box1.cget()
+                #frame_data = self.frames[k].get_data()
+                wages += float(self.frames[k].varBox1.get())  #this does work!
         
         target = self.frames['FrameA']
         target.label.config(text=wages)
