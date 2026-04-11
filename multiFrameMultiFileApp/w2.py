@@ -13,11 +13,22 @@ class W2(tk.Frame):
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
         self.controller = controller
+      
+
+        #this variable is a list that holds widget names that require
+        #numeric validation.
+        #as widgets are added, removed, renamed, etc. will need to update the list
+        #values assigned below. 
+        #multiple functions need to access this variable
+        global toValidate  
+
+        global entry_data  #class variable to hold data
+        entry_data={}
 
         # Register the validation function
         vcmd = (parent.register(self.validate_numeric), '%P', '%W')
 
-        self.instance_id = 0   #index each time you save and clear form to start a new instance
+        #self.instance_id = 0   #index each time you save and clear form to start a new instance
         self.label = tk.Label(self, text="W2")
         self.label.grid(column=0, row=0, columnspan=2)
 
@@ -234,12 +245,20 @@ class W2(tk.Frame):
         self.Box20 = tk.Entry(self, textvariable=self.varBox20, name='_Box20' )
         self.Box20.grid(column=3, row=29, columnspan=3)
 
+        ###      ####    End of Entry boxes
+        #widgets requiring numeric validation,  all others can be skipped.
+        #edit as required for any changes
+        toValidate =['_Box1', '_Box2', '_Box3', '_Box4', '_Box5', '_Box6', '_Box7', '_Box8', 
+                     '_Box9','_Box10', '_Box11', '_Box12a_data', '_Box12b_data', 
+                     '_Box12c_data', '_Box12d_data', '_Box16','_Box17','_Box18','_Box19']
         
         self.btn = tk.Button(self, text="Go to B", 
                         command=lambda: controller.show_frame("FrameB") ) 
         self.btn.grid(column=2, row=30, columnspan=3)
+
         self.btnW2 =tk.Button(self, text="Next W2 Form", 
-                         command=lambda: controller.create_new_instance(W2))
+                      command=lambda: controller.create_new_instance(W2))
+        
         self.btnW2.grid(column=2, row=31, columnspan=3)
         self.btnSave = tk.Button(self, text="Save Data", command=self.save_data)
         self.btnSave.grid(column=2, row=32, columnspan=3)
@@ -266,6 +285,8 @@ class W2(tk.Frame):
             figure out a stack of the previous frame or window
 
         """
+
+
     def save_data(self):
         #this is one way to preven saving known bad data
         # as long as the validate function is working
@@ -275,17 +296,21 @@ class W2(tk.Frame):
             return
         
 
-        entry_data = {}
-        entry_data['instance_id']=self.instance_id
-        
+        #entry_data = {}
+        entry_data['instance_id']= f"{__name__}_{len(self.controller.frames)}"
+     
         for widget in self.winfo_children():
             if isinstance(widget, tk.Entry):
-                if widget.get() != "":
-                    entry_data[str(widget).split('_')[-1]] = float(widget.get())
+                if widget.winfo_name() in toValidate:
+                    if widget.get() != "":
+                        entry_data[str(widget).split('_')[-1]] = float(widget.get())
+                    else:
+                        entry_data[str(widget).split('_')[-1]] = 0    #empty entry
                 else:
-                    entry_data[str(widget).split('_')[-1]] = 0
+                    entry_data[str(widget).split('_')[-1]] = widget.get()  #entry not in toValidate list
             
-        print("Saved W2 Data: ", entry_data)
+            
+        print("Saved W2 Data: ", entry_data)  #can delete or comment this line once debugged
         
         
         #  self.varBox1.set("")  #this works
@@ -300,11 +325,7 @@ class W2(tk.Frame):
         fgColor = self.Box20.cget("fg")  #this is an entry box that will not be validated
         bgColor = self.Box20.cget("bg")
 
-        #widgets requiring numeric validation,  all others can be skipped.
-        #edit as required for any changes
-        toValidate =['_Box1', '_Box2', '_Box3', '_Box4', '_Box5', '_Box6', '_Box7', '_Box8', 
-                     '_Box9','_Box10', '_Box11', '_Box12a_data', '_Box12b_data', 
-                     '_Box12c_data', '_Box12d_data', '_Box16','_Box17','_Box18','_Box19']
+        
         
         #print(widget.cget("bg"))
         #on macOS returns systemTextBackgroundColor
