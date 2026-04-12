@@ -8,8 +8,12 @@ class FrameA(tk.Frame):
         self.controller = controller
         self.label = tk.Label(self, text="Frame A")
         self.label.pack()
-        btn = tk.Button(self, text="Go to B", 
+
+        
+
+
+        self.btn = tk.Button(self, text="Go to B", 
                         command=lambda: controller.show_frame("FrameB") )  #Example logic
-        btn.pack()
+        self.btn.pack()
         label_line11_income=tk.Label(self)
         label_line11_income.pack()  #put result of calculation here
