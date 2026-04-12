@@ -58,9 +58,57 @@ class FrameA(tk.Frame):
         self.ssocsec = tk.Entry(self, textvariable=self.var_ssocsec, width=12)
         self.ssocsec.grid(column=5, row=srow+3, columnspan=2, sticky=tk.W+tk.E)
 
-        self.lblFilingStatus = tk.Label(self, text='Filing Status')
-        self.lblFilingStatus.grid(column=0, row=srow+4, sticky=tk.W)
         
+        self.varHomeAddress = tk.StringVar()
+        self.lblHomeAddress = tk.Label(self, text='Home address number and street. If you have a P.O. box see instructions.' ,
+                                        font=SMALL_FONT)
+        self.lblHomeAddress.grid(column=0, row=srow+5,columnspan=4, sticky=tk.W)
+        self.HomeAddress = tk.Entry(self, textvariable=self.varHomeAddress)
+        self.HomeAddress.grid(column=0, row=srow+6, columnspan=4, sticky=tk.W+tk.E)
+
+        self.varAptNum = tk.StringVar()
+        self.lblAptNum = tk.Label(self, text='Apt Number', font=SMALL_FONT)
+        self.lblAptNum.grid(column=4, row=srow+5, sticky=tk.W)
+        self.AptNum = tk.Entry(self, textvariable=self.varAptNum)
+        self.AptNum.grid(column=4, row=srow+6, sticky=tk.W+tk.E)
+        
+
+        self.varIntMainHome = tk.IntVar(value=0)
+        self.lblMainHome = tk.Label(self, text="Check here if your main home, \n and your spouses if filing a\njoint return, was in the" \
+                                            "\nU.S. for more \nthan half of 2025",
+                                            font='Arial, 6')
+        self.lblMainHome.grid(column=5, row=srow+5, columnspan=2, rowspan=2, sticky=tk.W+tk.N)
+        self.chkAptNum = tk.Checkbutton(self, variable=self.varIntMainHome)
+        self.chkAptNum.grid(column=6, row=srow+6, sticky=tk.E)
+
+        self.varCity = tk.StringVar()
+        self.lblCity = tk.Label(self, text="City, town, or post office. If you have a foreign address" \
+                                ",\nalso complete spaces below. ", 
+                                font='Arial, 6')
+        self.lblCity.grid(column=0, row=srow+7, columnspan=3, sticky=tk.W)
+        self.City = tk.Entry(self, textvariable=self.varCity)
+        self.City.grid(column=0, row=srow+8, columnspan=3, sticky=tk.W+tk.E)
+
+        self.varState = tk.StringVar()
+        self.lblState = tk.Label(self, text="State", font=SMALL_FONT, justify=tk.RIGHT)
+        self.lblState.grid(column=3, row=srow+7, sticky=tk.W)
+        self.state = tk.Entry(self, textvariable=self.varState, width=4)
+        self.state.grid(column=3, row=srow+8, sticky=tk.W+tk.E)
+
+        #need to add:
+        #Foreign country name 
+        self.varFcountry=tk.StringVar()
+
+        # Foreign province/state/county 
+        self.varFprov=tk.StringVar()
+
+        # Foreign postal code
+        self.varFpostal=tk.StringVar()
+
+        
+        #self.lblFilingStatus = tk.Label(self, text='Filing Status')
+        #self.lblFilingStatus.grid(column=0, row=srow+4, sticky=tk.W)
+
 
 
 
