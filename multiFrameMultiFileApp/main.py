@@ -19,6 +19,8 @@ class TestApp(tk.Tk):
         container.pack(side="top", fill="both", expand=True)
         
         self.frames = {}
+        self.current_frame = None
+
         self.w2Data={}
         # Initialize frames from different files
         #need a navigation frame
@@ -57,6 +59,7 @@ class TestApp(tk.Tk):
     def show_frame(self,page_name):
         frame = self.frames[page_name]
         frame.tkraise()
+        self.current_frame = page_name
 
     def update_data(self, text, target_frame):
         #self.frames[target_frame].label.config(text=text)
@@ -71,7 +74,8 @@ class TestApp(tk.Tk):
             
             if k[:2] == 'W2'  :
                 #this is a W2
-                #frame_data = self.frames[k].get_data()
+                #frame_data = self.frames[k].entry_data  # this works. this returns the entire dictionary
+                #print(f"Frame Data: {frame_data}")
                 wages += float(self.frames[k].varBox1.get())  #this does work!
         
         target = self.frames['FrameA']
@@ -122,5 +126,5 @@ if __name__ == "__main__":
 
     https://www.google.com/search?q=python+tkinter+loop+through+all+entry+widgets+and+save+their+data+to+a+dictionary+with+entry+widget+name+as+the+key&ie=UTF-8
 
-    
+
 """

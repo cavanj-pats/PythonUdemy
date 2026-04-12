@@ -22,8 +22,8 @@ class W2(tk.Frame):
         #multiple functions need to access this variable
         global toValidate  
 
-        global entry_data  #class variable to hold data
-        entry_data={}
+        #global self.entry_data  #class variable to hold data
+        self.entry_data= {}
 
         # Register the validation function
         vcmd = (parent.register(self.validate_numeric), '%P', '%W')
@@ -297,20 +297,20 @@ class W2(tk.Frame):
         
 
         #entry_data = {}
-        entry_data['instance_id']= f"{__name__}_{len(self.controller.frames)}"
+        self.entry_data['instance_id']= self.controller.current_frame  #f"{__name__}_{len(self.controller.frames)}"
      
         for widget in self.winfo_children():
             if isinstance(widget, tk.Entry):
                 if widget.winfo_name() in toValidate:
                     if widget.get() != "":
-                        entry_data[str(widget).split('_')[-1]] = float(widget.get())
+                        self.entry_data[str(widget).split('_')[-1]] = float(widget.get())
                     else:
-                        entry_data[str(widget).split('_')[-1]] = 0    #empty entry
+                        self.entry_data[str(widget).split('_')[-1]] = 0    #empty entry
                 else:
-                    entry_data[str(widget).split('_')[-1]] = widget.get()  #entry not in toValidate list
+                    self.entry_data[str(widget).split('_')[-1]] = widget.get()  #entry not in toValidate list
             
             
-        print("Saved W2 Data: ", entry_data)  #can delete or comment this line once debugged
+        print("Saved W2 Data: ", self.entry_data)  #can delete or comment this line once debugged
         
         
         #  self.varBox1.set("")  #this works
