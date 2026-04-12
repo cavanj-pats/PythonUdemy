@@ -20,6 +20,19 @@ class FrameA(tk.Frame):
         self.fname = tk.Entry(self, textvariable=self.var_fname)   
         self.fname.grid(column=0, row= srow+1, columnspan=2)
 
+        self.var_lname = tk.StringVar()
+        self.lbl_lname = tk.Label(self, text='If joint return, spouse’s first name and middle initial',
+                                  font=SMALL_FONT)
+        self.lbl_lname.grid(column=2, row= srow, columnspan=2, sticky=tk.W)
+        self.lname = tk.Entry(self, textvariable=self.var_lname)
+        self.lname.grid(column=2, row=srow+1, columnspan=2)
+
+        self.var_socsec = tk.StringVar()
+        self.lbl_socsec = tk.Label(self, text='Your social security number', 
+                                   font=SMALL_FONT)
+        self.lbl_socsec.grid(column=4, row=srow, columnspan=3)
+        self.socsec = tk.Entry(self, textvariable=self.var_socsec)
+        self.socsec.grid(column=4, row=srow+1, columnspan=3)
 
 
         #Souse First name and middle initial
@@ -32,6 +45,7 @@ class FrameA(tk.Frame):
 
         self.btn = tk.Button(self, text="Go to B", 
                         command=lambda: controller.show_frame("FrameB") )  #Example logic
-        self.btn.pack()
+        self.btn.grid(column=5, row=srow+15, columnspan=2)
+        
         label_line11_income=tk.Label(self)
         label_line11_income.pack()  #put result of calculation here
