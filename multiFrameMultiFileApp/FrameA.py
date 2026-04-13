@@ -52,7 +52,7 @@ class FrameA(tk.Frame):
         self.slname.grid(column=2, row=srow+3, columnspan=3, sticky=tk.W+tk.E)
 
         self.var_ssocsec = tk.StringVar()
-        self.lbl_ssocsec = tk.Label(self, text='Your social security number', 
+        self.lbl_ssocsec = tk.Label(self, text='spouse social security number', 
                                    font=SMALL_FONT)
         self.lbl_ssocsec.grid(column=5, row=srow+2, columnspan=2)
         self.ssocsec = tk.Entry(self, textvariable=self.var_ssocsec, width=12)
@@ -78,8 +78,8 @@ class FrameA(tk.Frame):
                                             "\nU.S. for more \nthan half of 2025",
                                             font='Arial, 6')
         self.lblMainHome.grid(column=5, row=srow+5, columnspan=2, rowspan=2, sticky=tk.W+tk.N)
-        self.chkAptNum = tk.Checkbutton(self, variable=self.varIntMainHome)
-        self.chkAptNum.grid(column=6, row=srow+6, sticky=tk.E)
+        self.chkMainHome = tk.Checkbutton(self, variable=self.varIntMainHome)
+        self.chkMainHome.grid(column=6, row=srow+6, sticky=tk.E)
 
         self.varCity = tk.StringVar()
         self.lblCity = tk.Label(self, text="City, town, or post office. If you have a foreign address" \
@@ -94,6 +94,12 @@ class FrameA(tk.Frame):
         self.lblState.grid(column=3, row=srow+7, sticky=tk.W)
         self.state = tk.Entry(self, textvariable=self.varState, width=4)
         self.state.grid(column=3, row=srow+8, sticky=tk.W+tk.E)
+
+        self.varZip=tk.StringVar()
+        self.lblZip = tk.Label(self, text='Zip code', font=SMALL_FONT)
+        self.lblZip.grid(column=4, row=srow+7)
+        self.zip = tk.Entry(self, textvariable=self.varZip)
+        self.zip.grid(column=4, row=srow+8, sticky=tk.W+tk.E)
 
         #need to add:
         #Foreign country name 
