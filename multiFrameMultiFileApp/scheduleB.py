@@ -24,9 +24,11 @@ class ScheduleB(tk.Frame):
                                         "shown on that form", wraplength=80)
         self.lblP1note.grid(column=0, row=1)
 
+        """
         self.btnFrameA =tk.Button(self.leftFrame, text="Frame A", 
                          command=lambda: controller.show_frame("FrameA"))
         self.btnFrameA.grid(column=0, row=2)
+        """
         
 
         #use this frame for header labels
@@ -70,14 +72,50 @@ class ScheduleB(tk.Frame):
 
             self.entries.append(row_entries)
 
-        self.line2Lbl = tk.Label(self.dataFrame, text="Add the amounts on line 1 . . . . . . . . . ", 
+        self.line2Lbl = tk.Label(self.dataFrame, text="2  Add the amounts on line 1 . . . . . . . . . ", 
                                  justify='left')
         self.line2Lbl.grid(column=0, row=rows+1)
         #self.line2Text = tk.StringVar(value="0")
-        self.line2Data = tk.Label(self.dataFrame, textvariable=self.line2Text, justify='right', relief=tk.SUNKEN,
-                                  padx=5, width=14, bg='white')
+        self.line2Data = tk.Label(self.dataFrame, textvariable=self.line2Text, justify='right', relief=tk.FLAT,
+                                  padx=5, width=13, bg='lightgray')
         self.line2Data.grid(column=1, row=rows+1)
 
+        self.line3Lbl = tk.Label(self.dataFrame, text="3   Excludable interest on series EE and " \
+                                "I U.S. savings bonds issued after 1989 Attach Form 8815.....")
+        self.line3Lbl.grid(column=0, row=rows+2)
+        self.line3Text = tk.StringVar(value="0")
+        self.line3Entry = tk.Entry(self.dataFrame, textvariable=self.line3Text, width=15, justify="right")
+        self.line3Entry.grid(column=1, row=rows+2, padx=4,pady=5)
+        self.line3Entry.bind("<FocusOut>", self.update_sum)
+        self.line3Entry.bind("<Return>", self.update_sum )
+
+        self.line4Lbl = tk.Label(self.dataFrame, text="4  Subtract line 3 from line 2. " \
+                                 "Enter the result here and on Form 1040 or 1040-SR, line 2b")
+        self.line4Lbl.grid(column=0, row=rows+3)
+        self.line4Text = tk.StringVar(value="0")
+        self.line4Data = tk.Label(self.dataFrame, textvariable=self.line4Text, justify="right",
+                                  relief=tk.FLAT, width=13, bg='lightgray', padx=5)
+        self.line4Data.grid(column=1, row=rows+3)
+
+
+        #  *****************   This is PART II of that form *********************
+        self.lblPart2 = tk.Label(self.leftFrame, text="Part II ordinary dividents", padx=0,pady=0)
+        self.lblPart2.grid(column=0,row=2)
+        self.lblP2note = tk.Label(self.leftFrame, font=SMALL_FONT, text="(See instructions "\
+                        "and the Instructions for Form 1040, line 3b.) Note: If you received a" \
+                        "Form 1099-DIV or substitute statement from a brokerage firm, "\
+                        "list the firm’s name as the payer and enter the ordinary " \
+                        "dividends shown on that form.", wraplength=80)
+        self.lblP2note.grid(column=0, row=3)
+
+
+
+
+        ##   ***************    End Part II
+
+        ##  ********************Part III
+
+        ### ******************** end part III
 
 
     def update_sum(self, event):
@@ -95,6 +133,13 @@ class ScheduleB(tk.Frame):
 
         # Update the label text
         self.line2Text.set(f"Total: {total}")
+        try:
+            xbonds = float(self.line3Text.get())
+            self.line4Text.set(f"Line 4: {total - xbonds}")
+        except ValueError:
+            pass
+    
+
        
 
 
