@@ -30,6 +30,7 @@ import tkinter as tk
 class DynamicPage(tk.Frame):
     def __init__(self, parent, config):
         super().__init__(parent)
+
         self.entries = {}  # Store Entry widgets to retrieve values later
         for widget_info in config:
             widget_type = widget_info["type"]
@@ -45,12 +46,18 @@ class DynamicPage(tk.Frame):
                     self.entries[widget_info["key"]] = widget
             # Add the widget to the grid
             widget.grid(row=row, column=column, padx=5, pady=5)   
+    
+    def get_values(self):
+        """Returns a dictionary of current values: {key: value}"""
+        return {k: v.get() for k, v in self.entries.items()}       
+
 
 
 class App:
     def __init__(self, root):
         self.container = tk.Frame(root)
         self.container.pack()
+        
 
         # Create different pages using the same class but different configs
         self.page1 = DynamicPage(self.container, page_config_1)
@@ -62,11 +69,14 @@ class App:
 
         # Raise the first page to show it
         self.page1.tkraise()
-
+        self.current_page = self.page1
         # Add navigation buttons
         tk.Button(root, text="Next", command=self.show_page2).pack()
 
     def show_page2(self):
+        data =self.current_page.get_values()
+        print(data)
+            
         self.page2.tkraise()
 
 root = tk.Tk()
@@ -74,16 +84,3 @@ app = App(root)
 root.mainloop()   
 
 
-
-
-#this is a method for keeping multiple instances 
-#of the same class separate for data purposes.
-
-class DynamicPage(tk.Frame):
-    def __init__(self, parent, config):
-        super().__init__(parent)
-        self.entries = {}  # This dictionary is unique to each instance
-        for widget_info in config:
-            if widget_info["type"] == "Entry":
-                entry = tk.Entry(self)
-                self.entries[widget_info["key"]] = entry  # Store with a unique key   
