@@ -206,3 +206,135 @@ class DynamicPage(tk.Frame):
                 entry = tk.Entry(self)
                 self.entries[widget_info["key"]] = entry  # Store with a unique key   
 """
+
+
+"""
+    ############################################################################################################################
+    For managing multiple instances of forms and data
+    https://search.brave.com/search?q=python+tkinter+dynamic+pages+work+but+multiple+instances+%28user+defined+quantity%29+of+same+page%2C+how+can+i+manage+the+data%3F+Each+in+own+dictionary%3F&summary=1&conversation=090a2e2cf53eb77cf22542431ab60ca69dfb
+
+
+    import tkinter as tk
+
+class DynamicApp(tk.Tk):
+    def __init__(self):
+        super().__init__()
+        self.container = tk.Frame(self)
+        self.container.pack(fill="both", expand=True)
+        
+        # Dictionary to hold page instances: key = page_id, value = Page instance
+        self.pages = {}
+        
+        # Create 3 instances of the same page
+        for i in range(3):
+            self.create_page(i)
+
+    def create_page(self, page_id):
+        # Instantiate the page class
+        page = DynamicPage(self.container, self, page_id)
+        
+        # Store the instance in the dictionary
+        self.pages[page_id] = page
+        
+        # Grid the page
+        page.grid(row=0, column=0, sticky="nsew")
+        
+        # Example: Store a unique StringVar for this page's entry
+        # This is often better than storing the widget itself for data access
+        page.data_var = tk.StringVar() 
+
+    def get_page_data(self, page_id):
+        if page_id in self.pages:
+            return self.pages[page_id].data_var.get()
+        return None
+
+class DynamicPage(tk.Frame):
+    def __init__(self, parent, controller, page_id):
+        super().__init__(parent)
+        self.page_id = page_id
+        
+        tk.Label(self, text=f"Page {page_id}").pack()
+        
+        # Entry widget linked to the page's specific StringVar
+        entry = tk.Entry(self, textvariable=controller.pages[page_id].data_var if page_id in controller.pages else tk.StringVar())
+        entry.pack()
+        
+        # Button to demonstrate data access
+        tk.Button(self, text="Show Data", command=lambda: self.show_data(controller, page_id)).pack()
+
+    def show_data(self, controller, page_id):
+        data = controller.get_page_data(page_id)
+        print(f"Data from Page {page_id}: {data}")
+
+if __name__ == "__main__":
+    app = DynamicApp()
+    app.mainloop()   
+
+    
+    
+    
+    ###################################################################################################################################
+    THIS IS PRETTY MUCH WHAT I AM DOING BUT MAY INCLUDE USEFUL INSIGHT
+    https://search.brave.com/search?q=python+tkinter+multiple+pages+%28frames%29+how+to+keep+on+a+stack+for+navigation&summary=1&conversation=090beb0bcdbadeac44758c7d4cae013e0a5b
+
+    import tkinter as tk
+
+class App(tk.Tk):
+    def __init__(self):
+        super().__init__()
+        
+        # 1. Create a container frame
+        container = tk.Frame(self)
+        container.pack(side="top", fill="both", expand=True)
+        container.grid_rowconfigure(0, weight=1)
+        container.grid_columnconfigure(0, weight=1)
+
+        self.frames = {}
+        
+        # 2. Initialize all pages and place them in the same grid location
+        for Page in (StartPage, PageOne, PageTwo):
+            page_name = Page.__name__
+            frame = Page(parent=container, controller=self)
+            self.frames[page_name] = frame
+            frame.grid(row=0, column=0, sticky="nsew")
+
+        # Show the starting page
+        self.show_frame("StartPage")
+
+    def show_frame(self, page_name):
+        # 4. Raise the specific frame to the top
+        frame = self.frames[page_name]
+        frame.tkraise()
+
+class StartPage(tk.Frame):
+    def __init__(self, parent, controller):
+        super().__init__(parent)
+        tk.Label(self, text="Start Page").pack(pady=10)
+        tk.Button(self, text="Go to Page One", 
+                  command=lambda: controller.show_frame("PageOne")).pack()
+
+class PageOne(tk.Frame):
+    def __init__(self, parent, controller):
+        super().__init__(parent)
+        tk.Label(self, text="Page One").pack(pady=10)
+        tk.Button(self, text="Back to Start", 
+                  command=lambda: controller.show_frame("StartPage")).pack()
+
+class PageTwo(tk.Frame):
+    def __init__(self, parent, controller):
+        super().__init__(parent)
+        tk.Label(self, text="Page Two").pack(pady=10)
+        tk.Button(self, text="Back to Start", 
+                  command=lambda: controller.show_frame("StartPage")).pack()
+
+if __name__ == "__main__":
+    app = App()
+    app.mainloop()   
+    
+    
+    
+    
+    
+    
+    
+    """
