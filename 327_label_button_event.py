@@ -22,7 +22,7 @@ win = Tk()
 win.title('First Application!')
 win.geometry('600x400')   #add +100+10 places the window
 
-fnt = Font(family='Coutier', size=30)
+fnt = Font(family='Courier', size=30)
 
 #take focus=0 does not allow keyboard focus.  tab and spacebar
 b1 = Button(win, font=fnt, text='Click to Count', command= btn1_click)
