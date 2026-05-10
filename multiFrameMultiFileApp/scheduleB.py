@@ -128,7 +128,7 @@ class ScheduleB(tk.Frame):
 
         self.lblLine5 = tk.Label(self.dataFrame, text="Enter Line 5 Payers and Amounts below: .........", font=SMALL_FONT)
         self.lblLine5.grid(column=0, row=rows+4, sticky=tk.W+tk.N)
-        self.line6Text = tk.StringVar(value=0)
+        self.line6Text = tk.StringVar(value='0')
         row_start = rows+5  #need to include this row
         row_end = row_start + 10
         self.part2_entries=[]
