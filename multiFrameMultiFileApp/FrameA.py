@@ -55,7 +55,7 @@ class FrameA(tk.Frame):
         self.lbl_ssocsec = tk.Label(self, text='spouse social security number', 
                                    font=SMALL_FONT)
         self.lbl_ssocsec.grid(column=5, row=srow+2, columnspan=2)
-        self.ssocsec = tk.Entry(self, textvariable=self.var_ssocsec, width=12)
+        self.ssocsec = tk.Entry(self, textvariable=self.var_ssocsec, width=12, key='ssocsec')
         self.ssocsec.grid(column=5, row=srow+3, columnspan=2, sticky=tk.W+tk.E)
 
         
