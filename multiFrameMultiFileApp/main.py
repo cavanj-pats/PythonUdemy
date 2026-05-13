@@ -37,6 +37,8 @@ class TestApp(tk.Tk):
         lblIncome = tk.Label(navFrame)
         lblIncome.pack()
 
+        self.btnShowFrameData = tk.Button(navFrame, text='Show Frame Data', command= lambda: self.showFrameData("FrameA"))
+        self.btnShowFrameData.pack()
         
         
         #as frames are added you need to add them below
@@ -55,11 +57,17 @@ class TestApp(tk.Tk):
         self.show_frame("FrameA")   #this should be the first item in the dictionary
                                      #if this changes it'll need to be changed.
         
+
+    
+    def showFrameData(self, frameName):
+        print(self.get_values(frameName))
+    
+    def get_values(self, frameName):
+        """Returns a dictionary of current values: {key: value}"""
+        frame = self.frames[frameName]
+        return {k: v.get() for k, v in frame.entries.items()}     
         
-        
-        """
-        self.create_new_instance("FrameA")
-        """
+       
     def show_frame(self,page_name):
         frame = self.frames[page_name]
         frame.tkraise()
