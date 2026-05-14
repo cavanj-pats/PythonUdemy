@@ -62,7 +62,7 @@ class FrameA(tk.Frame):
         self.lbl_ssocsec = tk.Label(self, text='spouse social security number', 
                                    font=SMALL_FONT)
         self.lbl_ssocsec.grid(column=5, row=srow+2, columnspan=2)
-        self.ssocsec = tk.Entry(self, textvariable=self.var_ssocsec, width=12, key='ssocsec')
+        self.ssocsec = tk.Entry(self, textvariable=self.var_ssocsec, width=12)
         self.ssocsec.grid(column=5, row=srow+3, columnspan=2, sticky=tk.W+tk.E)
         self.entries["ssocsec"]= self.ssocsec
         
@@ -88,7 +88,7 @@ class FrameA(tk.Frame):
         self.lblMainHome.grid(column=5, row=srow+5, columnspan=2, rowspan=2, sticky=tk.W+tk.N)
         self.chkMainHome = tk.Checkbutton(self, variable=self.varIntMainHome)
         self.chkMainHome.grid(column=6, row=srow+6, sticky=tk.E)
-        self.entries["MainHome"] = self.chkMainHome
+        self.entries["MainHome"] = self.varIntMainHome   #put the variable data value.  so later function can use .get()
 
         self.varCity = tk.StringVar()
         self.lblCity = tk.Label(self, text="City, town, or post office. If you have a foreign address" \
@@ -112,7 +112,7 @@ class FrameA(tk.Frame):
         self.zip = tk.Entry(self, textvariable=self.varZip)
         self.zip.grid(column=4, row=srow+8, sticky=tk.W+tk.E)
         self.entries["zip"]= self.zip
-        
+
         #need to add:
         #Foreign country name 
         self.varFcountry=tk.StringVar()
