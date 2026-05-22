@@ -20,6 +20,7 @@ class TestApp(tk.Tk):
         container.pack(side="top", fill="both", expand=True)
         
         self.frames = {}
+        self.frame_count={}
         self.current_frame = None
 
         self.w2Data={}
@@ -55,6 +56,14 @@ class TestApp(tk.Tk):
             #self.frame_instance_id += 1
             #instance_id = f"{F.__name__}_{self.frame_instance_id}"
             
+            #set the count of frames.  this is here jsut to test it            
+            if not page_name in self.frame_count:
+                self.frame_count[page_name]=1
+            else:
+                self.frame_count[page_name]+=1
+
+            print(page_name, self.frame_count[page_name])
+            
             frame = F(container, self)
             self.frames[page_name] = frame
             frame.grid(row=1, column=1, sticky="nsew")  #adjusted column
@@ -65,6 +74,11 @@ class TestApp(tk.Tk):
         btnNext = tk.Button(footerFrame, text="Next", command=lambda: self.show_frame("W2"))
         btnNext.pack(anchor='n', padx=10, pady=10)
 
+        #need to define in such a way so as to not need to know the intance ID, or,
+        #in the case of W2, go to the first such instance, or to the selected instance
+        #FrameA one instance
+        #W2 one or more instances
+        #ScheduleB break into Part I, II, and III one instance
 
         self.show_frame("FrameA")   #this should be the first item in the dictionary
                                      #if this changes it'll need to be changed.
