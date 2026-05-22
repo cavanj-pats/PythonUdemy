@@ -222,6 +222,11 @@ class W2(tk.Frame):
                               validate="focusout", justify=tk.RIGHT, 
                               textvariable=self.varBox17, name='_Box17' )
         self.Box17.grid(column=0, row=27, columnspan=3)
+        """
+        
+
+
+      
 
         self.varBox18 = tk.StringVar()
         self.lblBox18 = tk.Label(self, text='Local Wages, tips, etc', font=SMALL_FONT)
@@ -244,7 +249,8 @@ class W2(tk.Frame):
         self.lblBox20.grid(column=3, row=28, columnspan=3)
         self.Box20 = tk.Entry(self, textvariable=self.varBox20, name='_Box20' )
         self.Box20.grid(column=3, row=29, columnspan=3)
-
+        
+        """
         ###      ####    End of Entry boxes
         #widgets requiring numeric validation,  all others can be skipped.
         #edit as required for any changes

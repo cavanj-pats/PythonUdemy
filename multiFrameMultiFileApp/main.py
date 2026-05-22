@@ -27,7 +27,14 @@ class TestApp(tk.Tk):
         #need a navigation frame
         #ok to use grid just
         navFrame=tk.Frame(container, height=900, width=300, padx=50)
-        navFrame.grid(row=0, column=0, sticky="nsew")
+        navFrame.grid(row=0, column=0, rowspan=3, sticky="nsew")
+
+        headerFrame = tk.Frame(container, height=50)
+        headerFrame.grid(row=0, column=1,sticky="nsew")
+
+        btnMove = tk.Button(headerFrame, text="Next", command=lambda: self.show_frame("FrameB"))
+        btnMove.pack(anchor='s', padx=10, pady=10)
+
         self.btnID = tk.Button(navFrame, text='ID', command=self.calc_wages)
         self.btnID.pack()
 
@@ -50,9 +57,14 @@ class TestApp(tk.Tk):
             
             frame = F(container, self)
             self.frames[page_name] = frame
-            frame.grid(row=0, column=1, sticky="nsew")  #adjusted column
+            frame.grid(row=1, column=1, sticky="nsew")  #adjusted column
 
-        
+        footerFrame = tk.Frame(container, height=50)
+        footerFrame.grid(row=2, column=1, sticky="n", pady=20)
+
+        btnNext = tk.Button(footerFrame, text="Next", command=lambda: self.show_frame("W2"))
+        btnNext.pack(anchor='n', padx=10, pady=10)
+
 
         self.show_frame("FrameA")   #this should be the first item in the dictionary
                                      #if this changes it'll need to be changed.
@@ -108,7 +120,7 @@ class TestApp(tk.Tk):
         self.frames[instance_id] = new_frame
 
         # 4. Position it (usually in the same grid slot as others)
-        new_frame.grid(row=0, column=1, sticky="nsew")
+        new_frame.grid(row=1, column=1, sticky="nsew")
 
         # 5. Show the newly created frame
         self.show_frame(instance_id)

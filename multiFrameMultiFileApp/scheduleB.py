@@ -169,7 +169,11 @@ class ScheduleB(tk.Frame):
                                         "Foreign Financial Assets. See instructions" , wraplength=85 )
         self.lblPart3note.grid(column=0, row=5)
 
-        ### ******************** end part III
+        
+        """
+        
+      
+
         self.lblPart3_header = tk.Label(self.dataFrame, text= "Part III - You must complete this part if you (a) had over $1,500 "\
                                         "of taxable interest or ordinary dividends; (b) had a foreign "\
                                         "account; or (c) received a distribution from, or were a grantor "\
@@ -209,6 +213,7 @@ class ScheduleB(tk.Frame):
         self.cbLine8 = tk.Checkbutton(self.dataFrame, variable= self.varLine8)
         self.cbLine8.grid(column=1, row=row_end+7)
 
+        """
         ##################################    End Part III **********************************************###
         self.btnFrameA =tk.Button(self.leftFrame, text="Frame A", 
                          command=lambda: controller.show_frame("FrameA"))
