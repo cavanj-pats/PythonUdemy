@@ -3,7 +3,9 @@ import tkinter as tk
 from FrameA import FrameA
 from FrameB import FrameB
 from w2 import W2
-from scheduleB import ScheduleB
+from scheduleB_1 import ScheduleB_1
+from scheduleB_2 import ScheduleB_2
+from scheduleB_3 import ScheduleB_3
 """
     There will be forms (frames) with only one instance.  
     in fact i would believe most will be one instance.
@@ -39,7 +41,7 @@ class TestApp(tk.Tk):
         self.btnID = tk.Button(navFrame, text='ID', command=self.calc_wages)
         self.btnID.pack()
 
-        self.btnSchedB=tk.Button(navFrame,text='Schedule B', command=lambda: self.show_frame("ScheduleB"))
+        self.btnSchedB=tk.Button(navFrame,text='Schedule B', command=lambda: self.show_frame("ScheduleB_1"))
         self.btnSchedB.pack()
         
         lblIncome = tk.Label(navFrame)
@@ -50,7 +52,7 @@ class TestApp(tk.Tk):
         
         
         #as frames are added you need to add them below
-        for F in (FrameA, FrameB, W2, ScheduleB):
+        for F in (FrameA, FrameB, W2, ScheduleB_1, ScheduleB_2, ScheduleB_3):
             page_name=F.__name__
             #instance_id = f"{F.__name__}_{len(self.frames)}"
             #self.frame_instance_id += 1
