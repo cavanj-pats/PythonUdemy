@@ -1,5 +1,6 @@
 # main.py
 import tkinter as tk
+from id1 import id1
 from FrameA import FrameA
 from FrameB import FrameB
 from w2 import W2
@@ -17,24 +18,41 @@ from scheduleB_3 import ScheduleB_3
 class TestApp(tk.Tk):
     def __init__(self, *args, **kwargs):
         tk.Tk.__init__(self, *args, **kwargs)
-        global container 
-        container = tk.Frame(self)
-        container.pack(side="top", fill="both", expand=True)
         
+
         self.frames = {}
         self.frame_count={}
         self.current_frame = None
+
+
+        #self.container 
+        self.container = tk.Frame(self)
+        self.container.pack(side="top", fill="both", expand=True)
+        
+        
 
         self.w2Data={}
         # Initialize frames from different files
         #need a navigation frame
         #ok to use grid just
-        navFrame=tk.Frame(container, height=900, width=300, padx=50)
+        navFrame=tk.Frame(
+            self.container, 
+            height=900, 
+            width=300, 
+            padx=50
+            )
+        
         navFrame.grid(row=0, column=0, rowspan=3, sticky="nsew")
 
-        headerFrame = tk.Frame(container, height=50)
+        
+        headerFrame = tk.Frame(
+            self.container, 
+            height=50
+            )
+        
         headerFrame.grid(row=0, column=1,sticky="nsew")
 
+        
         btnMove = tk.Button(headerFrame, text="Next", command=lambda: self.show_frame("FrameB"))
         btnMove.pack(anchor='s', padx=10, pady=10)
 
@@ -47,12 +65,12 @@ class TestApp(tk.Tk):
         lblIncome = tk.Label(navFrame)
         lblIncome.pack()
 
-        self.btnShowFrameData = tk.Button(navFrame, text='Show Frame Data', command= lambda: self.showFrameData("FrameA"))
+        self.btnShowFrameData = tk.Button(navFrame, text='Show Frame Data', command= lambda: self.showFrameData("id1"))
         self.btnShowFrameData.pack()
         
         
         #as frames are added you need to add them below
-        for F in (FrameA, FrameB, W2, ScheduleB_1, ScheduleB_2, ScheduleB_3):
+        for F in (id1, FrameA, FrameB, W2, ScheduleB_1, ScheduleB_2, ScheduleB_3):
             page_name=F.__name__
             #instance_id = f"{F.__name__}_{len(self.frames)}"
             #self.frame_instance_id += 1
@@ -66,11 +84,11 @@ class TestApp(tk.Tk):
 
             print(page_name, self.frame_count[page_name])
             
-            frame = F(container, self)
+            frame = F(self.container, self)
             self.frames[page_name] = frame
             frame.grid(row=1, column=1, sticky="nsew")  #adjusted column
 
-        footerFrame = tk.Frame(container, height=50)
+        footerFrame = tk.Frame(self.container, height=50)
         footerFrame.grid(row=2, column=1, sticky="n", pady=20)
 
         btnNext = tk.Button(footerFrame, text="Next", command=lambda: self.show_frame("W2"))
@@ -82,7 +100,7 @@ class TestApp(tk.Tk):
         #W2 one or more instances
         #ScheduleB break into Part I, II, and III one instance
 
-        self.show_frame("FrameA")   #this should be the first item in the dictionary
+        self.show_frame("id1")   #this should be the first item in the dictionary
                                      #if this changes it'll need to be changed.
         
 
@@ -130,7 +148,7 @@ class TestApp(tk.Tk):
         
         # 2. Create the new frame instance
         # Pass 'self' as the controller so it can call show_frame later
-        new_frame = frame_class(container, self)
+        new_frame = frame_class(self.container, self)
 
         # 3. Add to your existing dictionary
         self.frames[instance_id] = new_frame
@@ -147,6 +165,8 @@ class TestApp(tk.Tk):
 
 if __name__ == "__main__":
     app = TestApp()
+    app.title('Form 1040 App')
+
     app.mainloop()   
 
 
