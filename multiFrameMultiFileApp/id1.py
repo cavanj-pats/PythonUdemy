@@ -99,7 +99,7 @@ class id1(tk.Frame):
             textvariable=self.varHomeAddress
             )
         
-        self.HomeAddress.grid(column=0, row=4, sticky=tk.W+tk.E)
+        self.HomeAddress.grid(column=0, row=4, columnspan=2, sticky=tk.W+tk.E)
 
         self.entries["HomeAddress"] = self.HomeAddress
         self.handle_placeholder(self.HomeAddress, "Home Address Number and Street.")
@@ -111,7 +111,7 @@ class id1(tk.Frame):
             self, 
             textvariable=self.varAptNum
             )
-        self.AptNum.grid(column=1, row=4, sticky=tk.W+tk.E)
+        self.AptNum.grid(column=2, row=4, sticky=tk.W+tk.E)
         self.entries["AptNum"]= self.AptNum
         self.handle_placeholder(self.AptNum, "Apartment Number")
 

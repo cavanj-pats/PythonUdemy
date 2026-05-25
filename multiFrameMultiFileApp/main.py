@@ -26,7 +26,7 @@ class TestApp(tk.Tk):
 
 
         #self.container 
-        self.container = tk.Frame(self)
+        self.container = tk.Frame(self, bg='GRAY')
         self.container.pack(side="top", fill="both", expand=True)
         
         
@@ -37,6 +37,7 @@ class TestApp(tk.Tk):
         #ok to use grid just
         navFrame=tk.Frame(
             self.container, 
+            bg='DARK GRAY',
             height=900, 
             width=300, 
             padx=50
@@ -47,6 +48,7 @@ class TestApp(tk.Tk):
         
         headerFrame = tk.Frame(
             self.container, 
+            bg='DARK GRAY',
             height=50
             )
         
@@ -88,7 +90,7 @@ class TestApp(tk.Tk):
             self.frames[page_name] = frame
             frame.grid(row=1, column=1, sticky="nsew")  #adjusted column
 
-        footerFrame = tk.Frame(self.container, height=50)
+        footerFrame = tk.Frame(self.container, bg='DARK GRAY', height=50)
         footerFrame.grid(row=2, column=1, sticky="n", pady=20)
 
         btnNext = tk.Button(footerFrame, text="Next", command=lambda: self.show_frame("W2"))
