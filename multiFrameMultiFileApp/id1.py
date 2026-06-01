@@ -226,3 +226,5 @@ class id1(tk.Frame):
         # Bind the specific entry
         entry.bind('<FocusIn>', on_focus_in)
         entry.bind('<FocusOut>', on_focus_out)
+
+

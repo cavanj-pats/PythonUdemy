@@ -7,6 +7,8 @@ from w2 import W2
 from scheduleB_1 import ScheduleB_1
 from scheduleB_2 import ScheduleB_2
 from scheduleB_3 import ScheduleB_3
+from dependents import dependents
+
 """
     There will be forms (frames) with only one instance.  
     in fact i would believe most will be one instance.
@@ -72,7 +74,7 @@ class TestApp(tk.Tk):
         
         
         #as frames are added you need to add them below
-        for F in (id1, FrameA, FrameB, W2, ScheduleB_1, ScheduleB_2, ScheduleB_3):
+        for F in (dependents, id1, FrameA, FrameB, W2, ScheduleB_1, ScheduleB_2, ScheduleB_3):
             page_name=F.__name__
             #instance_id = f"{F.__name__}_{len(self.frames)}"
             #self.frame_instance_id += 1
@@ -93,7 +95,7 @@ class TestApp(tk.Tk):
         footerFrame = tk.Frame(self.container, bg='DARK GRAY', height=50)
         footerFrame.grid(row=2, column=1, sticky="n", pady=20)
 
-        btnNext = tk.Button(footerFrame, text="Next", command=lambda: self.show_frame("W2"))
+        btnNext = tk.Button(footerFrame, text="dependents", command=lambda: self.show_frame("dependents"))
         btnNext.pack(anchor='n', padx=10, pady=10)
 
         #need to define in such a way so as to not need to know the intance ID, or,
