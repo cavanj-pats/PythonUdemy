@@ -26,13 +26,17 @@ class dependents(tk.Frame):
         self.Relationship.pack()
         self.handle_placeholder(self.Relationship, "Relationship")
 
+        # Using the year below should be converted to a variable/dyanamic string
+        # ********************************************
         self.varLiveWithYou = tk.IntVar()
-        self.chkLiveWithYou = tk.Checkbutton(self, variable=self.varLiveWithYou, text="Check if lived with you")
-        self.chkLiveWithYou.pack(side=tk.LEFT)
+        self.chkLiveWithYou = tk.Checkbutton(self, variable=self.varLiveWithYou, 
+                                             text="Check if lived with you more than half of 2025",
+                                             wraplength=140)
+        self.chkLiveWithYou.pack() # was side=tk.LEFT
 
 
-        self.label1 = tk.Label(self, text="Check if lived with you more than half 2025", wraplength=15)
-        self.label1.pack(side=tk.LEFT)
+        #self.label1 = tk.Label(self, text="Check if lived with you more than half 2025", wraplength=15)
+        #self.label1.pack(side=tk.LEFT)
         
         """
         self.chkLivedInUSA = tk.Checkbutton(self)
