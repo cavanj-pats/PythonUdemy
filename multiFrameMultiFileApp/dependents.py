@@ -35,7 +35,9 @@ class dependents(tk.Frame):
         for i in range(4):
             self.create_duplicate_frame(self.GridFrame[i], f"Dependent {i+1}")
 
-
+        self.btn = tk.Button(self, text="Print Instances",
+                             command=self.print_data)
+        self.btn.pack(side="right")
         
 
 
@@ -107,14 +109,14 @@ class dependents(tk.Frame):
         # store the data for later use
         self.instances.append({
             "DependentNumber": label_text,
-            "LastName": self.varLastName,
-            "FirstName" : self.varFirstName,
-            "Relationship" : self.varRelationship,
-            "SSN" : self.varSSN,
-            "LiveWithYou" : self.varLiveWithYou,
-            "InUSA": self.varInUSA,
-            "FullTimeStudent": self.varFullTimeStudent,
-            "Disabled" : self.varDisabled
+            "LastName": self.LastName.get(),
+            "FirstName" : self.FirstName.get(),
+            "Relationship" : self.Relationship.get(),
+            "SSN" : self.SSN.get(),
+            "LiveWithYou" : self.varLiveWithYou.get(),
+            "InUSA": self.varInUSA.get(),
+            "FullTimeStudent": self.varFullTimeStudent.get(),
+            "Disabled" : self.varDisabled.get()
 
         })
         
@@ -136,3 +138,6 @@ class dependents(tk.Frame):
         # Bind the specific entry
         entry.bind('<FocusIn>', on_focus_in)
         entry.bind('<FocusOut>', on_focus_out)
+
+    def print_data(self):
+        print(self.instances)
