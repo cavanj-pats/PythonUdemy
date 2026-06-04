@@ -109,11 +109,11 @@ class dependents(tk.Frame):
         # store the data for later use
         self.instances.append({
             "DependentNumber": label_text,
-            "LastName": self.LastName.get(),
-            "FirstName" : self.FirstName.get(),
-            "Relationship" : self.Relationship.get(),
-            "SSN" : self.SSN.get(),
-            "LiveWithYou" : self.varLiveWithYou.get(),
+            "LastName": self.varLastName,
+            "FirstName" : self.FirstName,
+            "Relationship" : self.Relationship,
+            "SSN" : self.SSN,
+            "LiveWithYou" : self.varLiveWithYou,
             "InUSA": self.varInUSA.get(),
             "FullTimeStudent": self.varFullTimeStudent.get(),
             "Disabled" : self.varDisabled.get()
