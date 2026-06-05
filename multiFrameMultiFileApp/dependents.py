@@ -140,4 +140,14 @@ class dependents(tk.Frame):
         entry.bind('<FocusOut>', on_focus_out)
 
     def print_data(self):
-        print(self.instances)
+        for index, data in enumerate(self.instances):
+            depNum = data["DependentNumber"]  #I don't think i need to use get
+            lname = data["LastName"].get()
+            fname = data["FirstName"].get()
+            relationship = data["Relationship"].get()
+
+            print(f"{depNum} {fname} {lname} {relationship}")
+            #this works. i can call a function to get the data.
+            #also need a flag to signal data has been entered
+            #and saved wo when opening form a file we can populate the data
+
