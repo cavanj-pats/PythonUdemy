@@ -12,6 +12,10 @@ class dependents(tk.Frame):
         self.entries={}
         self.GridFrame={}
 
+        #in order to present four dependents, create a subFrame
+        #inside the subFrame place four frames in a grid
+        #in each GridFrame we can simply pack the widgets
+        
         self.subFrame = tk.Frame(self)
         self.subFrame.pack()
         self.gridFrame0 = tk.Frame(self.subFrame)
