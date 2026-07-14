@@ -8,6 +8,9 @@ from scheduleB_1 import ScheduleB_1
 from scheduleB_2 import ScheduleB_2
 from scheduleB_3 import ScheduleB_3
 from dependents import dependents
+from app_data import app_data
+from app_data import w2_data
+
 
 """
     There will be forms (frames) with only one instance.  
@@ -24,19 +27,21 @@ class TestApp(tk.Tk):
 
         self.frames = {}
         self.frame_count={}
+        self.w2Data={}
         self.current_frame = None
 
 
-        #self.container 
+        #self.container  - top level frame that will hold all other frames
+        #left will be a Navigation Frame
+        #top and bottom will be a header and footer frame  used for navigation.
         self.container = tk.Frame(self, bg='GRAY')
         self.container.pack(side="top", fill="both", expand=True)
         
-        
-
-        self.w2Data={}
+    
         # Initialize frames from different files
         #need a navigation frame
-        #ok to use grid just
+        #ok to use grid just    
+
         navFrame=tk.Frame(
             self.container, 
             bg='DARK GRAY',

@@ -1,0 +1,21 @@
+these are edits i made.
+CTL - SHIFT - P
+
+the top defaulProfile command i edited the line that was there by adding "(Conda)"
+The other block i pasted in above the existing Command PRompt entry.
+
+{
+    "terminal.integrated.defaultProfile.windows": "Command Prompt (Conda)",
+    "terminal.integrated.profiles.windows": {
+        "Command Prompt (Conda)": {
+            "path": "cmd.exe",
+            "args": ["/K", "conda activate base"]
+        }
+    }
+}
+
+
+//create  new environment names env1040
+conda create --name env1040
+//the environment is only for conda installation, packages, and scripts.  Don't put project files in there.
+ conda activate env1040
