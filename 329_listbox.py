@@ -2,7 +2,7 @@
 
 
 from tkinter import *  # type: ignore
-from tkinter.font import *
+#from tkinter.font import *
 
 #from tkmacosx import *
 
