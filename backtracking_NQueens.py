@@ -58,6 +58,9 @@ def backtrack(row):
             place_queen(row, c)
             backtrack(row+1)
             remove_queen(row, c)  #popping or removing the solution is part of backtracking
+        else:
+            pass # remove for debug print(f"{row}, {c} not safe.")
+           
 
 def print_board(solution):
     n = len(solution)
