@@ -2,6 +2,13 @@
 # on the laptop VSCODE is happiest using the anaconda [conda] python package
 #install packes using the anaconda prompt
 
+"""
+THIS CODE MIGHT NOT RUN AS OF AUG 17 2026.  THE UNDERLYING TIMKEN WEB SITE HAS CHANGED
+AND SCRAPING THIS DATA WOULD BE DIFFERENT NOW.   THE NAVIGATION SCHEME WOULD NEED TO 
+CHANGE.
+"""
+
+
 import requests
 from bs4 import BeautifulSoup
 import pandas as pd
