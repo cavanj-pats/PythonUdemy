@@ -1,5 +1,8 @@
 #parseXL.py
 """
+****** if it is just a data table, then the first row
+will have numerous non empty cells.
+
 Execution Report - The main demand signal.
 Use MRP report for long range planning.
 SNR report - what is in transit. Shipped, not received.
@@ -76,9 +79,19 @@ def parse_excel_report(file_path, sheet_name=0):
 
    # 2. Extract Metadata First  Iterate through rows to trap the metadata strings
   for idx, row in df_raw.iterrows():
+    #first check if first row is start of a table
+    first_row_table_cells = [str(val).strip().lower() for val in row if pd.notna(val) 
+                             and str(val).strip() != ""]
+            
+        # Sift out empty rows or merged single-cell metadata rows
+    if int(idx)==0 and len(first_row_table_cells) >= 3:    #guess that 3 is a good value
+      #this is a s/s with a table of data
+      report_name = 'Supplier Table'
+      header_row_index = 0
+      break
+
+
     # Combine cell strings in the row to safely handle merged cells
-     #row_text = " ".join(row.dropna().astype(str))
-        # Replaces: row_text = " ".join(row.dropna().astype(str))
     row_text = " ".join([str(val) for val in row if pd.notna(val)])
         
         # Extract name if found and not yet set
@@ -100,7 +113,7 @@ def parse_excel_report(file_path, sheet_name=0):
 
     if report_name is not None and report_date is not None and supplier_code is not None:
       if report_name.lower() == 'execution':
-        supplier_name = df_raw.iloc[:supplier_code_idx+1]
+        supplier_name = df_raw.iloc[supplier_code_idx+1,0]
       elif report_name.lower() == 'pick list':
         supplier_name_text= str(df_raw.iloc[supplier_code_idx,0])  # row idx and col - 0
         #if i do above, there are no extra rows and no extra columns.  so no NaN.
@@ -108,11 +121,16 @@ def parse_excel_report(file_path, sheet_name=0):
         supplier_name_pattern = r'^[\d\s_\n\r]+ | [\d\s_\s\r]+$'
         supplier_name = re.sub(supplier_name_pattern, "", supplier_name_text)
         supplier_name = supplier_name.strip()  #leading and trailing spaces
+        #dDate = report_date[14:].strip().split(' ')  #split on space
+        day, month, year = report_date.split('/')
+        dDate = f"{month}/{day}/{year}"
+        report_date = f"{dDate}"
+
       elif report_name.lower() == 'snr':
         supplier_name_text= str(df_raw.iloc[supplier_code_idx,0])  # row idx and col - 0
         supplier_name_pattern = r'(^[0-9-]+)'
         supplier_name = re.sub(supplier_name_pattern,'',supplier_name_text)
-        
+
       break
     elif int(idx) >= MAX_ROWS:
       raise ValueError('Unable to find title information')
@@ -175,7 +193,8 @@ def parse_excel_report(file_path, sheet_name=0):
 # --- How to use it ---
 #data_df = parse_excel_report("ExecutionReport_Dummy.xlsx")
 #data_df = parse_excel_report("8445 EXE 20160323.xlsx")
-data_df = parse_excel_report("8445 SNR 20160323.xlsx")
-#data_df = parse_excel_report("8445 PL 20160323.xlsx")
+#data_df = parse_excel_report("8445 SNR 20160323.xlsx")
+data_df = parse_excel_report("8445 PL 20160323.xlsx")
+#data_df = parse_excel_report("SAC OSR 20160323.xlsx")
 print(data_df.head())
 print(len(data_df))
