@@ -45,6 +45,7 @@ data set - header row - starts with 'Material Number'
 
 import re
 import pandas as pd
+from typing import cast
 
 MAX_ROWS = 20  #max rows for title search
 
@@ -84,7 +85,8 @@ def parse_excel_report(file_path, sheet_name=0):
                              and str(val).strip() != ""]
             
         # Sift out empty rows or merged single-cell metadata rows
-    if int(idx)==0 and len(first_row_table_cells) >= 3:    #guess that 3 is a good value
+    clean_idx = cast(int, idx)   #remove error.  code was running fine
+    if clean_idx==0 and len(first_row_table_cells) >= 3:    #guess that 3 is a good value
       #this is a s/s with a table of data
       report_name = 'Supplier Table'
       header_row_index = 0
@@ -97,19 +99,29 @@ def parse_excel_report(file_path, sheet_name=0):
         # Extract name if found and not yet set
     if not report_name and name_pattern.search(row_text):
       name_match = name_pattern.search(row_text)
-      report_name = name_match.group(0)
+      #might not even need to raise error.  just ignore andlet report_name be none
+      if name_match:
+        report_name = name_match.group(0)
+      else:
+        raise ValueError ('No Report Name found when expected at top dataset.')
       report_name_idx = idx
             
         # Extract date if found and not yet set
     if not report_date and date_pattern.search(row_text):
       date_match = date_pattern.search(row_text)
-      report_date = date_match.group(0)
+      if date_match:
+        report_date = date_match.group(0)
+      else:
+        raise ValueError('No Date to match when expected.')
       report_date_idx = idx
 
     if not supplier_code and supplier_code_pattern.search(row_text):
       supplier_code_match = supplier_code_pattern.search(row_text)
-      supplier_code = supplier_code_match.group(0)
-      supplier_code_idx = int(idx)
+      if supplier_code_match:
+        supplier_code = supplier_code_match.group(0)
+      else:
+        raise ValueError('No Supplier Code Match when match was expected')
+      supplier_code_idx = cast(int, idx)
 
     if report_name is not None and report_date is not None and supplier_code is not None:
       if report_name.lower() == 'execution':
@@ -132,7 +144,7 @@ def parse_excel_report(file_path, sheet_name=0):
         supplier_name = re.sub(supplier_name_pattern,'',supplier_name_text)
 
       break
-    elif int(idx) >= MAX_ROWS:
+    elif cast(int,idx) >= MAX_ROWS:
       raise ValueError('Unable to find title information')
 
   #3. Dynamic Table Finder
@@ -154,7 +166,7 @@ def parse_excel_report(file_path, sheet_name=0):
 
     #if (has_known_column or len(non_empty_cells) >= 3) and not is_title_row:
     if (has_known_column):
-      header_row_index = idx
+      header_row_index = cast(int, idx)
       break
 
     """
