@@ -1,6 +1,6 @@
 #taxApp.py
 
-bracketMax = 99999999
+bracketMax = 99999999   #address this somehow in the calc. if income is greater than this....
 
 #calculate taxes based on filing status and expected income
 def calculate_tax(grossIncome, standardDeduction, brackets):
