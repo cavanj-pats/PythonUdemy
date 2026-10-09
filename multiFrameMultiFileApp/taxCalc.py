@@ -1,4 +1,7 @@
 #taxApp.py
+
+bracketMax = 99999999
+
 #calculate taxes based on filing status and expected income
 def calculate_tax(grossIncome, standardDeduction, brackets):
     #CALC the Adjusted gross income using filing status to determine standard deduction
@@ -43,12 +46,12 @@ if __name__ == "__main__":
         (403550, 0.24),
         (512450, 0.32),
         (768700, 0.35),
-        (99999999,0.37)
+        (bracketMax,0.37)
     ]
 
     taxable, total = calculate_tax(gross_income,standard_deduction, mfj_brackets)
 
     print(f"Taxable Income: {taxable}, total tax due: {total}")
-    print(f"Effective Tax Rate tax / gross: {total / gross_income * 100} %20")
+    print(f"Effective Tax Rate tax / gross: {total / gross_income * 100:.2f} %")
 
     
